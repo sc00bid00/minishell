@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/13 17:52:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:05:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@
 
 # define ERROR_1	"Error: Error reading line.\n"
 
-# define	BOLD	"\x01\033[1m"
-# define	BLACK	"\x01\033[30;1m"
-# define	RED		"\x01\033[31;1m"
-# define	GREEN	"\x01\033[32;1m"
-# define	YELLOW	"\x01\033[33;1m"
-# define	BLUE	"\x01\033[34;1m"
-# define	MAGENTA	"\x01\033[35;1m"
-# define	CYAN	"\x01\033[36;1m"
-# define	WHITE	"\x01\033[37;1m"
-# define	RESET	"\x01\033[0m;"
+# define	BOLD	"\x01\033[1m\x02"
+# define	BLACK	"\x01\033[30;1m\x02"
+# define	RED		"\x01\033[31;1m\x02"
+# define	GREEN	"\x01\033[32;1m\x02"
+# define	YELLOW	"\x01\033[33;1m\x02"
+# define	BLUE	"\x01\033[34;1m\x02"
+# define	MAGENTA	"\x01\033[35;1m\x02"
+# define	CYAN	"\x01\033[36;1m\x02"
+# define	WHITE	"\x01\033[37;1m\x02"
+# define	RESET	"\x01\033[0m;\x02"
 
 // read input
 
