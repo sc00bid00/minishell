@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/13 17:32:52 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/14 16:24:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@
 
 typedef struct s_token
 {
+	char	*str;
 	t_list	*lst;
 	int		prev;
 	int		curr;
+	int		p_sta;
+	int		c_sta;
 	int		count;
-	int		chk;
 }			t_token;
 
 #endif
