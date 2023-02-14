@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/14 16:31:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:00:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,20 @@ void	ft_lex(t_token	*tkn)
 		ft_getstatus(tkn);
 		if (tkn->curr == 0)
 			tkn->p_sta = tkn->c_sta;
-		if (tkn->c_sta != tkn->p_sta && tkn->p_sta != 0 \
-			&& !(tkn->c_sta & 0b0000011))
+		if (tkn->c_sta & 0b0000011)
+			;
+		else
 		{
-			ft_save(tkn);
-			tkn->prev = tkn->curr;
+			if (tkn->c_sta != tkn->p_sta && tkn->p_sta != 0)
+			{
+				if (tkn->p_sta & 0b0000011)
+					tkn->curr++;
+				ft_save(tkn);
+				tkn->prev = tkn->curr;
+			}
+			if (tkn->c_sta == 0)
+				tkn->prev = tkn->curr + 1;
 		}
-		if (tkn->c_sta == 0 && !(tkn->c_sta & 0b0000011))
-			tkn->prev = tkn->curr;
 		tkn->p_sta = tkn->c_sta;
 		tkn->curr++;
 	}
