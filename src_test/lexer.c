@@ -1,42 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_2.c                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/14 17:26:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/14 18:41:17 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parse.h>
+#include <lexer.h>
 
+/* clear t_token allocation */
+void	ft_cleanup(t_token *tkn)
+{
+	t_list	*tmp;
+	if (tkn->lst)
+	{
+		while (tkn->lst)
+		{
+			tmp = tkn->lst->next;
+			free(tkn->lst->content);
+			free(tkn->lst);
+			tkn->lst = tmp;
+		}
+	}
+	if (tkn)
+		free(tkn);
+}
+
+/* print lst->content to stdout */
 void	tmp_prtlst(t_token *tkn)
 {
+	t_list	*tmp;
+
+	tmp = tkn->lst;
 	while (tkn->lst)
 	{
 		ft_printf("%s\n", tkn->lst->content);
 		tkn->lst = tkn->lst->next;
 	}
+	tkn->lst = tmp;
 }
 
-int	ft_init_tkn(t_token *tkn)
+/* return 0ed t_token elements */
+void	ft_init_tkn(t_token *tkn)
 {
-	tkn->lst = malloc(sizeof(t_list));
-	if (!tkn->lst)
-	{
-		// ft_cleanup(tkn);
-		return (0);
-	}
+	tkn->lst = NULL;
 	tkn->c_sta = 0b0000000;
 	tkn->p_sta = 0b0000000;
 	tkn->curr = 0;
 	tkn->prev = 0;
 	tkn->count = 0;
-	return (1);
 }
 
+/* return flags bitwise current character */
 void	ft_getstatus(t_token *tkn)
 {
 	if (tkn->str[tkn->curr] == '\'')
@@ -59,22 +78,18 @@ void	ft_getstatus(t_token *tkn)
 	}
 }
 
+/* return t_list node with char * token as content */
 void	ft_save(t_token *tkn)
 {
-	t_list	*tmp;
-
-	if (tkn->count == 0)
-		tkn->lst->content = \
-			ft_substr(tkn->str, tkn->prev, tkn->curr - tkn->prev);
-	else
-	{
-		tmp = ft_lstnew(ft_substr(tkn->str, tkn->prev, tkn->curr - tkn->prev));
-		ft_lstadd_back(&(tkn->lst), tmp);
-	}
+	ft_lstadd_back(&(tkn->lst), \
+		ft_lstnew(ft_substr(tkn->str, tkn->prev, tkn->curr - tkn->prev)));
 	tkn->count++;
 }
 
-void	ft_lex(t_token	*tkn)
+/* return t_token with t_list of tokens
+token is either a word or a metacharacter
+text in quotes is word */
+void	ft_lex(t_token *tkn)
 {
 	while (tkn->str && tkn->str[tkn->curr])
 	{
@@ -102,6 +117,7 @@ void	ft_lex(t_token	*tkn)
 		ft_save(tkn);
 }
 
+/* main for test purpose*/
 int	main(void)
 {
 	t_token	*tkn;
@@ -109,10 +125,13 @@ int	main(void)
 	tkn = malloc(sizeof(t_token));
 	if (!tkn)
 		return (1);
-	if (!ft_init_tkn(tkn))
-		return (1);
-	tkn->str = " <   inf    cat| wc -l    |ls -la   | echo   \"so la la\" >>&out";
+	ft_init_tkn(tkn);
+	tkn->str \
+		= " <   inf    cat| wc -l  << end  |ls -la   \
+		| echo   \"so la la\" >>&out";
 	ft_lex(tkn);
 	tmp_prtlst(tkn);
+	ft_printf("*****************\ncreated %d nodes\n", tkn->count);
+	ft_cleanup(tkn);
 	return (0);
 }
