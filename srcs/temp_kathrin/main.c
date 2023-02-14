@@ -179,11 +179,37 @@
 // 		read_input();
 // }
 
+/*	SIGINT = Ctrl + C;
+*	SIGQUIT = Ctrl-\
+*	Ctrl + D tbd
+*/
 
+
+void	mt_signal_handler(int signal, siginfo_t *info, void *context)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (signal == SIGQUIT)
+	{
+		exit(0);
+	}
+}
 
 
 int main (int argc, char **argv, char **envp)
 {
+	struct sigaction	signal;
+
+	signal.sa_sigaction = &mt_signal_handler;
+	// signal.sa_flags = SA_SIGINFO;
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGQUIT, &signal, NULL);
     while (1)
 		get_input();
+	return (0);
 }
