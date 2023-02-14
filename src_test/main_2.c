@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/14 17:00:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:26:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_lex(t_token	*tkn)
 		ft_getstatus(tkn);
 		if (tkn->curr == 0)
 			tkn->p_sta = tkn->c_sta;
-		if (tkn->c_sta & 0b0000011)
+		if (tkn->p_sta & 0b0000011)
 			;
 		else
 		{
@@ -111,7 +111,7 @@ int	main(void)
 		return (1);
 	if (!ft_init_tkn(tkn))
 		return (1);
-	tkn->str = "' < inf' cat| wc -l  |ls -la   | echo \"so la la\" >>&out";
+	tkn->str = " <   inf    cat| wc -l    |ls -la   | echo   \"so la la\" >>&out";
 	ft_lex(tkn);
 	tmp_prtlst(tkn);
 	return (0);
