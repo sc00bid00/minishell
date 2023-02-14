@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/13 15:38:08 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/14 12:38:45 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ RESET	= \033[0m
 
 # souce and objects files
 
-SRC				=	temp/main	\
+SRC				=	temp_kathrin/main	\
 					prompt/prompt \
 
 INC				=	${NAME}      \
@@ -124,26 +124,26 @@ $(MAC_READLINE):
 #     fi
 clean: #header
 #	@rm -f .header
-	@echo -en "clean objs";
+	@echo -en "cleaning objects...\n";
 	@$(MAKE) clean -C lib/libft
-#	@if find $(OBJ_DIR) -type f -name '*.o' -delete > /dev/null 2>&1; then        \
-		echo -en "\\r        $(NAME)          🗑  ${RED}$(OBJ_DIR)/${DEFCL}${DEL_R}";\
+	@if find $(OBJ_DIR) -type f -name '*.o' -delete > /dev/null 2>&1; then        \
+	echo -en "\\r$(GREEN)$(OBJ_DIR)/$(RESET)${DEL_R}";\
 	fi
 #	@echo -e "\n";
-#	@if find $(OBJ_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
+	@if find $(OBJ_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
 		:;                                                                      \
 	fi
 fclean: clean #header
-	@echo -en "clean bins"
+	@echo -en "cleanig bins...\n"
 	@$(MAKE) fclean -C lib/libft
-#	@if find $(LIB_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
-#		:; \
-#	fi
-#	@if [ -f "${NAME}" ]; then                                                    \
-#		rm -f ${NAME};                                                          \
-#		echo -e "\\r         $(NAME)          🗑  ${RED}$(NAME)${DEFCL}${DEL_R}"; \
-#	fi
-	@echo -en "\n";
+	@if find $(LIB_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
+		:; \
+	fi
+	@if [ -f "${NAME}" ]; then                                                    \
+		rm -f ${NAME};                                                          \
+		echo -e "\\r $(NAME)         $(GREEN)$(NAME)$(RESET)${DEL_R}"; \
+	fi
+
 # header_c:
 #     @rm -f .header
 re: fclean all
