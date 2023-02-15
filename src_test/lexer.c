@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 13:06:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:53:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ void	ft_expand(t_token *tkn)
 		if (tmp->content && ((char *)tmp->content)[0] != '\'' \
 			&& ft_strchr(((char *)tmp->content), '$') && !flag)
 		{
-			tmp_str = ft_strdup(getenv(&((char *)tmp->content)[1]));
+			tmp_str = ft_strtrim((char *)tmp->content, "\"$");
 			free(tmp->content);
-			tmp->content = tmp_str;
+			tmp->content = ft_strdup(getenv(tmp_str));
+			free(tmp_str);
 		}
 		if (!ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;
@@ -82,12 +83,11 @@ void	tmp_prtlst(t_token *tkn)
 	t_list	*tmp;
 
 	tmp = tkn->lst;
-	while (tkn->lst)
+	while (tmp)
 	{
-		ft_printf("%s\n", tkn->lst->content);
-		tkn->lst = tkn->lst->next;
+		ft_printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
-	tkn->lst = tmp;
 }
 
 /* return 0ed t_token elements */
@@ -173,12 +173,17 @@ int	main(void)
 		return (1);
 	ft_init_tkn(tkn);
 	tkn->str \
-		= " <   inf    cat '$USER'| wc -l << $USER $PATH << end  |ls -la   \
+		= "\"$USER\" <   inf    cat '$USER'| wc -l << $USER $PATH \"PATH\" << end  |ls -la   \
 		| echo   \"so la la\" >>out";
 	ft_printf("\ninput string:\n%s\n**********\n", tkn->str);
 	ft_lex(tkn);
+	ft_printf("\ntoken list before expansion:\n**********\n");
+	tmp_prtlst(tkn);
 	ft_expand(tkn);
+	ft_printf("\ntoken list before quotation marks removal:\n**********\n");
+	tmp_prtlst(tkn);
 	ft_remquotes(tkn);
+	ft_printf("\nfinal token list :\n**********\n");
 	tmp_prtlst(tkn);
 	ft_printf("**********\nchained list with %d nodes\n", tkn->count);
 	ft_cleanup(tkn);
