@@ -6,13 +6,14 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 15:15:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 15:37:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 
-/* main for test purpose*/
+/* call ft_lex passing an allocated and initialized t_token
+clean-up after use */
 int	main(void)
 {
 	t_token	*tkn;

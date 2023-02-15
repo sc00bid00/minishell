@@ -6,13 +6,13 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 15:25:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 15:40:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 
-/* return t_list trimming external ' "*/
+/* return t_list without ' and/or " */
 void	ft_remquotes(t_token *tkn)
 {
 	t_list	*tmp;
@@ -29,7 +29,7 @@ void	ft_remquotes(t_token *tkn)
 	}
 }
 
-/* return t_list expanding system variables */
+/* return t_list expanding system variables as appropriate */
 void	ft_expand(t_token *tkn)
 {
 	t_list	*tmp;
@@ -56,7 +56,7 @@ void	ft_expand(t_token *tkn)
 	}
 }
 
-/* return flags bitwise current character */
+/* return bitwise flags to split tokens */
 void	ft_getstatus(t_token *tkn)
 {
 	if (tkn->str[tkn->curr] == '\'')
@@ -79,7 +79,7 @@ void	ft_getstatus(t_token *tkn)
 	}
 }
 
-/* return t_list node with char * token as content */
+/* return t_list nodes containing tokne char * */
 void	ft_save(t_token *tkn)
 {
 	if (tkn->p_sta & 0b0000011)
