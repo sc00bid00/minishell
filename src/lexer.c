@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 15:40:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 17:15:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ void	ft_save(t_token *tkn)
 /* return t_token with t_list of tokens
 token is either a word or a metacharacter
 text in quotes is word */
-void	ft_lex(t_token *tkn)
+t_token	*ft_lex(char *str)
 {
+	t_token	*tkn;
+
+	tkn = ft_init_tkn(str);
 	while (tkn->str && tkn->str[tkn->curr])
 	{
 		ft_getstatus(tkn);
@@ -116,4 +119,5 @@ void	ft_lex(t_token *tkn)
 		ft_save(tkn);
 	ft_expand(tkn);
 	ft_remquotes(tkn);
+	return (tkn);
 }

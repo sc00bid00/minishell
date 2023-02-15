@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/15 16:00:28 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/15 17:26:18 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ OBJ_TEST_DIR = ./obj_test/
 INC_DIR = -I ./inc -I ./lib/libft
 LIBFT= ./lib/libft/libft.a
 
-SRC =	lexer_main.c \
-		lexer.c \
+SRC =	lexer.c \
+		main.c \
 		utils_lexer_mem.c \
 		utils_lexer_tmp.c
 
@@ -71,10 +71,12 @@ $(LIBFT):
 
 clean:
 	@rm -rf $(OBJ_TEST_DIR)
+	@rm -rf $(OBJ_DIR)
 	@make clean -C ./lib/libft
 
 fclean: clean
 	@rm -f $(NAME_TEST)
+	@rm -f $(NAME)
 	@make fclean -C ./lib/libft
 
 
