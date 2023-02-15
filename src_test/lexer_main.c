@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   lexer_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 15:11:03 by lsordo           ###   ########.fr       */
+/*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
+/*   Updated: 2023/02/15 15:15:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include <lexer.h>
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <libft.h>
-
-typedef struct s_token
+/* main for test purpose*/
+int	main(void)
 {
-	char	*str;
-	t_list	*lst;
-	int		prev;
-	int		curr;
-	int		p_sta;
-	int		c_sta;
-	int		count;
-}			t_token;
+	t_token	*tkn;
 
-void	ft_lex(t_token *tkn);
-void	ft_cleanup(t_token *tkn);
-void	ft_init_tkn(t_token *tkn);
-void	tmp_prtlst(t_token *tkn);
-
-#endif
+	tkn = malloc(sizeof(t_token));
+	if (!tkn)
+		return (1);
+	ft_init_tkn(tkn);
+	tkn->str \
+		= "\"$USER\" <   inf    cat '$USER'| wc -l << $USER $PATH \"PATH\" << end  |ls -la   \
+		| echo   \"so la la\" >>out";
+	ft_lex(tkn);
+	tmp_prtlst(tkn);
+	ft_cleanup(tkn);
+	return (0);
+}

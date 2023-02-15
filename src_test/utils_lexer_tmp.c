@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   utils_lexer_tmp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 15:11:03 by lsordo           ###   ########.fr       */
+/*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
+/*   Updated: 2023/02/15 15:19:50 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include <lexer.h>
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <libft.h>
-
-typedef struct s_token
+/* print lst->content to stdout */
+void	tmp_prtlst(t_token *tkn)
 {
-	char	*str;
-	t_list	*lst;
-	int		prev;
-	int		curr;
-	int		p_sta;
-	int		c_sta;
-	int		count;
-}			t_token;
+	t_list	*tmp;
 
-void	ft_lex(t_token *tkn);
-void	ft_cleanup(t_token *tkn);
-void	ft_init_tkn(t_token *tkn);
-void	tmp_prtlst(t_token *tkn);
-
-#endif
+	ft_printf("*****\ntemp output for debugginig purpose\n");
+	ft_printf("*****\ninput string \"%s\"\n*****\n", tkn->str);
+	tmp = tkn->lst;
+	while (tmp)
+	{
+		ft_printf("%s\n", tmp->content);
+		tmp = tmp->next;
+	}
+	ft_printf("*****\nchain with %d nodes\n*****\n", tkn->count);
+}

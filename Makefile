@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/15 11:30:04 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/15 15:11:53 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ OBJ_TEST_DIR = ./obj_test/
 INC_DIR = -I ./inc -I ./lib/libft
 LIBFT= ./lib/libft/libft.a
 
-SRC_TEST =	lexer.c
+SRC_TEST =	lexer_main.c \
+			lexer.c \
+			utils_lexer_mem.c \
+			utils_lexer_tmp.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
