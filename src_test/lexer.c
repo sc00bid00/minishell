@@ -6,13 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 13:53:11 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 14:01:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
-
-
 
 /* return t_list trimming external ' "*/
 void	ft_remquotes(t_token *tkn)
