@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 11:44:58 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:06:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ void	ft_remquotes(t_token *tkn)
 void	ft_expand(t_token *tkn)
 {
 	t_list	*tmp;
-	int		i;
+	char	*tmp_str;
 	int		flag;
-	// char	*tmp_str;
 
-	tmp = tkn->lst;
 	flag = 0;
+	tmp = tkn->lst;
 	while (tmp)
 	{
-		if (tmp->content && ft_strchr((char *)tmp->content, '$') \
-			&& ((char *)tmp->content)[0] != '\'')
+		if (tmp->content && ((char *)tmp->content)[0] != '\'' \
+			&& ft_strchr(((char *)tmp->content), '$') && !flag)
 		{
-			i = 0;
-			while (((char *)tmp->content)[i])
-			{
-
-				i++;
-			}
+			tmp_str = ft_strdup(getenv(&((char *)tmp->content)[1]));
+			free(tmp->content);
+			tmp->content = tmp_str;
 		}
+		if (!ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
+			flag = 1;
+		else
+			flag = 0;
 		tmp = tmp->next;
 	}
 }
@@ -173,12 +173,12 @@ int	main(void)
 		return (1);
 	ft_init_tkn(tkn);
 	tkn->str \
-		= " <   inf    cat '$USER'| wc -l $USER  << end  |ls -la   \
+		= " <   inf    cat '$USER'| wc -l << $USER $PATH << end  |ls -la   \
 		| echo   \"so la la\" >>out";
 	ft_printf("\ninput string:\n%s\n**********\n", tkn->str);
 	ft_lex(tkn);
 	ft_expand(tkn);
-	// ft_remquotes(tkn);
+	ft_remquotes(tkn);
 	tmp_prtlst(tkn);
 	ft_printf("**********\nchained list with %d nodes\n", tkn->count);
 	ft_cleanup(tkn);
