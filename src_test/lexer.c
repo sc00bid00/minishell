@@ -6,16 +6,62 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/14 18:41:17 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/15 11:44:58 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 
+
+
+/* return t_list trimming external ' "*/
+void	ft_remquotes(t_token *tkn)
+{
+	t_list	*tmp;
+	char	*tmp_str;
+
+	tmp = tkn->lst;
+	while (tmp)
+	{
+		if (tmp->content)
+			tmp_str = ft_strtrim(tmp->content, "\'\"");
+		free(tmp->content);
+		tmp->content = tmp_str;
+		tmp = tmp->next;
+	}
+}
+
+/* return t_list expanding system variables */
+void	ft_expand(t_token *tkn)
+{
+	t_list	*tmp;
+	int		i;
+	int		flag;
+	// char	*tmp_str;
+
+	tmp = tkn->lst;
+	flag = 0;
+	while (tmp)
+	{
+		if (tmp->content && ft_strchr((char *)tmp->content, '$') \
+			&& ((char *)tmp->content)[0] != '\'')
+		{
+			i = 0;
+			while (((char *)tmp->content)[i])
+			{
+
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
 /* clear t_token allocation */
 void	ft_cleanup(t_token *tkn)
 {
 	t_list	*tmp;
+
 	if (tkn->lst)
 	{
 		while (tkn->lst)
@@ -127,11 +173,14 @@ int	main(void)
 		return (1);
 	ft_init_tkn(tkn);
 	tkn->str \
-		= " <   inf    cat| wc -l  << end  |ls -la   \
-		| echo   \"so la la\" >>&out";
+		= " <   inf    cat '$USER'| wc -l $USER  << end  |ls -la   \
+		| echo   \"so la la\" >>out";
+	ft_printf("\ninput string:\n%s\n**********\n", tkn->str);
 	ft_lex(tkn);
+	ft_expand(tkn);
+	// ft_remquotes(tkn);
 	tmp_prtlst(tkn);
-	ft_printf("*****************\ncreated %d nodes\n", tkn->count);
+	ft_printf("**********\nchained list with %d nodes\n", tkn->count);
 	ft_cleanup(tkn);
 	return (0);
 }
