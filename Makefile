@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/16 09:44:00 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/16 15:00:10 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ RESET	= \033[0m
 
 SRC				=	temp_kathrin/main	\
 					prompt/prompt \
-					signals/signals
+					signals/signals \
+					utils/copy_env_to_heap
 
 INC				=	${NAME}      \
 					libft                               

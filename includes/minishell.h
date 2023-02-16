@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/16 12:54:30 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:59:28 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,14 @@
 
 char	*read_line(void);
 int		get_input(void);
+
+// utils
+
+char **copy_env_to_heap(char **envp);
+
+
+// temp
+
+void temp_print_envs(char **envp);
 
 #endif
