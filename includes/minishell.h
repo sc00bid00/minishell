@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/14 14:20:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:54:30 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include <signal.h>
+#include <termios.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
+#include "signals.h"
 
 # define ERROR_1	"Error: Error reading line.\n"
 

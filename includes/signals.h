@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/16 13:32:36 by kczichow         ###   ########.fr       */
+/*   Created: 2023/02/16 09:39:24 by kczichow          #+#    #+#             */
+/*   Updated: 2023/02/16 14:11:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SIGNALS_H
+# define SIGNALS_H
+
 #include "minishell.h"
 
-char	*read_line(void)
-{
-	char *line;
-	line = readline("\033[36;1m$ \033[0m");
-	if (line == NULL)
-	{
-		exit(1);
-	}
-	return (line);
-}
+struct sigaction	sa;
+struct sigaction	sb;
+struct termios new_termios;
+static struct termios old_termios;
+sigset_t			set;
 
+void	setup_signals(bool interactive);
+void	signal_handler(int signal);
+void	restore_terminal();
+void	setup_sigint();
+void	handle_sigint(int signal, siginfo_t *info, void *context);
 
-int	get_input(void)
-{
-	char *input;
-
-	
-	if ((input = read_line()) != NULL)
-	{
-		if (input && *input)
-			add_history(input);
-		free(input);
-	}
-	return (0);
-}
+#endif

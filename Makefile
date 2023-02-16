@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/14 12:38:45 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/16 09:44:00 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ RESET	= \033[0m
 
 SRC				=	temp_kathrin/main	\
 					prompt/prompt \
+					signals/signals
 
 INC				=	${NAME}      \
 					libft                               
