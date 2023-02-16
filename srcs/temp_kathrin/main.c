@@ -18,6 +18,9 @@ int main (int argc, char **argv, char **envp)
 		setup_sigint();
 		get_input();
 		// restore_terminal();
+		// get_input();
+		//setup_sigexec(); put back default signals
+		// restore_terminal();
 	}
 	return (0);
 }
