@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 12:28:34 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:23:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	ft_cleanlst(t_list *lst)
 /* clear t_token allocation */
 void	ft_cleanup(t_token *tkn)
 {
-	t_list	*tmp;
-
 	if (tkn->lst)
 		ft_cleanlst(tkn->lst);
 	if (tkn)
