@@ -6,11 +6,11 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/17 16:45:12 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/17 16:49:18 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lexer
+NAME = parser
 NAME_TEST = test
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
@@ -24,8 +24,10 @@ LIBFT= ./lib/libft/libft.a
 
 SRC =	lexer.c \
 		main.c \
+		parser.c \
 		utils_cleanup.c \
 		utils_init.c \
+		utils_parser_get.c \
 		utils_tmp.c
 
 SRC_TEST =	lexer.c \
