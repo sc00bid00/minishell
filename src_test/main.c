@@ -6,12 +6,122 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 10:17:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/17 12:56:46 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
+
+void	ft_getwords(t_token *tkn, t_scmd *cmd)
+{
+	t_list	*tmp;
+	t_list	**arr;
+
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '|')
+			break ;
+		if (tmp->content)
+		{
+			ft_lstadd_back(&arr[cmd->count], ft_strdup(tmp->content));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	ft_getappend(t_token *tkn, t_scmd *cmd)
+{
+	t_list	*tmp;
+	t_list	**arr;
+	int		flag;
+
+	arr = cmd->arr;
+	tmp = tkn->lst;
+	flag = 0;
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '|')
+			break ;
+		if (tmp->content && (!ft_strcmp(tmp->content, ">>", 1) || flag))
+		{
+			flag = flag ^ 1;
+			ft_lstadd_back(&arr[cmd->count], ft_strdup(tmp->content));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	ft_getredout(t_token *tkn, t_scmd *cmd)
+{
+	t_list	*tmp;
+	t_list	**arr;
+	int		flag;
+
+	arr = cmd->arr;
+	tmp = tkn->lst;
+	flag = 0;
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '|')
+			break ;
+		if (tmp->content && (!ft_strcmp(tmp->content, ">", 1) || flag))
+		{
+			flag = flag ^ 1;
+			ft_lstadd_back(&arr[cmd->count], ft_strdup(tmp->content));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	ft_getredin(t_token *tkn, t_scmd *cmd)
+{
+	t_list	*tmp;
+	t_list	**arr;
+	int		flag;
+
+	arr = cmd->arr;
+	tmp = tkn->lst;
+	flag = 0;
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '|')
+			break ;
+		if (tmp->content && (!ft_strcmp(tmp->content, "<", 1) || flag))
+		{
+			flag = flag ^ 1;
+			ft_lstadd_back(&arr[cmd->count], ft_strdup(tmp->content));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	ft_gethdoc(t_token *tkn, t_scmd *cmd)
+{
+	t_list	*tmp;
+	t_list	**arr;
+	int		flag;
+
+	arr = cmd->arr;
+	tmp = tkn->lst;
+	flag = 0;
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '|')
+			break ;
+		if (tmp->content && (!ft_strcmp(tmp->content, "<<", 2) || flag))
+		{
+			flag = flag ^ 1;
+			ft_lstadd_back(&arr[cmd->count], ft_strdup(tmp->content));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
 
 int	ft_ctscmd(t_scmd *scmd, t_token *tkn)
 {
@@ -46,25 +156,6 @@ t_scmd	*ft_init_scmd(t_token *tkn)
 	}
 	scmd->count = 0;
 	return (scmd);
-}
-
-void	ft_gethdoc(t_token *tkn, t_scmd *cmd)
-{
-	t_list	*tmp;
-	int		flag;
-
-	flag = 0;
-	tmp = tkn->lst;
-	while (tmp)
-	{
-		if (tmp->content && !cmd->count \
-			&& (!ft_strncmp(tmp->content, "<<", 2) || flag))
-		{
-			flag = flag ^ 1;
-			ft_lstadd_back(&cmd->arr[cmd->count], tmp->content);
-		}
-		tmp = tmp->next;
-	}
 }
 
 t_scmd	*ft_parse(t_token *tkn)

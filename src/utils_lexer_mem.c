@@ -6,11 +6,25 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/15 17:27:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/17 12:28:34 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
+
+/* clean up a t_list */
+void	ft_cleanlst(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->content);
+		free(lst);
+		lst = tmp;
+	}
+}
 
 /* clear t_token allocation */
 void	ft_cleanup(t_token *tkn)
@@ -18,15 +32,7 @@ void	ft_cleanup(t_token *tkn)
 	t_list	*tmp;
 
 	if (tkn->lst)
-	{
-		while (tkn->lst)
-		{
-			tmp = tkn->lst->next;
-			free(tkn->lst->content);
-			free(tkn->lst);
-			tkn->lst = tmp;
-		}
-	}
+		ft_cleanlst(tkn->lst);
 	if (tkn)
 		free(tkn);
 }
