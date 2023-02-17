@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/15 17:26:18 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/16 12:33:06 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRC =	lexer.c \
 		utils_lexer_mem.c \
 		utils_lexer_tmp.c
 
-SRC_TEST =
+SRC_TEST =	main.c \
+			utils_lexer_mem.c \
+			lexer.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
