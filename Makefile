@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/17 15:01:20 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/17 16:45:12 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,16 @@ LIBFT= ./lib/libft/libft.a
 
 SRC =	lexer.c \
 		main.c \
-		utils_lexer_mem.c \
+		utils_cleanup.c \
+		utils_init.c \
 		utils_tmp.c
 
 SRC_TEST =	lexer.c \
 			main.c \
-			utils_lexer_mem.c \
+			parser.c \
+			utils_cleanup.c \
+			utils_init.c \
+			utils_parser_get.c \
 			utils_tmp.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)

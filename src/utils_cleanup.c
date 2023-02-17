@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_lexer_mem.c                                  :+:      :+:    :+:   */
+/*   utils_mem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 14:23:11 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/17 16:41:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
+#include <parser.h>
 
-/* clean up a t_list */
+/* clean up t_list */
 void	ft_cleanlst(t_list *lst)
 {
 	t_list	*tmp;
@@ -26,6 +27,21 @@ void	ft_cleanlst(t_list *lst)
 	}
 }
 
+/* clean up t-list ** */
+void	ft_cleanscmd(t_scmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->arr[i])
+	{
+		ft_cleanlst(cmd->arr[i]);
+		i++;
+	}
+	free(cmd->arr);
+	free(cmd);
+}
+
 /* clear t_token allocation */
 void	ft_cleanup(t_token *tkn)
 {
@@ -33,22 +49,4 @@ void	ft_cleanup(t_token *tkn)
 		ft_cleanlst(tkn->lst);
 	if (tkn)
 		free(tkn);
-}
-
-/* return allocated and 0 initilized t_token*/
-t_token	*ft_init_tkn(char *str)
-{
-	t_token	*tkn;
-
-	tkn = malloc(sizeof(t_token));
-	if (!tkn)
-		return (NULL);
-	tkn->str = str;
-	tkn->lst = NULL;
-	tkn->c_sta = 0b0000000;
-	tkn->p_sta = 0b0000000;
-	tkn->curr = 0;
-	tkn->prev = 0;
-	tkn->count = 0;
-	return (tkn);
 }
