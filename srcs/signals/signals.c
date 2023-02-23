@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 08:50:56 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/16 16:34:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:42:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	restore_terminal()
 	sigemptyset(&set);
 }
 
+/*	handler for SIGINT signal */
 void	handle_sigint(int signal, siginfo_t *info, void *context)
 {
 	if (signal == SIGINT)
@@ -42,6 +43,7 @@ void	handle_sigint(int signal, siginfo_t *info, void *context)
 	}
 }
 
+/*	set up of SIGINT sigaction, including set */
 void	setup_sigint()
 {
     set_terminal();
