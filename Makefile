@@ -6,14 +6,15 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/16 15:00:10 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/23 16:17:47 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			=	/bin/bash
 UNAME			=	$(shell uname)
 #MAKEFLAGS		=	--no-print-directory
-#CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
+CFLAGS			=	-g -fsanitize=address 
+# CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
 
 NAME			=	minishell
 
@@ -42,7 +43,11 @@ RESET	= \033[0m
 SRC				=	temp_kathrin/main	\
 					prompt/prompt \
 					signals/signals \
-					utils/copy_env_to_heap
+					utils/utils_list \
+					env/env_build \
+					env/env_update \
+					env/env_transform \
+					builtin/builtin_pwd
 
 INC				=	${NAME}      \
 					libft                               
@@ -81,25 +86,25 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c #header_c
     
 # distinguish between Apple and Linux OS
 
-# ifeq ($(UNAME), Darwin)
+ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
-#	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
+	@echo -en "\\r       ${BGREEN}$(NAME)${DEFCL}        ✔  ${BGREEN}./$(NAME)${DEFCL}${DEL_R}\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
-#	@rm -f .tmp
-#else    
-#$(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
-#    @echo -en "\\r       ${BGREEN}$(NAME)${DEFCL}        ✔  ${BGREEN}./$(NAME)${DEFCL}${DEL_R}\n"
-#    @$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
-#    @rm -f .tmp
-# endif
-# $(READLINE):
-#     @echo -n "install...     readline     "
-#     @-if pacman -Sy --noconfirm readline &>/dev/null; then  \
-#         echo -e "\\rinstall...   readline     ✔  $(GREEN)apt install libreadline-dev$(DEFCL)\n"; \
-#     elif apt install -y libreadline-dev &>/dev/null; then \
-#         echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(DEFCL)\n"; \
-#     fi
-#     @sleep 1
+	@rm -f .tmp
+else    
+$(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
+	@echo -en "\\r       ${BGREEN}$(NAME)${DEFCL}        ✔  ${BGREEN}./$(NAME)${DEFCL}${DEL_R}\n"
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
+	@rm -f .tmp
+endif
+$(READLINE):
+    # @echo -n "install...     readline     "
+	@-if pacman -Sy --noconfirm readline &>/dev/null; then  \
+		echo -e "\\rinstall...   readline     ✔  $(GREEN)apt install libreadline-dev$(DEFCL)\n"; \
+	elif apt install -y libreadline-dev &>/dev/null; then \
+		echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(DEFCL)\n"; \
+    fi
+	@sleep 1
 	
 # installing brew
 
