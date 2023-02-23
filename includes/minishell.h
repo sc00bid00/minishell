@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/23 13:17:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:16:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "signals.h"
 # include "env.h"
 # include "utils.h"
+# include "builtin.h"
 
 # define ERROR_1	"Error: Error reading line.\n"
 
