@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:05:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/23 14:39:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/24 13:38:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,28 @@ t_env	*ms_lstadd_back(t_env *env, t_env *temp)
 	return (env);
 }
 
-// void	ft_lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*node;
+void	ft_ms_lstclear(t_env *lst)
+{
+	t_env	*node;
 
-// 	if (lst && del)
-// 	{
-// 		while (*lst)
-// 		{
-// 			node = *lst;
-// 			*lst = node->next;
-// 			del(node->content);
-// 			free(node);
-// 		}
-// 	}
-// }
+	if (lst && lst->next)
+	{
+		while (lst)
+		{
+			node = lst;
+			lst = node->next;
+			// ft_ms_lstdelone(node);
+			free(node);
+			// lst = node;
+		}
+	}
+	lst = NULL;
+}
 
-// void	ft_lstdelone(t_list *lst, void (*del)(void *))
+// void	ft_ms_lstdelone(t_env *env)
 // {
-// 	if (lst && lst->content && del)
-// 	{
-// 		del(lst->content);
-// 		free(lst);
-// 	}
+// 	if (env)
+// 		free(env);
 // }
 
 int	ms_lstsize(t_env *lst)
