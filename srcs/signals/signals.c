@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 08:50:56 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/23 14:42:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:22:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 *	SIGQUIT = Ctrl \
 *	Ctrl + D is character 4 from the ASCII table, not a signal
 */
-
+static struct termios 	new_termios;
+static struct termios 	old_termios;
+sigset_t				set;
+	
 void	set_terminal()
 {
 	tcgetattr(STDIN_FILENO, &old_termios);
@@ -46,9 +49,13 @@ void	handle_sigint(int signal, siginfo_t *info, void *context)
 /*	set up of SIGINT sigaction, including set */
 void	setup_sigint()
 {
+	struct sigaction		sa;
+	struct sigaction		sb;
+
     set_terminal();
 	sa.sa_sigaction = &handle_sigint;
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
 }
+
