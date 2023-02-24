@@ -6,45 +6,31 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/23 14:28:37 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:09:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*ms_substr(char const *s, unsigned int start, size_t len)
-{
-	char			*ptr;
-	unsigned int	i;
-
-	if (!s || len == 0)
-		return (NULL);
-	if (start > strlen(s))
-		len = 0;
-	if (len > strlen(s) - start)
-		len = strlen(s) - start;
-	ptr = (char *)malloc((len + 1) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (i < len && *(s + start + i))
-	{
-		ptr[i] = (char)s[start + i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
 
 /*	print environment list */
 void	print_env(t_env *env)
 {
 	while (env != NULL)
 	{
-		printf("%s", env->var_name);
-		printf("=");
-		printf("%s\n", env->var_content);
-		env = env->next;
+		if (env->var_name)
+		{
+			printf("%s", env->var_name);
+			printf("=");
+		}
+		if(env->var_content)
+		{
+			printf("%s\n", env->var_content);
+			// printf("TEST\n");
+		}
+		if (env->next)
+			env = env->next;
+		else
+			return ;
 	}
 }
 
@@ -57,7 +43,7 @@ char	*get_var_name(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	var_name = ms_substr(var, 0, i);
+	var_name = ft_substr(var, 0, i);
 	return (var_name);
 }
 
@@ -78,7 +64,7 @@ char	*get_var_content(char *var)
 	{
 		while (var[len])
 			len++;
-		var_content = ms_substr(var, i + 1, len);
+		var_content = ft_substr(var, i + 1, len);
 	}
 	return (var_content);
 }
@@ -88,7 +74,7 @@ t_env	*new_var(char *var)
 {
 	t_env	*temp;
 
-	temp = malloc(sizeof(t_env));
+	temp = ft_calloc(sizeof(t_env), 1);
 	if (!temp)
 		return (NULL);
 	else
@@ -117,6 +103,5 @@ t_env	*copy_envp_to_env(char **envp)
 		env = ms_lstadd_back(env, temp);
 		i++;
 	}
-	// print_env(env);
 	return (env);
 }
