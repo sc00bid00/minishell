@@ -6,14 +6,15 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/23 16:17:47 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/24 13:50:18 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			=	/bin/bash
 UNAME			=	$(shell uname)
 #MAKEFLAGS		=	--no-print-directory
-CFLAGS			=	-g -fsanitize=address 
+CFLAG			= -g
+# CFLAGS			=	-g -fsanitize=address 
 # CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
 
 NAME			=	minishell
@@ -47,20 +48,21 @@ SRC				=	temp_kathrin/main	\
 					env/env_build \
 					env/env_update \
 					env/env_transform \
-					builtin/builtin_pwd
+					builtin/builtin_pwd \
+					builtin/builtin_cd
 
 INC				=	${NAME}      \
 					libft                               
 LIB				=	libft
 SRC_FILES		=	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(SRC)))
-LIB_FILES		=	$(addsuffix .a, $(addprefix $(LIB_DIR)/, $(LIB)))
+LIB_FILES		=	$(addsuffix .a, $(addprefix $(LIB_DIR)/$(LIB)/, $(LIB)))
 OBJ_FILES		=	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(SRC)))
 INC_FILES		=	$(addsuffix .h, $(addprefix $(INC_DIR)/, $(INC)))
 READLINE		=	/usr/include/readline/readline.h
 INCLUDES		=	-I ${INC_DIR}
 
 # link libraries
-LINKER			=	-L lib -l ft -l readline
+LINKER			=	-L lib/libft -l ft -l readline
 
 MAC_BREW		=	/Users/${USER}/.brewconfig.zsh
 MAC_READLINE	=	~/.brew/opt/readline
@@ -69,6 +71,7 @@ MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
 $(LIB_FILES): #header 
+	# make -j8 -C $(LIB_FILES)
    # @echo -n "compile..." 
    # @touch .tmp
 	@$(MAKE) MAKEFLAGS+=-j8 CFLAGS+="$(CFLAGS)" -C lib/libft
@@ -132,7 +135,7 @@ $(MAC_READLINE):
 clean: #header
 #	@rm -f .header
 	@echo -en "cleaning objects...\n";
-	@$(MAKE) clean -C lib/libft
+	@$(MAKE) fclean -C lib/libft
 	@if find $(OBJ_DIR) -type f -name '*.o' -delete > /dev/null 2>&1; then        \
 	echo -en "\\r$(GREEN)$(OBJ_DIR)/$(RESET)${DEL_R}";\
 	fi
@@ -142,7 +145,6 @@ clean: #header
 	fi
 fclean: clean #header
 	@echo -en "cleanig bins...\n"
-	@$(MAKE) fclean -C lib/libft
 	@if find $(LIB_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
 		:; \
 	fi
