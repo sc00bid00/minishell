@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/23 16:16:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:21:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@
 # define	WHITE	"\x01\033[37;1m\x02"
 # define	RESET	"\x01\033[0m;\x02"
 
-// read input
-
-char	*read_line(void);
-int		get_input(void);
 
 // utils
 
