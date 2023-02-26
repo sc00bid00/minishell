@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_lexer_tmp.c                                  :+:      :+:    :+:   */
+/*   utils_tmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 14:46:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 07:41:51 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ void	tmp_prtlst(t_token *tkn)
 	tmp = tkn->lst;
 	while (tmp)
 	{
-		ft_printf("%s\n", tmp->content);
+		ft_printf("%s \n", tmp->content);
 		tmp = tmp->next;
 	}
 	ft_printf("=== output end ===\nchain with %d nodes\n*****\n", tkn->count);
 }
 
+/* print *lst->content to stdout*/
 void	tmp_prtarrlst(t_scmd *cmd)
 {
 	t_list	*tmp;
@@ -39,10 +40,9 @@ void	tmp_prtarrlst(t_scmd *cmd)
 	while (cmd->arr[i])
 	{
 		tmp = cmd->arr[i];
-		ft_printf("simple command %d of %d\n", i + 1, cmd->n_scmd);
 		while (tmp)
 		{
-			ft_printf("%s ", tmp->content);
+			ft_printf("%s, ", tmp->content);
 			tmp = tmp->next;
 		}
 		ft_printf("\n");

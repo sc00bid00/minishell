@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 16:38:25 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 07:53:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(void)
 	ft_printf("input\n%s\n", tkn->str);
 	tmp_prtarrlst(scmd);
 	ft_cleanscmd(scmd);
-	ft_cleanup(tkn);
+	ft_cleantkn(tkn);
 	return (0);
 }

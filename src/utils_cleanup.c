@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_mem.c                                        :+:      :+:    :+:   */
+/*   utils_cleanup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 16:41:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 07:53:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_cleanscmd(t_scmd *cmd)
 }
 
 /* clear t_token allocation */
-void	ft_cleanup(t_token *tkn)
+void	ft_cleantkn(t_token *tkn)
 {
 	if (tkn->lst)
 		ft_cleanlst(tkn->lst);

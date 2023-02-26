@@ -6,14 +6,14 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 16:40:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 08:13:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
 
-/* return int num of simple cmds out of t_token.str*/
+/* return int num of simple cmds out of t_token.str */
 int	ft_ctscmd(t_token *tkn)
 {
 	t_list	*tmp;
@@ -61,7 +61,7 @@ t_scmd	*ft_init_scmd(t_token *tkn)
 	scmd->arr = ft_calloc(scmd->n_scmd + 1, sizeof(t_list *));
 	if (!scmd->arr)
 	{
-		ft_cleanup(tkn);
+		ft_cleantkn(tkn);
 		return (NULL);
 	}
 	scmd->count = 0;
