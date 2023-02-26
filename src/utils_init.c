@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/26 08:34:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 12:59:50 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ t_scmd	*ft_init_scmd(t_token *tkn)
 		return (NULL);
 	scmd->n_scmd = ft_ctscmd(tkn);
 	scmd->arr = ft_calloc(scmd->n_scmd + 1, sizeof(t_list *));
-	if (!scmd->arr)
+	scmd->cmd = ft_calloc(scmd->n_scmd + 1, sizeof(t_cmd *));
+	if (!(scmd->arr && scmd->cmd))
 	{
 		ft_cleantkn(tkn);
 		free(scmd);
@@ -68,4 +69,21 @@ t_scmd	*ft_init_scmd(t_token *tkn)
 	scmd->count = 0;
 	scmd->arr[scmd->n_scmd] = NULL;
 	return (scmd);
+}
+
+/* return 0 initialized and allocated t_scmd->t_cmd * */
+int	ft_initcmd(t_scmd *scmd)
+{
+	t_cmd	*cmd;
+
+	cmd->arr = ft_alloc(scmd->count + 1, sizeof(char *));
+	if (!cmd->arr)
+		return (0);
+	cmd = scmd->cmd;
+	cmd->in_name = NULL;
+	cmd->out_name = NULL;
+	cmd->fd_in = 0;
+	cmd->fd_out = 0;
+	cmd->path = NULL;
+	return (1);
 }

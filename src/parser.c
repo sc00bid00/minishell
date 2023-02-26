@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:22:46 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 15:26:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 12:43:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ t_scmd	*ft_parse(t_token *tkn)
 		ft_getwords(tkn, scmd);
 		scmd->count++;
 	}
+	if (!ft_prexec(scmd))
+		return (NULL);
 	return (scmd);
 }
