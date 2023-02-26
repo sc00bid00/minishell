@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/26 08:13:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 08:34:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_scmd	*ft_init_scmd(t_token *tkn)
 	if (!scmd->arr)
 	{
 		ft_cleantkn(tkn);
+		free(scmd);
 		return (NULL);
 	}
 	scmd->count = 0;
