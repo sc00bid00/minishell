@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/17 16:11:43 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/26 10:51:14 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_scmd
 {
 	int		count;
 	int		n_scmd;
-	int		hdoc;
 	t_list	**arr;
 }			t_scmd;
 
