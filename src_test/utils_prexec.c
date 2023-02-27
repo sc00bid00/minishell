@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 18:52:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 20:44:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ int	ft_isword(t_list *lst, int *count, t_scmd *scmd)
 
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd)
 {
-	int		rule;
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
 	if (!ft_strncmp(lst->content, ">>", 2))
-		rule = O_WRONLY | O_CREAT | O_APPEND;
+		tmp->rule = O_WRONLY | O_CREAT | O_APPEND;
 	else
-		rule = O_WRONLY | O_CREAT | O_TRUNC;
+		tmp->rule = O_WRONLY | O_CREAT | O_TRUNC;
 	if (lst->next)
 	{
 		tmp->out_name = ft_strdup(lst->next->content);
-		tmp->fd_out = open(tmp->out_name, rule, 0644);
+		tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
+		close(tmp->fd_out);
 	}
 	*count -= 2;
 }
@@ -56,9 +56,10 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 {
 	t_cmd	*tmp;
 	char	*block;
-	char	tmp_s[1];
+	char	tmp_s[2];
 
 	tmp_s[0] = 65 + scmd->count;
+	tmp_s[1] = '\0';
 	tmp = scmd->cmd[scmd->count];
 	tmp->in_name = ft_strjoin(".hdoc_", tmp_s);
 	tmp->fd_in = open(tmp->in_name, O_RDWR | O_CREAT, 0644);
@@ -76,19 +77,32 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 			write(tmp->fd_in, block, ft_strlen(block));
 		free(block);
 	}
+	close(tmp->fd_in);
 }
 
-static void	ft_invalid(char	*filename, t_cmd *tmp)
+static void	ft_invalid(char	*filename, t_scmd *scmd)
 {
+	t_cmd	*tmp;
+
+	tmp = scmd->cmd[scmd->count];
 	if (access(filename, R_OK | F_OK) < 0)
 	{
-		tmp->err_flag |= 1;
-		tmp->in_name = filename;
-		tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
+		if (tmp->in_name)
+			free(tmp->in_name);
+		tmp->in_name = ft_strdup(filename);
+		tmp->fd_in = -1;
+		tmp->err_flag = 1;
+	}
+	else
+	{
+		if (tmp->in_name)
+			free(tmp->in_name);
+		tmp->in_name = ft_strdup(filename);
+		tmp->fd_in = 3;
 	}
 }
 
-void	ft_isin(t_list *lst, int *count, t_scmd *scmd)
+void	ft_isin(t_list *lst, t_scmd *scmd)
 {
 	t_cmd	*tmp;
 
@@ -98,18 +112,14 @@ void	ft_isin(t_list *lst, int *count, t_scmd *scmd)
 		if (!ft_strncmp(lst->content, "<<", 2))
 		{
 			tmp->hd_flag = 1;
+			if (tmp->in_name)
+				free(tmp->in_name);
 			ft_isheredoc(lst->next->content, scmd);
 		}
 		else
 		{
-			if (!tmp->hd_flag)
-			{
-				tmp->in_name = ft_strdup(lst->next->content);
-				tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
-			}
-			else if (!tmp->err_flag)
-				ft_invalid(lst->next->content, tmp);
+			if (!tmp->hd_flag && !tmp->err_flag)
+				ft_invalid(lst->next->content, scmd);
 		}
 	}
-	*count -= 2;
 }
