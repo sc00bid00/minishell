@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/27 17:32:50 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/27 17:42:50 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,17 +48,6 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 $(OBJ_DIR):
 	@mkdir -p ./obj
-
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(OBJ_DIR_BONUS) $(LIBFT) $(LIBGNL) $(OBJ_BONUS)
-	@$(CC) $(OBJ_BONUS) $(LIBFT) $(LIBGNL) -o $(NAME)
-
-$(OBJ_DIR_BONUS)%.o: $(SRC_DIR_BONUS)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
-
-$(OBJ_DIR_BONUS):
-	@mkdir -p ./obj_bonus
 
 test:
 
