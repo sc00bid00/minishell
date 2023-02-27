@@ -6,15 +6,14 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 10:14:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:49:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* 	imitate behavior of pwd builtin */
 /*	getcwd returns pointer to path if sucessful, else it returns NULL */
-int_fast64_t	builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*pwd;
 
