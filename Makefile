@@ -3,26 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/14 12:38:45 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/27 17:51:49 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			=	/bin/bash
 UNAME			=	$(shell uname)
 #MAKEFLAGS		=	--no-print-directory
-#CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
+#CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address
 
 NAME			=	minishell
 
 # path to directories
 
-SRC_DIR			=	srcs
+SRC_DIR			=	src
 OBJ_DIR			=	obj
 LIB_DIR			=	lib
-INC_DIR			=	includes
+INC_DIR			=	inc
 
 # color codes for command line messages
 
@@ -39,11 +39,11 @@ RESET	= \033[0m
 
 # souce and objects files
 
-SRC				=	temp_kathrin/main	\
+SRC				=	lexer/lexer \
 					prompt/prompt \
 
 INC				=	${NAME}      \
-					libft                               
+					libft
 LIB				=	libft
 SRC_FILES		=	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(SRC)))
 LIB_FILES		=	$(addsuffix .a, $(addprefix $(LIB_DIR)/, $(LIB)))
@@ -61,22 +61,22 @@ MAC_INCLUDES	=	-I $(MAC_READLINE)/include
 MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
-$(LIB_FILES): #header 
-   # @echo -n "compile..." 
+$(LIB_FILES): #header
+   # @echo -n "compile..."
    # @touch .tmp
 	@$(MAKE) MAKEFLAGS+=-j8 CFLAGS+="$(CFLAGS)" -C lib/libft
-	@ar -rc $(LIB_FILES) $$(find ./lib/libft -type f -name '*.o') 
+	@ar -rc $(LIB_FILES) $$(find ./lib/libft -type f -name '*.o')
 $(OBJ_DIR):
-	@mkdir -p $(shell find srcs -type d | sed \s/srcs/obj/g)
+	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
 #	mkdir $@
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c #header_c 
-#	@if [ ! -f .tmp ]; then                      
-#		echo -n "compile...";                    
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c #header_c
+#	@if [ ! -f .tmp ]; then
+#		echo -n "compile...";
 #		touch .tmp;
 #	fi
 #	@echo -en "\\r     ➜  ${BCYAN}$(NAME)${RESET}...    »  $@${DEL_R}"
 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
-    
+
 # distinguish between Apple and Linux OS
 
 # ifeq ($(UNAME), Darwin)
@@ -84,7 +84,7 @@ $(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 #	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
 #	@rm -f .tmp
-#else    
+#else
 #$(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 #    @echo -en "\\r       ${BGREEN}$(NAME)${DEFCL}        ✔  ${BGREEN}./$(NAME)${DEFCL}${DEL_R}\n"
 #    @$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
@@ -98,7 +98,7 @@ $(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 #         echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(DEFCL)\n"; \
 #     fi
 #     @sleep 1
-	
+
 # installing brew
 
 $(MAC_BREW):
@@ -114,10 +114,10 @@ $(MAC_READLINE):
 	@echo "$(MAGENTA) INSTALLING READLINE ...$(RESET)"
 	@brew install readline
 	@echo ""
-	
+
 # header:
 #     @if [ ! -f ".header" ]; then                       \
-#         echo    "$(BLUE) MINISHELL ${RESET}";          \ 
+#         echo    "$(BLUE) MINISHELL ${RESET}";          \
 #         echo    "$(BCYAN) by Luca & Kathrin $(RESET)"; \
 #         echo    "";                                    \
 #         touch .header;                                 \
