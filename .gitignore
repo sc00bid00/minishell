@@ -1,6 +1,8 @@
-obj*
+obj_test
+src_test
 lib
 *_v*
 lexer
 parser
 test
+Makefile
