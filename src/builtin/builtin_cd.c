@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 14:24:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:25:15 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_pwd(t_env *env)
 	if (str)
 	{
 		if (!update_variable(env, "OLDPWD", str))
-			ft_error("cd", 1, "PWD");
+			ft_error("cd", "PWD", 1);
 	}
 	else
 		printf("ERROR\n");
@@ -54,12 +54,12 @@ int	builtin_cd(int argc, char **argv, t_env *env)
 	dir = get_dir(argc, argv, env);
 	if (dir == NULL)
 	{
-		ft_error("minishell", 1, 0);
+		ft_error("minishell", dir, 0);
 		return (ERROR);
 	}	
 	if (chdir(dir) == ERROR)
 	{
-		ft_error("cd", 0, argv[1]);
+		ft_error("cd", argv[1], 0);
 		return (ERROR);
 	}
 	update_pwd(env);
