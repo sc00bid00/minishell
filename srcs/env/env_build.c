@@ -6,33 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 15:09:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:12:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*	print environment list */
-void	print_env(t_env *env)
-{
-	while (env != NULL)
-	{
-		if (env->var_name)
-		{
-			printf("%s", env->var_name);
-			printf("=");
-		}
-		if(env->var_content)
-		{
-			printf("%s\n", env->var_content);
-			// printf("TEST\n");
-		}
-		if (env->next)
-			env = env->next;
-		else
-			return ;
-	}
-}
 
 /*	extract and return variable name from envp */
 char	*get_var_name(char *var)
