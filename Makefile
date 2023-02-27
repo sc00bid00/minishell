@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/27 09:32:50 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/27 17:32:50 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,23 +23,16 @@ INC_DIR = -I ./inc -I ./lib/libft -I ./lib/get_next_line/include
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 
-SRC =	lexer.c \
-		main.c \
-		parser.c \
-		utils_cleanup.c \
-		utils_init.c \
-		utils_parser_get.c \
-		utils_tmp.c
-
-SRC_TEST =	lexer.c \
-			main.c \
-			parser.c \
-			prexec.c \
-			utils_cleanup.c \
-			utils_init.c \
-			utils_parser_get.c \
-			utils_prexec.c \
-			utils_tmp.c
+SRC =	lexer/lexer.c \
+		parser/parser.c \
+		parser/utils_parser_get.c \
+		prexec/prexec.c \
+		prexec/utils_prexec.c \
+		utils/utils_cleanup.c \
+		utils/utils_init.c \
+		utils/utils_tmp.c\
+		main.c
+SRC_TEST =
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
