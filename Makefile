@@ -6,14 +6,15 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/24 13:50:18 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/27 14:03:08 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			=	/bin/bash
 UNAME			=	$(shell uname)
 #MAKEFLAGS		=	--no-print-directory
-CFLAG			= -g
+CFLAGS			= -g
+# -Wall -Wextra -Werror
 # CFLAGS			=	-g -fsanitize=address 
 # CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
 
@@ -45,11 +46,15 @@ SRC				=	temp_kathrin/main	\
 					prompt/prompt \
 					signals/signals \
 					utils/utils_list \
+					utils/utils_error \
 					env/env_build \
 					env/env_update \
 					env/env_transform \
 					builtin/builtin_pwd \
-					builtin/builtin_cd
+					builtin/builtin_cd \
+					builtin/builtin_env \
+					builtin/builtin_check \
+					builtin/builtin_echo
 
 INC				=	${NAME}      \
 					libft                               
