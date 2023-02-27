@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/27 16:24:18 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/27 16:32:00 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,10 @@ NAME			=	minishell
 
 # path to directories
 
-SRC_DIR			=	src
+SRC_DIR			=	srcs
 OBJ_DIR			=	obj
 LIB_DIR			=	lib
-INC_DIR			=	inc
+INC_DIR			=	includes
 
 # color codes for command line messages
 
@@ -81,7 +81,7 @@ $(LIB_FILES): #header
 	@$(MAKE) MAKEFLAGS+=-j8 CFLAGS+="$(CFLAGS)" -C lib/libft
 	@ar -rc $(LIB_FILES) $$(find ./lib/libft -type f -name '*.o') 
 $(OBJ_DIR):
-	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
+	@mkdir -p $(shell find srcs -type d | sed \s/srcs/obj/g)
 #	mkdir $@
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c #header_c 
 #	@if [ ! -f .tmp ]; then                      
