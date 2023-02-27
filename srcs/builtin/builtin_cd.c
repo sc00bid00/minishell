@@ -6,14 +6,27 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 15:42:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:24:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ~ . ..  */
+/*	if argument is cd (argc == 1) or cd ~, return home directory */
+char	*get_dir(int argc, char **argv, t_env *env)
+{
+	char	*dir;
+	
+	if (argc == 1 || (argc == 2 && ft_strncmp(argv[1], "~", 2)))
+		dir = return_var_content(env, "HOME");
+	else if (argc == 2 && ft_strncmp(argv[1], "-", 2))
+		dir = return_var_content(env, "OLDPWD");
+	else if (argv[1])
+		dir = argv[1];
+	return (dir);
+}
 
+/*	set value from OLDPWD to PWD and get new value for PWD */
 void	update_pwd(t_env *env)
 {
 	char	*cwd;
@@ -21,53 +34,40 @@ void	update_pwd(t_env *env)
 	
 	cwd = getcwd(NULL, 0);
 	str = return_var_content(env, "PWD");
-	update_variable(env, "OLDPWD", str);
-	update_variable(env, "PWD", cwd);
+	if (str)
+	{
+		if (!update_variable(env, "OLDPWD", str))
+			ft_error("cd", 1, "PWD");
+	}
+	else
+		printf("ERROR\n");
+	if (!update_variable(env, "PWD", cwd))
+		printf("ERROR\n");
 	free (cwd);
 }
 
-t_env	*builtin_cd(int argc, char **argv, t_env *env)
+/*	use chdir function to change dir */
+int	builtin_cd(int argc, char **argv, t_env *env)
 {
-	if (argc == 1)
+	char *dir;
+	
+	dir = get_dir(argc, argv, env);
+	if (dir == NULL)
 	{
-		if (chdir("~"))
-			printf("Failed to change directory\n");
+		ft_error("minishell", 1, 0);
+		return (ERROR);
+	}	
+	if (chdir(dir) == ERROR)
+	{
+		ft_error("cd", 0, argv[1]);
+		return (ERROR);
 	}
-		
-	
-	// if (chdir("/Users/kczichow/Documents/projects") == 0) {
-    //     printf("Changed directory to /home/myusername/mydirectory\n");
-    // } else {
-    //     printf("Failed to change directory\n");
-    // }
 	update_pwd(env);
-	
-	// print_env(env);
-	
-		// print_env(env);
-	// free (cwd);
-	// free (str);
-	// free (temp);
-	// (~)
-	// .
-	// ..
-	// src 
-	
-	// chdir(".") = chdir ("path")
-	// cd src 
-	// cd ./src 
-	// cd ../minishell/src 
-	// cd /bin/
-
-	// free OLDPWD
-	// OLDPWD = PWD 
-	// PWD = getcwd
-	return (env);
+	char *pwd;
+	char *oldpwd;
+	pwd = return_var_content(env, "PWD");
+	oldpwd = return_var_content(env, "OLDPWD");
+	printf("PWD is %s\n", pwd);
+	printf("OLDPWD is %s\n", oldpwd);
+	return (EXIT_SUCCESS);
 }
-
-/*
-	export:
-	- keine Argumente : print everything
-	- bestehende Argumente: ipdate oder ignore
-	- neue Argumente: add;
-*/
