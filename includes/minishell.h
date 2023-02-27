@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 11:21:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:57:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include "libft.h"
 # include "signals.h"
 # include "env.h"
 # include "utils.h"
 # include "builtin.h"
 
-# define ERROR_1	"Error: Error reading line.\n"
+# define ERROR	-1
 
 # define	BOLD	"\x01\033[1m\x02"
 # define	BLACK	"\x01\033[30;1m\x02"
