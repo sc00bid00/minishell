@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/26 07:41:51 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:21:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,26 @@ void	tmp_prtarrlst(t_scmd *cmd)
 		i++;
 	}
 	ft_printf("=== output end ===\n");
+}
+
+void	tmp_prtcmd(t_scmd *scmd)
+{
+	t_cmd	**tmp;
+	int		i;
+	int		j;
+
+	tmp = scmd->cmd;
+	i = 0;
+	while (tmp && tmp[i])
+	{
+		ft_printf("Infile  %s\tfd %d\nOutfile %s\tfd %d\n", tmp[i]->in_name, \
+			tmp[i]->fd_in, tmp[i]->out_name, tmp[i]->fd_out);
+		j = 0;
+		while (tmp[i]->arr && tmp[i]->arr[j])
+		{
+			ft_printf("%d.%d %s\n", i, j, tmp[i]->arr[j]);
+			j++;
+		}
+		i++;
+	}
 }

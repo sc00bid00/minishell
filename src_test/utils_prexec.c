@@ -6,31 +6,29 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/26 12:59:12 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 14:48:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
 
-int	ft_isword(t_list *lst, int count, t_scmd *scmd)
+int	ft_isword(t_list *lst, int *count, t_scmd *scmd)
 {
 	t_cmd	*tmp;
 	t_list	*tmp2;
 	int		i;
 
-	tmp->arr = ft_alloc(count + 1, sizeof(char *));
+	tmp = scmd->cmd[scmd->count];
+	tmp->arr = ft_calloc(*count + 1, sizeof(char *));
 	if (!tmp->arr)
 		return (0);
+	tmp2 = lst;
 	i = 0;
-	while (i < count)
+	while (tmp2)
 	{
-		tmp2 = lst;
-		if (tmp2)
-		{
-			tmp->arr[scmd->count][i] = ft_strdup(tmp2->content);
-			tmp2 = tmp2->next;
-		}
+		tmp->arr[i] = ft_strdup(tmp2->content);
+		tmp2 = tmp2->next;
 		i++;
 	}
 	return (1);
@@ -42,14 +40,14 @@ void	ft_isout(t_list *lst, int *count, t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	if (!ft_strncmp(lst->content, "<<", 2))
+	if (!ft_strncmp(lst->content, ">>", 2))
 		rule = O_WRONLY | O_CREAT | O_APPEND;
 	else
 		rule = O_WRONLY | O_CREAT | O_TRUNC;
 	if (lst->next)
 	{
-		tmp->in_name = ft_strdup(lst->next->content);
-		tmp->fd_out = open(tmp->in_name, rule, 0644);
+		tmp->out_name = ft_strdup(lst->next->content);
+		tmp->fd_out = open(tmp->out_name, rule, 0644);
 	}
 	*count -= 2;
 }
@@ -58,13 +56,16 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 {
 	t_cmd	*tmp;
 	char	*block;
+	char	tmp_s[1];
 
+	tmp_s[0] = 65 + scmd->count;
 	tmp = scmd->cmd[scmd->count];
-	tmp->in_name = ft_strjoin(".hdoc_", ft_atoi(scmd->count));
+	tmp->in_name = ft_strjoin(".hdoc_", tmp_s);
 	tmp->fd_in = open(tmp->in_name, O_RDWR | O_CREAT, 0644);
 	while (1)
 	{
-		block = get_next_line(tmp->fd_in);
+		ft_printf("> ");
+		block = get_next_line(0);
 		if (!ft_strncmp(block, limiter, ft_strlen(block) - 1) \
 			&& ft_strlen(limiter) == ft_strlen(block) - 1)
 		{
