@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 14:53:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int	ft_init_cmd(t_scmd *scmd)
 	tmp->fd_in = 0;
 	tmp->fd_out = 1;
 	tmp->path = NULL;
+	tmp->hd_flag = 0;
 	return (1);
 }

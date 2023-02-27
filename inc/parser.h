@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:42 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 14:53:14 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_cmd
 	int		fd_out;
 	char	*path;
 	char	**arr;
+	int		hd_flag;
 }			t_cmd;
 
 typedef struct s_scmd
