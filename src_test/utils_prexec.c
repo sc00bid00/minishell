@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 16:12:58 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 18:52:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,16 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 	}
 }
 
+static void	ft_invalid(char	*filename, t_cmd *tmp)
+{
+	if (access(filename, R_OK | F_OK) < 0)
+	{
+		tmp->err_flag |= 1;
+		tmp->in_name = filename;
+		tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
+	}
+}
+
 void	ft_isin(t_list *lst, int *count, t_scmd *scmd)
 {
 	t_cmd	*tmp;
@@ -97,10 +107,8 @@ void	ft_isin(t_list *lst, int *count, t_scmd *scmd)
 				tmp->in_name = ft_strdup(lst->next->content);
 				tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
 			}
-			else
-			{
-				/* manage open error if file invalid */
-			}
+			else if (!tmp->err_flag)
+				ft_invalid(lst->next->content, tmp);
 		}
 	}
 	*count -= 2;

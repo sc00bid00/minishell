@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 14:53:14 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/27 18:41:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <libft.h>
 # include <lexer.h>
 # include <get_next_line.h>
+# include <sys/errno.h>
+# include <string.h>
 
 typedef struct s_cmd
 {
@@ -29,6 +31,9 @@ typedef struct s_cmd
 	int		fd_out;
 	char	*path;
 	char	**arr;
+	char	*err;
+	char	*err_name;
+	int		err_flag;
 	int		hd_flag;
 }			t_cmd;
 
