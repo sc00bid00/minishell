@@ -6,13 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 15:09:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:34:21 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-/* three variables need to be updated, pwd, old pwd, shell level */
+/* returns var value, if var does not exist, returns NULL */
 char	*return_var_content(t_env *env, char *str)
 {
 	t_env *temp;
