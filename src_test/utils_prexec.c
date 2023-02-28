@@ -6,29 +6,27 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 20:44:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 10:17:12 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
 
-int	ft_isword(t_list *lst, int *count, t_scmd *scmd)
+int	ft_isword(t_list **lst, int *count, t_scmd *scmd)
 {
 	t_cmd	*tmp;
-	t_list	*tmp2;
 	int		i;
 
 	tmp = scmd->cmd[scmd->count];
 	tmp->arr = ft_calloc(*count + 1, sizeof(char *));
 	if (!tmp->arr)
 		return (0);
-	tmp2 = lst;
 	i = 0;
-	while (tmp2)
+	while (*lst)
 	{
-		tmp->arr[i] = ft_strdup(tmp2->content);
-		tmp2 = tmp2->next;
+		tmp->arr[i] = ft_strdup((*lst)->content);
+		*lst = (*lst)->next;
 		i++;
 	}
 	return (1);
@@ -118,7 +116,7 @@ void	ft_isin(t_list *lst, t_scmd *scmd)
 		}
 		else
 		{
-			if (!tmp->hd_flag && !tmp->err_flag)
+			if (!tmp->hd_flag || !tmp->err_flag)
 				ft_invalid(lst->next->content, scmd);
 		}
 	}
