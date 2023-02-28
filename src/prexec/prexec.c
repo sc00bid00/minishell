@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 13:16:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 10:11:39 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 {
 	if (tmp && *tmp && ((char *)(*tmp)->content)[0] == '<')
 	{
-		ft_isin(*tmp, count, scmd);
+		ft_isin(*tmp, scmd);
+		*count -= 2;
 		*tmp = (*tmp)->next;
 	}
 	else if (tmp && *tmp && ((char *)(*tmp)->content)[0] == '>')
@@ -26,10 +27,7 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 		*tmp = (*tmp)->next;
 	}
 	else if (tmp && *tmp)
-	{
-		ft_isword(*tmp, count, scmd);
-		*tmp = (*tmp)->next;
-	}
+		ft_isword(tmp, count, scmd);
 	return (1);
 }
 
