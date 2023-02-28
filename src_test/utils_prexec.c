@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 10:17:12 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 10:42:48 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 	tmp_s[0] = 65 + scmd->count;
 	tmp_s[1] = '\0';
 	tmp = scmd->cmd[scmd->count];
-	tmp->in_name = ft_strjoin(".hdoc_", tmp_s);
+	tmp->in_name = ft_strjoin("/var/tmp/.hdoc_", tmp_s);
 	tmp->fd_in = open(tmp->in_name, O_RDWR | O_CREAT, 0644);
 	while (1)
 	{
