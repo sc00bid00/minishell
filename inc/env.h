@@ -22,7 +22,6 @@ typedef struct s_env
 
 t_env	*copy_envp_to_env(char **envp);
 char	**create_env_array(t_env *env);
-int		print_env(t_env *env);
 t_env	*update_variable(t_env *env, char *var, char *new_val);
 char	*return_var_content(t_env *env, char *str);
 
