@@ -27,8 +27,7 @@ SRC_DIR			=	src
 OBJ_DIR			=	obj
 LIB_DIR			=	lib
 INC_DIR			=	inc
-SRC_TEST_DIR	= 	src_test
-OBJ_TEST_DIR	= 	obj_test
+SRC_TEST_DIR	= 	src
 
 # color codes for command line messages
 
@@ -68,7 +67,6 @@ LIB				=	libft
 SRC_FILES		=	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(SRC)))
 LIB_FILES		=	$(addsuffix .a, $(addprefix $(LIB_DIR)/$(LIB)/, $(LIB)))
 OBJ_FILES		=	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(SRC)))
-OBJ_TEST_FILES	=	$(addsuffix .o, $(addprefix $(OBJ_TEST_DIR)/, $(SRC_TEST)))
 INC_FILES		=	$(addsuffix .h, $(addprefix $(INC_DIR)/, $(INC)))
 READLINE		=	/usr/include/readline/readline.h
 INCLUDES		=	-I ${INC_DIR}
@@ -91,10 +89,10 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
 
-$(OBJ_TEST_DIR):
-	@mkdir -p $(shell find src_test -type d | sed \s/src_test/obj_test/g)
-$(OBJ_TEST_DIR)/%.o: $(SRC_TEST_DIR)/%.c
-	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
+# $(OBJ_TEST_DIR):
+# 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
+# $(OBJ_TEST_DIR)/%.o: $(SRC_TEST_DIR)/%.c
+# 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
 
 # distinguish between Apple and Linux OS
 
@@ -105,9 +103,9 @@ $(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
 	@rm -f .tmp
-$(NAME_TEST): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_TEST_DIR) $(OBJ_TEST_FILES)
+$(NAME_TEST): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 	@echo -en "\\r       ${BGREEN}$(NAME_TEST)${RESET}        ✔  ${BGREEN}./$(NAME_TEST)${RESET}${DEL_R}\n"
-	@$(CC) $(CFLAGS) -o $(NAME_TEST) $(OBJ_TEST_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
+	@$(CC) $(CFLAGS) -o $(NAME_TEST) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
 	@rm -f .tmp	
 else    
 $(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
