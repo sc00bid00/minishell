@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 16:44:07 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 16:56:32 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	main(void)
 		| grep <Makefile << stop <invalid $USER 2 > out2 >>out";
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn);
-	ft_printf("counted %d simple command(s)\n", scmd->n_scmd);
-	ft_printf("input\n%s\n", tkn->str);
-	tmp_prtarrlst(scmd);
+	ft_printf("counted %d simple command(s)\n\n", scmd->n_scmd);
+	ft_printf("input\n%s\n\n", tkn->str);
+	// tmp_prtarrlst(scmd);
 	tmp_prtcmd(scmd);
 	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);

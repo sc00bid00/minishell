@@ -6,11 +6,11 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/28 16:48:14 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/28 16:54:59 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = parser
+NAME = prexec
 NAME_TEST = test
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
