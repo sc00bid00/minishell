@@ -6,13 +6,14 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 16:20:25 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 17:14:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
 
+/* return 1 if env path and command combination is X_OK, 0 else*/
 int	ft_validpath(char *path)
 {
 	if (!access(path, X_OK))
@@ -20,6 +21,7 @@ int	ft_validpath(char *path)
 	return (0);
 }
 
+/* return t_scmd->cmd[i]->path if combination ok, NULL else */
 void	ft_paths(t_scmd *scmd)
 {
 	int		j;
@@ -43,6 +45,7 @@ void	ft_paths(t_scmd *scmd)
 	ft_freesplit(arr);
 }
 
+/* triage between in out or command, return NULL*/
 int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 {
 	if (tmp && *tmp && ((char *)(*tmp)->content)[0] == '<')
@@ -57,7 +60,10 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 		*tmp = (*tmp)->next;
 	}
 	else if (tmp && *tmp)
-		ft_isword(tmp, count, scmd);
+	{
+		if (!ft_isword(tmp, count, scmd))
+			return (0);
+	}
 	return (1);
 }
 
