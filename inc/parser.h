@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 14:53:14 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 10:12:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <libft.h>
 # include <lexer.h>
 # include <get_next_line.h>
+# include <sys/errno.h>
+# include <string.h>
 
 typedef struct s_cmd
 {
@@ -29,7 +31,9 @@ typedef struct s_cmd
 	int		fd_out;
 	char	*path;
 	char	**arr;
+	int		err_flag;
 	int		hd_flag;
+	int		rule;
 }			t_cmd;
 
 typedef struct s_scmd
@@ -49,9 +53,10 @@ void	ft_getredout(t_token *tkn, t_scmd *cmd);
 void	ft_getappend(t_token *tkn, t_scmd *cmd);
 void	ft_getwords(t_token *tkn, t_scmd *cmd);
 int		ft_prexec(t_scmd *scmd);
-void	ft_isin(t_list *lst, int *count, t_scmd *scmd);
+void	ft_isin(t_list *lst, t_scmd *scmd);
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd);
-int		ft_isword(t_list *lst, int *count, t_scmd *scmd);
+int		ft_isword(t_list **lst, int *count, t_scmd *scmd);
+void	ft_cleancmd(t_scmd *scmd);
 void	ft_cleanscmd(t_scmd *cmd);
 void	tmp_prtarrlst(t_scmd *cmd);
 void	tmp_prtcmd(t_scmd *scmd);
