@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 10:42:48 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 15:11:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_isout(t_list *lst, int *count, t_scmd *scmd)
 		tmp->rule = O_WRONLY | O_CREAT | O_TRUNC;
 	if (lst->next)
 	{
+		if (tmp->out_name)
+			free(tmp->out_name);
 		tmp->out_name = ft_strdup(lst->next->content);
 		tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
 		close(tmp->fd_out);

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 20:24:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 15:08:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_cleantkn(t_token *tkn)
 		free(tkn);
 }
 
+/* clean up and clear t_scmd and contained structs */
 void	ft_cleancmd(t_scmd *scmd)
 {
 	int		i;
