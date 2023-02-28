@@ -6,13 +6,13 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/27 16:23:10 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/28 16:43:06 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = parser
 NAME_TEST = test
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = ./srcs/
 OBJ_DIR = ./obj/
@@ -23,13 +23,15 @@ INC_DIR = -I ./inc -I ./lib/libft -I ./lib/get_next_line/includes
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 
-SRC =	lexer.c \
-		main.c \
-		parser.c \
-		utils_cleanup.c \
-		utils_init.c \
-		utils_parser_get.c \
-		utils_tmp.c
+SRC =		lexer.c \
+			main.c \
+			parser.c \
+			prexec.c \
+			utils_cleanup.c \
+			utils_init.c \
+			utils_parser_get.c \
+			utils_prexec.c \
+			utils_tmp.c
 
 SRC_TEST =	lexer.c \
 			main.c \
@@ -55,17 +57,6 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 $(OBJ_DIR):
 	@mkdir -p ./obj
-
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(OBJ_DIR_BONUS) $(LIBFT) $(LIBGNL) $(OBJ_BONUS)
-	@$(CC) $(OBJ_BONUS) $(LIBFT) $(LIBGNL) -o $(NAME)
-
-$(OBJ_DIR_BONUS)%.o: $(SRC_DIR_BONUS)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
-
-$(OBJ_DIR_BONUS):
-	@mkdir -p ./obj_bonus
 
 test:
 

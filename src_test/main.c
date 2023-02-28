@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/27 16:05:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 16:44:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int	main(void)
 	t_token	*tkn;
 	t_scmd	*scmd;
 
-	str = "cat -e < invalid << stop| grep $USER >>out";
+	str = "cat -e < Makefile > out1    \
+		| grep <Makefile << stop <invalid $USER 2 > out2 >>out";
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn);
 	ft_printf("counted %d simple command(s)\n", scmd->n_scmd);
 	ft_printf("input\n%s\n", tkn->str);
 	tmp_prtarrlst(scmd);
 	tmp_prtcmd(scmd);
+	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);
 	ft_cleantkn(tkn);
 	return (0);
