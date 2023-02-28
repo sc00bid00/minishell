@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 15:46:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 16:20:25 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_paths(t_scmd *scmd)
 	while (arr && arr[j])
 	{
 		tmp = ft_strjoin(arr[j], "/");
-		scmd->cmd[scmd->count]->path = ft_strjoin(tmp, scmd->cmd[scmd->count]->arr[0]);
+		scmd->cmd[scmd->count]->path = \
+			ft_strjoin(tmp, scmd->cmd[scmd->count]->arr[0]);
 		free(tmp);
 		if (ft_validpath(scmd->cmd[scmd->count]->path))
 			break ;
@@ -39,6 +40,7 @@ void	ft_paths(t_scmd *scmd)
 		scmd->cmd[scmd->count]->path = NULL;
 		j++;
 	}
+	ft_freesplit(arr);
 }
 
 int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)

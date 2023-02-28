@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 15:11:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/28 16:18:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	ft_invalid(char	*filename, t_scmd *scmd)
 		tmp->fd_in = -1;
 		tmp->err_flag = 1;
 	}
-	else
+	else if (!tmp->hd_flag)
 	{
 		if (tmp->in_name)
 			free(tmp->in_name);
@@ -118,7 +118,7 @@ void	ft_isin(t_list *lst, t_scmd *scmd)
 		}
 		else
 		{
-			if (!tmp->hd_flag || !tmp->err_flag)
+			if (!tmp->err_flag)
 				ft_invalid(lst->next->content, scmd);
 		}
 	}
