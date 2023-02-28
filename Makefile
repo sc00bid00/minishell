@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/28 16:43:06 by lsordo           ###   ########.fr        #
+#    Updated: 2023/02/28 16:48:14 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ_DIR = ./obj/
 SRC_TEST_DIR = ./src_test/
 OBJ_TEST_DIR = ./obj_test/
 
-INC_DIR = -I ./inc -I ./lib/libft -I ./lib/get_next_line/includes
+INC_DIR = -I ./includes -I ./lib/libft -I ./lib/get_next_line/include
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 
