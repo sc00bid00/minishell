@@ -6,11 +6,11 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/02/28 16:54:59 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/01 18:55:23 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = prexec
+NAME = executor
 NAME_TEST = test
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
@@ -23,7 +23,8 @@ INC_DIR = -I ./includes -I ./lib/libft -I ./lib/get_next_line/include
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 
-SRC =		lexer.c \
+SRC =		executor.c\
+			lexer.c \
 			main.c \
 			parser.c \
 			prexec.c \
@@ -33,15 +34,7 @@ SRC =		lexer.c \
 			utils_prexec.c \
 			utils_tmp.c
 
-SRC_TEST =	lexer.c \
-			main.c \
-			parser.c \
-			prexec.c \
-			utils_cleanup.c \
-			utils_init.c \
-			utils_parser_get.c \
-			utils_prexec.c \
-			utils_tmp.c
+SRC_TEST =	main.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 

@@ -6,12 +6,13 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 16:54:53 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/01 20:06:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
 #include <parser.h>
+#include <executor.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,16 +22,14 @@ int	main(int argc, char **argv, char **envp)
 	int		ret;
 
 	if (argc || argv)
+	{
 		;
-	str = "cat -e > out1    \
-		| grep <Makefile << stop <invalid $USER 2 > out2 >>out \
-		| wc -l < Makefile";
+	}
+
+	str = "< Makefile cat -e | wc -l > out";
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn, envp);
 	ret = ft_pipe(scmd);
-	ft_printf("counted %d simple command(s)\n\n", scmd->n_scmd);
-	ft_printf("input\n%s\n\n", tkn->str);
-	tmp_prtcmd(scmd);
 	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);
 	ft_cleantkn(tkn);

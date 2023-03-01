@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 16:56:47 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:58:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,20 @@ int	ft_pipein(t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
-	if (tmp->fd_out == -1)
+	if (access(tmp->out_name, F_OK))
+		dup2(scmd->fd[1], STDOUT_FILENO);
+	else
 	{
-		perror(tmp->out_name);
-		return (0);
+		tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
+		if (tmp->fd_out == -1)
+		{
+			perror(tmp->out_name);
+			return (0);
+		}
+		dup2(tmp->fd_out, STDOUT_FILENO);
+		if (tmp->fd_out > 1)
+			close(tmp->fd_out);
 	}
-	dup2(tmp->fd_out, STDOUT_FILENO);
-	close(tmp->fd_out);
 	return (1);
 }
 
