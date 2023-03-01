@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 15:57:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:10:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define	WHITE	"\x01\033[37;1m\x02"
 # define	RESET	"\x01\033[0m;\x02"
 
+#define enum 
 
 // utils
 

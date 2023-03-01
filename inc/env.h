@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:52:24 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/01 11:06:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:58:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ char	**create_env_array(t_env *env);
 /* env_update */
 t_env	*ret_var(t_env *env, char *str);
 t_env	*upd_var(t_env *env, char *var, char *new_val);
-int		*del_var(t_env *env, char *var);
+int		del_var(t_env *env, char *var);
 
 #endif
