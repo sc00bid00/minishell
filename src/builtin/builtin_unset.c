@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_error.c                                      :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 13:57:28 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/01 13:38:34 by kczichow         ###   ########.fr       */
+/*   Created: 2023/03/01 09:19:17 by kczichow          #+#    #+#             */
+/*   Updated: 2023/03/01 16:39:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_error(char *s1, char *s2, int i)
+int	builtin_unset(int argc, char **argv, t_env *env)
 {
-	char *str;
+	int i;
 
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd (s2, 2);
-	ft_putstr_fd(": ", 2);
-	if (i == 0)
-		str = strerror(errno);
-	else
-		str = "meine Fehlermeldung";
-	ft_putstr_fd(str, 2);
+	(void) argc;
+	i = 1;
+	while(argv[i])
+	{
+		if (ret_var(env, argv[i]) == NULL)
+		{
+			ft_error("unset", argv[i], 0);
+			return (0);
+		}
+		else
+		{
+			del_var(env, argv[i]);
+			i++;
+		}
+	}
+	print_env(env);
+	return (0);
 }

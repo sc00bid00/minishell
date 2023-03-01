@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 11:12:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:38:42 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ int	print_env(t_env *env)
 /*	imitate behavior of env */
 int	builtin_env(int argc, char **argv, t_env *env)
 {
-	// argc = (void);
-	// argv = (void);
-
+	(void) argc;
+	(void) argv;
 	if (!print_env(env))
 		return (ERROR);
 	return (EXIT_SUCCESS);

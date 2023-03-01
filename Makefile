@@ -6,15 +6,14 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/27 16:55:34 by kczichow         ###   ########.fr        #
+#    Updated: 2023/03/01 16:30:08 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			=	/bin/bash
 UNAME			=	$(shell uname)
 #MAKEFLAGS		=	--no-print-directory
-CFLAGS			= -g
-# -Wall -Wextra -Werror
+CFLAGS			= -g -Wall -Wextra -Werror
 # CFLAGS			=	-g -fsanitize=address 
 # CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
 
@@ -47,7 +46,6 @@ RESET	= \033[0m
 
 SRC				=	temp_kathrin/main	\
 					prompt/prompt \
-					signals/signals \
 					env/env_build \
 					env/env_update \
 					env/env_transform \
@@ -56,7 +54,9 @@ SRC				=	temp_kathrin/main	\
 					builtin/builtin_pwd \
 					builtin/builtin_cd \
 					builtin/builtin_env \
-					builtin/builtin_echo
+					builtin/builtin_echo \
+					builtin/builtin_unset
+					# signals/signals \
 
 SRC_TEST		=	main \
 					utils_lexer_mem \
@@ -100,10 +100,26 @@ $(OBJ_TEST_DIR)/%.o: $(SRC_TEST_DIR)/%.c
 
 test: $(NAME_TEST)
 
+# ifeq ($(UNAME), Darwin)
+# $(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
+# 	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
+# 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
+# 	@rm -f .tmp
+# $(NAME_TEST): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_TEST_DIR) $(OBJ_TEST_FILES)
+# 	@echo -en "\\r       ${BGREEN}$(NAME_TEST)${RESET}        ✔  ${BGREEN}./$(NAME_TEST)${RESET}${DEL_R}\n"
+# 	@$(CC) $(CFLAGS) -o $(NAME_TEST) $(OBJ_TEST_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
+# 	@rm -f .tmp	
+# else    
+# $(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
+# 	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
+# 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
+# 	@rm -f .tmp
+# endif
+
 ifeq ($(UNAME), Darwin)
-$(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
+$(NAME):$(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
 	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
 	@rm -f .tmp
 $(NAME_TEST): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_TEST_DIR) $(OBJ_TEST_FILES)
 	@echo -en "\\r       ${BGREEN}$(NAME_TEST)${RESET}        ✔  ${BGREEN}./$(NAME_TEST)${RESET}${DEL_R}\n"
@@ -118,29 +134,29 @@ endif
 
 # installing readline
 
-$(READLINE):
-	@-if pacman -Sy --noconfirm readline &>/dev/null; then  \
-		echo -e "\\rinstall...   readline     ✔  $(GREEN)apt install libreadline-dev$(RESET)\n"; \
-	elif apt install -y libreadline-dev &>/dev/null; then \
-		echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(RESET)\n"; \
-    fi
-	@sleep 1
+# $(READLINE):
+# 	@-if pacman -Sy --noconfirm readline &>/dev/null; then  \
+# 		echo -e "\\rinstall...   readline     ✔  $(GREEN)apt install libreadline-dev$(RESET)\n"; \
+# 	elif apt install -y libreadline-dev &>/dev/null; then \
+# 		echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(RESET)\n"; \
+#     fi
+# 	@sleep 1
 	
 # installing brew
 
-$(MAC_BREW):
-	@echo "$(MAGENTA) INSTALLING BREW ... $(RESET)"
-	@curl -fsL https://rawgit.com/kube/42homebrew/master/install.sh | zsh;
-	@source ~/.zshrc
-	@brew install readline
-	@echo ""
+# $(MAC_BREW):
+# 	@echo "$(MAGENTA) INSTALLING BREW ... $(RESET)"
+# 	@curl -fsL https://rawgit.com/kube/42homebrew/master/install.sh | zsh;
+# 	@source ~/.zshrc
+# 	@brew install readline
+# 	@echo ""
 
 # installing readline
 
-$(MAC_READLINE):
-	@echo "$(MAGENTA) INSTALLING READLINE ...$(RESET)"
-	@brew install readline
-	@echo ""
+# $(MAC_READLINE):
+# 	@echo "$(MAGENTA) INSTALLING READLINE ...$(RESET)"
+# 	@brew install readline
+# 	@echo ""
 
 clean:
 	@echo -en "cleaning objects...\n";

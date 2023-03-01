@@ -34,9 +34,10 @@ int main (int argc, char **argv, char **envp)
 	// builtin_pwd();
 	// print_env(env);
 	builtin_cd(argc, argv, env);
-	ft_error("minishell", argv[5], 0);
+	// ft_error("minishell", argv[5], 0);
 	// builtin_env(argc, argv, env);
 	// builtin_echo(argc, argv, env);
+	// builtin_unset(argc, argv, env);
 	// print_env(env);
 	// ft_ms_lstclear(env);
 	// free (env);
