@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 10:25:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/01 16:56:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,48 @@
 #include <executor.h>
 
 /* wait children processes, feedback exitstatus */
-void	ft_wait(t_data *d)
+void	ft_wait(t_scmd *scmd)
 {
 	while (1)
 	{
-		if (waitpid(-1, &d->wstatus, 0) == -1)
+		if (waitpid(-1, &scmd->wstatus, 0) == -1)
 			break ;
-		d->flag = WEXITSTATUS(d->wstatus);
+		scmd->flag = WEXITSTATUS(scmd->wstatus);
 	}
 }
 
 /* infile to STDIN, if existing and accessible */
-void	ft_firstcmd(t_data *d)
+int	ft_firstcmd(t_scmd *scmd)
 {
-	if (d->ci == 0)
+	t_cmd	*tmp;
+
+	tmp = scmd->cmd[scmd->count];
+	tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
+	if (tmp->fd_in < 0)
 	{
-		d->infiled = open(d->files[0], O_RDONLY, 0644);
-		if (d->infiled < 0)
-		{
-			perror(d->files[0]);
-			d->flag = errno;
-			ft_cleanup(d);
-		}
-		dup2(d->infiled, STDIN_FILENO);
-		close(d->infiled);
+		perror(tmp->in_name);
+		return (0);
 	}
+	dup2(tmp->fd_in, STDIN_FILENO);
+	close(tmp->fd_in);
+	return (1);
 }
 
 /* STDOUT to pipe, or to outfile if last cmd */
-void	ft_pipein(t_data *d)
+int	ft_pipein(t_scmd *scmd)
 {
-	int	r;
+	t_cmd	*tmp;
 
-	if (d->ci != d->cnum - 1)
-		dup2(d->fd[1], STDOUT_FILENO);
-	else
+	tmp = scmd->cmd[scmd->count];
+	tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
+	if (tmp->fd_out == -1)
 	{
-		if (d->hd_offset)
-			r = O_WRONLY | O_CREAT | O_APPEND;
-		else
-			r = O_WRONLY | O_CREAT | O_TRUNC;
-		d->outfiled = open(d->files[1], r, 0644);
-		if (d->outfiled == -1)
-		{
-			perror(d->files[1]);
-			d->flag = errno;
-			ft_cleanup(d);
-		}
-		dup2(d->outfiled, STDOUT_FILENO);
-		close(d->outfiled);
+		perror(tmp->out_name);
+		return (0);
 	}
+	dup2(tmp->fd_out, STDOUT_FILENO);
+	close(tmp->fd_out);
+	return (1);
 }
 
 /* child processes execve*/
@@ -75,8 +67,10 @@ int	ft_child(t_scmd	*scmd)
 
 	tmp = scmd->cmd[scmd->count];
 	close(scmd->fd[0]);
-	ft_pipein(scmd);
-	ft_firstcmd(scmd);
+	if (!ft_pipein(scmd))
+		return (0);
+	if (!ft_firstcmd(scmd))
+		return (0);
 	if (!tmp->path)
 	{
 		ft_putstr_fd("command not found : ", STDERR_FILENO);
@@ -87,10 +81,10 @@ int	ft_child(t_scmd	*scmd)
 	err = execve(tmp->path, tmp->arr, scmd->envp);
 	if (err == -1)
 	{
-		perror(d->args[d->ci][0]);
-		d->flag = errno;
-		ft_cleanup(d);
+		perror(tmp->arr[0]);
+		return (0);
 	}
+	return (1);
 }
 
 /* pipe, fork, STDIN to pipe (parent process)*/
@@ -118,5 +112,5 @@ int	ft_pipe(t_scmd *scmd)
 		scmd->count++;
 	}
 	ft_wait(scmd);
-	return (1);
+	return (scmd->flag);
 }
