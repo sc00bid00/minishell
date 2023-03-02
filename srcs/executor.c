@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 19:58:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 05:09:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,19 @@ int	ft_firstcmd(t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
-	if (tmp->fd_in < 0)
+	if (access(tmp->in_name, F_OK))
+		dup2(scmd->fd[0], STDIN_FILENO);
+	else
 	{
-		perror(tmp->in_name);
-		return (0);
+		tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
+		if (tmp->fd_in < 0)
+		{
+			perror(tmp->in_name);
+			return (0);
+		}
+		dup2(tmp->fd_in, STDIN_FILENO);
+		close(tmp->fd_in);
 	}
-	dup2(tmp->fd_in, STDIN_FILENO);
-	close(tmp->fd_in);
 	return (1);
 }
 
