@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:08:47 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:44:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!argc && !argv)
 		return (1);
-	// edge cases:
-	// heredoc not redirecting
+	// BASTARDS LIST:
+	// heredoc not redirecting *** solved ***
 	// str = "< testfile | < testfile cat -e >> out << stop";
-	str = "< testfile | <testfile cat -e >> out << stop";
+	// persisting hdoc *** solved ***
+	// str = "< testfile | <testfile cat -e >> out << stop";
 	ft_printf("%s\n", str);
 	// token not recognized
 	// str = "< Makefile wc -l > << stop out2";
@@ -35,7 +36,6 @@ int	main(int argc, char **argv, char **envp)
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn, envp);
 	ret = ft_pipe(scmd);
-	tmp_prtlst2(scmd->hdocs);
 	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);
 	ft_cleantkn(tkn);

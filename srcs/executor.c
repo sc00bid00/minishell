@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:35:17 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:42:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 /* wait children processes, feedback exitstatus */
 void	ft_wait(t_scmd *scmd)
-{	t_list	*tmp;
+{
+	t_list	*tmp;
 
 	while (1)
 	{
@@ -25,7 +26,7 @@ void	ft_wait(t_scmd *scmd)
 		scmd->flag = WEXITSTATUS(scmd->wstatus);
 	}
 	tmp = scmd->hdocs;
-	while(tmp)
+	while (tmp)
 	{
 		unlink(tmp->content);
 		tmp = tmp->next;
