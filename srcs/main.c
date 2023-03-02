@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 05:12:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:47:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	main(int argc, char **argv, char **envp)
 	t_scmd	*scmd;
 	int		ret;
 
-	if (argc && argv)
+	if (!argc && !argv)
 		return (1);
-	str = "< Makefile cat -e | wc -l > out";
+	str = "< Makefile wc -l > out2";
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn, envp);
 	ret = ft_pipe(scmd);

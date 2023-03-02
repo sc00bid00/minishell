@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 05:09:01 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:49:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_firstcmd(t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	if (access(tmp->in_name, F_OK))
+	if (!tmp->in_name || access(tmp->in_name, F_OK))
 		dup2(scmd->fd[0], STDIN_FILENO);
 	else
 	{
@@ -53,7 +53,9 @@ int	ft_pipein(t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	if (access(tmp->out_name, F_OK))
+	if (tmp->fd_out == 1 && (scmd->count == scmd->n_scmd - 1))
+		dup2(tmp->fd_out, STDOUT_FILENO);
+	else if (!tmp->out_name || access(tmp->out_name, F_OK))
 		dup2(scmd->fd[1], STDOUT_FILENO);
 	else
 	{
