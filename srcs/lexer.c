@@ -6,11 +6,22 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 18:55:56 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 20:36:24 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer.h>
+
+/* return t_list nodes containing tokne char * */
+void	ft_save(t_token *tkn)
+{
+	if (tkn->p_sta & 0b0000011)
+		tkn->curr++;
+	ft_lstadd_back(&(tkn->lst), \
+		ft_lstnew(ft_substr(tkn->str, tkn->prev, tkn->curr - tkn->prev)));
+	tkn->prev = tkn->curr;
+	tkn->count++;
+}
 
 /* return bitwise flags to split tokens */
 void	ft_getstatus(t_token *tkn)
