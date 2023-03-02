@@ -46,6 +46,7 @@
 
 #define enum 
 
+int exitstatus;
 // utils
 
 char **copy_env_to_heap(char **envp);

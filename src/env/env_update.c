@@ -57,8 +57,3 @@ int	del_var(t_env *env, char *var)
 	}
 	return (1);
 }
-
-// t_env	*add_var(t_env *env, char *str)
-// {
-// 	return (NULL);
-// }

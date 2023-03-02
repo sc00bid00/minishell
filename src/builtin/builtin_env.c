@@ -24,7 +24,10 @@ int	print_env(t_env *env, bool export)
 		if (env->var_name)
 		{
 			printf("%s", env->var_name);
-			printf("=");
+			if (env->var_content)
+				printf("=");
+			else
+				printf("\n");
 		}
 		if(env->var_content)
 			printf("%s\n", env->var_content);

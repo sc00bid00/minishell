@@ -28,7 +28,7 @@ int	get_input(void)
 {
 	char *input;
 
-	
+	exitstatus = 0;
 	if ((input = read_line()) != NULL)
 	{
 		if (input && *input)
