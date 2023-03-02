@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:44:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:54:59 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	main(int argc, char **argv, char **envp)
 	// str = "< testfile | < testfile cat -e >> out << stop";
 	// persisting hdoc *** solved ***
 	// str = "< testfile | <testfile cat -e >> out << stop";
-	ft_printf("%s\n", str);
 	// token not recognized
 	// str = "< Makefile wc -l > << stop out2";
-	// working one
+	// bad address *** solved ***
 	// str = "< Makefile cat -e | wc -l >> out3 > out4";
+	ft_printf("%s\n", str);
 	tkn = ft_lex(str);
 	scmd = ft_parse(tkn, envp);
 	ret = ft_pipe(scmd);
