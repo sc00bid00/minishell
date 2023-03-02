@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <stdbool.h>
 # include "libft.h"
 # include "signals.h"
 # include "env.h"
