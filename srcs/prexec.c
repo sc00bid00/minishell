@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/28 17:14:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:22:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,25 @@ void	ft_paths(t_scmd *scmd)
 	int		j;
 	char	**arr;
 	char	*tmp;
+	t_cmd	*cmd;
 
 	arr = ft_split(getenv("PATH"), ':');
 	j = 0;
 	while (arr && arr[j])
 	{
-		tmp = ft_strjoin(arr[j], "/");
-		scmd->cmd[scmd->count]->path = \
-			ft_strjoin(tmp, scmd->cmd[scmd->count]->arr[0]);
-		free(tmp);
-		if (ft_validpath(scmd->cmd[scmd->count]->path))
-			break ;
-		free(scmd->cmd[scmd->count]->path);
-		scmd->cmd[scmd->count]->path = NULL;
+		cmd = scmd->cmd[scmd->count];
+		if (!cmd->arr || !cmd->arr[0])
+			cmd->path = NULL;
+		else
+		{
+			tmp = ft_strjoin(arr[j], "/");
+			cmd->path = ft_strjoin(tmp, cmd->arr[0]);
+			free(tmp);
+			if (ft_validpath(cmd->path))
+				break ;
+			free(cmd->path);
+			cmd->path = NULL;
+		}
 		j++;
 	}
 	ft_freesplit(arr);
