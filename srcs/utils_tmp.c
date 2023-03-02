@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 14:41:08 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:11:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,17 @@ void	tmp_prtcmd(t_scmd *scmd)
 			ft_printf("%d.%d     %s\n", i, j, tmp[i]->arr[j]);
 		write(1, "\n", 1);
 		i++;
+	}
+}
+
+void	tmp_prtlst2(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		ft_printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
 }

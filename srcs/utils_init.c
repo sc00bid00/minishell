@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 17:53:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:06:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr)
 	scmd->n_scmd = ft_ctscmd(tkn);
 	scmd->arr = ft_calloc(scmd->n_scmd + 1, sizeof(t_list *));
 	scmd->cmd = ft_calloc(scmd->n_scmd + 1, sizeof(t_cmd *));
+	scmd->hdocs = NULL;
 	if (!(scmd->arr && scmd->cmd))
 	{
 		ft_cleantkn(tkn);

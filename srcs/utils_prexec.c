@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 15:02:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:15:12 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ void	ft_isin(t_list *lst, t_scmd *scmd)
 			if (tmp->in_name)
 				free(tmp->in_name);
 			ft_isheredoc(lst->next->content, scmd);
+			if (!access(tmp->in_name, F_OK))
+				ft_lstadd_back(&scmd->hdocs, \
+				ft_lstnew(ft_strdup(tmp->in_name)));
 		}
 		else
 		{

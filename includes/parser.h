@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/01 16:47:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 16:56:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_scmd
 	char	**envp;
 	int		wstatus;
 	int		flag;
+	t_list	*hdocs;
 	t_list	**arr;
 	t_cmd	**cmd;
 }			t_scmd;

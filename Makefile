@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/01 18:55:23 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/02 17:29:13 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC =		executor.c\
 			parser.c \
 			prexec.c \
 			utils_cleanup.c \
+			utils_executor.c \
 			utils_init.c \
 			utils_parser_get.c \
 			utils_prexec.c \

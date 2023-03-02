@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 09:13:49 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:30:21 by lsordo           ###   ########.fr       */
+/*   Created: 2023/03/02 17:17:44 by lsordo            #+#    #+#             */
+/*   Updated: 2023/03/02 17:27:13 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
-# include <sys/wait.h>
+#include <lexer.h>
+#include <parser.h>
+#include <executor.h>
 
-int		ft_pipe(t_scmd *scmd);
-int		ft_helpexecutor(t_scmd *scmd);
-int		ft_pipein(t_scmd *scmd);
-int		ft_firstcmd(t_scmd *scmd);
-void	tmp_prtlst2(t_list *lst);
-#endif
+int	ft_helpexecutor(t_scmd *scmd)
+{
+	close(scmd->fd[0]);
+	if (!ft_pipein(scmd))
+		return (0);
+	if (!ft_firstcmd(scmd))
+		return (0);
+	return (1);
+}

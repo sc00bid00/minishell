@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 14:33:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:28:02 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,15 @@ int	ft_firstcmd(t_scmd *scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	if (!tmp->in_name || access(tmp->in_name, F_OK))
+	if (!tmp->in_name)
+	{
+		if (access(tmp->in_name, F_OK))
+		{
+			perror(tmp->in_name);
+			return (0);
+		}
 		dup2(scmd->fd[0], STDIN_FILENO);
+	}
 	else
 	{
 		tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
@@ -79,22 +86,23 @@ int	ft_child(t_scmd	*scmd)
 	t_cmd	*tmp;
 
 	tmp = scmd->cmd[scmd->count];
-	close(scmd->fd[0]);
-	if (!ft_pipein(scmd))
-		return (0);
-	if (!ft_firstcmd(scmd))
+	if (!ft_helpexecutor(scmd))
 		return (0);
 	if (!tmp->path)
 	{
-		ft_putstr_fd("command not found : ", STDERR_FILENO);
-		ft_putstr_fd(tmp->arr[0], STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		if (tmp->arr)
+		{
+			ft_putstr_fd("command not found : ", STDERR_FILENO);
+			ft_putstr_fd(tmp->arr[0], STDERR_FILENO);
+			ft_putstr_fd("\n", STDERR_FILENO);
+		}
 		return (0);
 	}
 	err = execve(tmp->path, tmp->arr, scmd->envp);
 	if (err == -1)
 	{
-		perror(tmp->arr[0]);
+		if (tmp->arr)
+			perror(tmp->arr[0]);
 		return (0);
 	}
 	return (1);
