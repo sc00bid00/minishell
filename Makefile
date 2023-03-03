@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 08:17:31 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 09:02:24 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ INC_DIR =	-I ./inc \
 
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
+LIBRL = ./lib/readline/libreadline.a
 
 SRC =		main.c \
 			lexer.c \
@@ -57,13 +58,24 @@ SRC =		main.c \
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
+MAC_BREW		=	/Users/${USER}/.brewconfig.zsh
+MAC_READLINE	=	~/.brew/opt/readline
+MAC_INCLUDES	=	-I $(MAC_READLINE)/include
+MAC_LINKER		=	-L $(MAC_READLINE)/lib
+
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
-	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) -o $(NAME)
-
+ifeq ($(UNAME), Darwin)
+$(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
+	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(MAC_LINKER) -o $(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
+else
+$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(LIBRL) $(OBJ)
+	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(LIBRL) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+endif
 
 $(OBJ_DIR):
 	@mkdir -p ./obj
@@ -72,6 +84,28 @@ $(LIBFT):
 	@$(MAKE) -C ./lib/libft
 $(LIBGNL):
 	@$(MAKE) -C ./lib/get_next_line
+
+
+$(READLINE):
+	@echo -n "install...	  readline	   "
+	@-if pacman -Sy --noconfirm readline &>/dev/null; then  \
+		echo -e "\\rinstall...	  readline	   ✔  $(GREEN)apt install libreadline-dev$(DEFCL)\n"; \
+	elif apt install -y libreadline-dev &>/dev/null; then \
+		echo -e "\\rinstall...	  readline	   ✔  $(GREEN)pacman -Sy readline$(DEFCL)\n"; \
+	fi
+	@sleep 1
+
+$(MAC_BREW):
+	@echo "${CYAN}installing brew...${DEFCL}"
+	@curl -fsL https://rawgit.com/kube/42homebrew/master/install.sh | zsh;
+	@source ~/.zshrc
+	@brew install readline
+	@echo ""
+
+$(MAC_READLINE):
+	@echo "${CYAN}installing readline...${DEFCL}"
+	@brew install readline
+	@echo ""
 
 clean:
 	@rm -rf $(OBJ_DIR)
