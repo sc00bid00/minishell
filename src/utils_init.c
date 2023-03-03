@@ -6,12 +6,12 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:06:53 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 13:40:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer.h>
-#include <parser.h>
+#include <minishell.h>
+#include <minishell.h>
 
 /* return int num of simple cmds out of t_token.str */
 int	ft_ctscmd(t_token *tkn)

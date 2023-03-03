@@ -6,11 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 20:36:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 13:40:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer.h>
+#include <minishell.h>
 
 /* return t_list nodes containing tokne char * */
 void	ft_save(t_token *tkn)

@@ -6,11 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 20:46:05 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 13:40:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer.h>
+#include <minishell.h>
 
 void	ft_helpunextkn(t_token *tkn, t_list *tmp)
 {

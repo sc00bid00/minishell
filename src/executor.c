@@ -6,13 +6,13 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/02 17:53:38 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 13:40:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer.h>
-#include <parser.h>
-#include <executor.h>
+#include <minishell.h>
+#include <minishell.h>
+#include <minishell.h>
 
 /* wait children processes, feedback exitstatus */
 void	ft_wait(t_scmd *scmd)

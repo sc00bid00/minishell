@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 08:50:56 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 11:22:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:42:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static struct termios 	new_termios;
 static struct termios 	old_termios;
 sigset_t				set;
-	
+
 void	set_terminal()
 {
 	tcgetattr(STDIN_FILENO, &old_termios);
@@ -37,6 +37,9 @@ void	restore_terminal()
 /*	handler for SIGINT signal */
 void	handle_sigint(int signal, siginfo_t *info, void *context)
 {
+	(void) info;
+	(void) context;
+
 	if (signal == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
@@ -50,9 +53,8 @@ void	handle_sigint(int signal, siginfo_t *info, void *context)
 void	setup_sigint()
 {
 	struct sigaction		sa;
-	struct sigaction		sb;
 
-    set_terminal();
+	set_terminal();
 	sa.sa_sigaction = &handle_sigint;
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);

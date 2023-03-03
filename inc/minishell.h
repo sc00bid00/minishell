@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 12:50:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:44:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include <executor.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <get_next_line.h>
+# include <prompt.h>
 
 
 # define ERROR	-1
@@ -48,7 +50,7 @@
 # define	WHITE	"\x01\033[37;1m\x02"
 # define	RESET	"\x01\033[0m;\x02"
 
-#define enum 
+#define enum
 
 int exitstatus;
 // utils
