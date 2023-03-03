@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 13:17:46 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 13:28:57 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,22 +80,22 @@ MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
 
-ifeq ($(UNAME), Darwin)
+# ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
 	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(MAC_LINKER) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
-else
-$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(LIBRL) $(OBJ)
-	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(LIBRL) -o $(NAME)
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
-endif
+# else
+# 	$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(LIBRL) $(OBJ)
+# 		@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(LIBRL) -o $(NAME)
+# 	$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+# 		@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+# endif
 
-$(OBJ_DIR):
-	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
+# $(OBJ_DIR):
+# 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
+# $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+# 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
 
 # $(OBJ_TEST_DIR):
 # 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
