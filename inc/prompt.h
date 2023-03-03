@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 09:57:46 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/24 11:11:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 11:22:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROMPT_H
 # define PROMPT_H
-
-// # include "minishell.h"
 
 char	*read_line(void);
 int		get_input(void);

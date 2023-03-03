@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 15:57:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 11:22:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <errno.h>
+# include <sys/errno.h>
 # include <string.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <errno.h>
-# include "libft.h"
-# include "signals.h"
-# include "env.h"
-# include "utils.h"
-# include "builtin.h"
+# include <libft.h>
+# include <signals.h>
+# include <env.h>
+# include <utils.h>
+# include <builtin.h>
+# include <lexer.h>
+# include <parser.h>
+# include <executor.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+
 
 # define ERROR	-1
 

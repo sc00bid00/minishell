@@ -6,16 +6,12 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 11:13:34 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 11:20:48 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-# include <unistd.h>
-# include <stdlib.h>
-# include <libft.h>
 
 typedef struct s_token
 {

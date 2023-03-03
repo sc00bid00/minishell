@@ -6,22 +6,12 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 11:13:56 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 11:21:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <libft.h>
-# include <lexer.h>
-# include <get_next_line.h>
-# include <sys/errno.h>
-# include <string.h>
 
 typedef struct s_cmd
 {

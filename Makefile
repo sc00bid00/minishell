@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 11:12:25 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 11:27:36 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,13 @@ LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 LIBRL = ./lib/readline/libreadline.a
 
-SRC =		main.c \
+SRC =		builtin_cd.c \
+			builtin_echo.c \
+			builtin_env.c \
+			puilitin_pwd.c \
+			env_build.c \
+			env_transform.c \
+			main.c \
 			lexer.c \
 			utils_lexer.c \
 			parser.c \
