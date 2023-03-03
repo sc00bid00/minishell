@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 13:06:29 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 13:13:47 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,12 @@ SRC =		builtin_cd.c \
 			puilitin_pwd.c \
 			env_build.c \
 			env_transform.c \
+			env_update.c \
 			main.c \
+			prompt.c \
+			signals.c \
+			utils_error.c \
+			utils_list.c \
 			lexer.c \
 			utils_lexer.c \
 			parser.c \
