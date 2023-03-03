@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 13:44:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:39:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 
 #define enum
 
-int exitstatus;
+extern int exitstatus;
 // utils
 
 char **copy_env_to_heap(char **envp);

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 13:56:30 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:40:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 // 	ft_cleantkn(tkn);
 // 	return (ret);
 // }
-
+int exitstatus;
 // Katrhin Main Nr.1 - readline
 int main (int argc, char **argv, char **envp)
 {
