@@ -55,7 +55,8 @@ SRC				=	temp_kathrin/main	\
 					builtin/builtin_cd \
 					builtin/builtin_env \
 					builtin/builtin_echo \
-					builtin/builtin_unset
+					builtin/builtin_unset \
+					builtin/builtin_export \
 					# signals/signals \
 
 SRC_TEST		=	main \

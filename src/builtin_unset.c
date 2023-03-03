@@ -31,6 +31,6 @@ int	builtin_unset(int argc, char **argv, t_env *env)
 			i++;
 		}
 	}
-	print_env(env);
+	print_env(env, false);
 	return (0);
 }

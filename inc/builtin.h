@@ -16,9 +16,10 @@
 int	builtin_pwd(void);
 int	builtin_cd(int argc, char **argv, t_env *env);
 int	builtin_env(int argc, char **argv, t_env *env);
-int print_env(t_env *env);
+int print_env(t_env *env, bool export);
 int	builtin_echo(int argc, char **argv, t_env *env);
 int	builtin_unset(int arg, char **argv, t_env *env);
+int	builtin_export(int argc, char **argv, t_env *env);
 
 
 #endif

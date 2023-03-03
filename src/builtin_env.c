@@ -13,16 +13,21 @@
 #include "minishell.h"
 
 /*	print environment list */
-int	print_env(t_env *env)
+int	print_env(t_env *env, bool export)
 {
 	if (!env)
 		return (ERROR);
 	while (env != NULL)
 	{
+		if (export)
+			printf("declare -x ");
 		if (env->var_name)
 		{
 			printf("%s", env->var_name);
-			printf("=");
+			if (env->var_content)
+				printf("=");
+			else
+				printf("\n");
 		}
 		if(env->var_content)
 			printf("%s\n", env->var_content);
@@ -39,7 +44,7 @@ int	builtin_env(int argc, char **argv, t_env *env)
 {
 	(void) argc;
 	(void) argv;
-	if (!print_env(env))
+	if (!print_env(env, false))
 		return (ERROR);
 	return (EXIT_SUCCESS);
 }
