@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 09:02:24 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 09:25:51 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,6 @@ $(LIBFT):
 	@$(MAKE) -C ./lib/libft
 $(LIBGNL):
 	@$(MAKE) -C ./lib/get_next_line
-
 
 $(READLINE):
 	@echo -n "install...	  readline	   "
