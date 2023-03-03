@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/16 13:32:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:53:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_input(void)
 {
 	char *input;
 
-	
+	exitstatus = 0;
 	if ((input = read_line()) != NULL)
 	{
 		if (input && *input)

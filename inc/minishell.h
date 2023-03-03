@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 11:22:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 12:50:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@
 # define	WHITE	"\x01\033[37;1m\x02"
 # define	RESET	"\x01\033[0m;\x02"
 
+#define enum 
 
+int exitstatus;
 // utils
 
 char **copy_env_to_heap(char **envp);

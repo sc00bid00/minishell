@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 16:25:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:51:57 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,21 @@
 char	*get_dir(int argc, char **argv, t_env *env)
 {
 	char	*dir;
+	t_env	*temp;
 	
 	if (argc == 1 || (argc == 2 && ft_strncmp(argv[1], "~", 2)))
-		dir = return_var_content(env, "HOME");
+	{
+		temp = ret_var(env, "HOME");
+		dir = temp->var_content;
+	}
 	else if (argc == 2 && ft_strncmp(argv[1], "-", 2))
-		dir = return_var_content(env, "OLDPWD");
-	else if (argv[1])
+	{
+		temp =	ret_var(env, "OLDPWD");	
+		dir =	temp->var_content;
+	}
+	else
 		dir = argv[1];
+	// printf("%s\n", dir);
 	return (dir);
 }
 
@@ -31,17 +39,21 @@ void	update_pwd(t_env *env)
 {
 	char	*cwd;
 	char	*str;
+	t_env	*temp;
 	
 	cwd = getcwd(NULL, 0);
-	str = return_var_content(env, "PWD");
+	// printf("CWD is %s\n", cwd);
+	temp = ret_var(env, "PWD");
+	str = temp->var_content;
+	// printf("PWD is %s\n", str);
 	if (str)
 	{
-		if (!update_variable(env, "OLDPWD", str))
+		if (!upd_var(env, "OLDPWD", str))
 			ft_error("cd", "PWD", 1);
 	}
 	else
 		printf("ERROR\n");
-	if (!update_variable(env, "PWD", cwd))
+	if (!upd_var(env, "PWD", cwd))
 		printf("ERROR\n");
 	free (cwd);
 }
@@ -52,22 +64,32 @@ int	builtin_cd(int argc, char **argv, t_env *env)
 	char *dir;
 	
 	dir = get_dir(argc, argv, env);
+		
 	if (dir == NULL)
 	{
-		ft_error("minishell", dir, 0);
+		ft_error("minishell", dir, 1);
 		return (ERROR);
 	}	
 	if (chdir(dir) == ERROR)
 	{
+		printf("%s\n", dir);
 		ft_error("cd", argv[1], 0);
 		return (ERROR);
 	}
 	update_pwd(env);
+	//test_print
 	char *pwd;
 	char *oldpwd;
-	pwd = return_var_content(env, "PWD");
-	oldpwd = return_var_content(env, "OLDPWD");
+	t_env *temp;
+	t_env *temp2;
+	temp = ret_var(env, "PWD");
+	pwd = temp->var_content;
 	printf("PWD is %s\n", pwd);
-	printf("OLDPWD is %s\n", oldpwd);
+	temp2 = ret_var(env, "OLDPWD");
+	if (temp2)
+	{
+		oldpwd = temp2->var_content;
+		printf("OLDPWD is %s\n", oldpwd);
+	}
 	return (EXIT_SUCCESS);
 }

@@ -13,6 +13,11 @@
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
+<<<<<<< HEAD
+=======
+// #include "minishell.h"
+
+>>>>>>> kathrin
 void	setup_signals(bool interactive);
 void	signal_handler(int signal);
 void	restore_terminal();

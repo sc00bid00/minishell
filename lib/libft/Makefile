@@ -1,8 +1,8 @@
-CC		=	cc
-AR		=	ar
-CFLAGS	=	-I. -Wall -Wextra -Werror
+# CC		=	cc
+# AR		=	ar
+# CFLAGS	=	-I. -Wall -Wextra -Werror
 NAME	=	libft.a
-SRC		= 	ft_atoi.c\
+FUNCTIONS		= 	ft_atoi.c\
 			ft_atoi_base.c\
 			ft_bzero.c\
 			ft_calloc.c\
@@ -50,24 +50,31 @@ SRC		= 	ft_atoi.c\
 			ft_lstmap.c\
 			ft_freesplit.c
 
-OBJ		=	$(SRC:.c=.o)
+# the following rule creates .o files from the .c input files
+OBJS		=	${FUNCTIONS:.c=.o}
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror
 
-DEPS	=	libft.h
+# remove files and do not display error message/ stop if it does not
+# exist (-f);
+RM	= rm -f
 
-%.o: %.c $(DEPS)
-	@$(CC) -c -o $@ $< $(CFLAGS)
+# the following command changes the original underlying rule in the
+# Makefile to compile with the flags;
+.c.o:	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all: $(NAME)
+# The ${OBJS} in the first line is a precondition to execute the ${NAME};
+${NAME}:	${OBJS}
+		ar rc ${NAME} ${OBJS}
 
-$(NAME): $(OBJ)
-	@$(AR) rcs $@ $^
+all:	${NAME}
 
 clean:
-	@rm -f $(OBJ) $(OBJ_B)
+		${RM} ${OBJS}
 
-fclean: clean
-	@rm -f $(NAME)
+fclean:		clean
+			${RM} ${NAME}
 
-re: fclean all
+re:	fclean	all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

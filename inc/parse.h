@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.h                                           :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 10:56:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 12:51:27 by kczichow         ###   ########.fr       */
+/*   Created: 2023/02/16 09:39:24 by kczichow          #+#    #+#             */
+/*   Updated: 2023/02/24 11:20:30 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROMPT_H
-# define PROMPT_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-char	*read_line(void);
-int		get_input(void);
-
-#endif
+void	setup_signals(bool interactive);
+void	signal_handler(int signal);
+void	restore_terminal();
+void	setup_sigint();
+void	handle_sigint(int signal, siginfo_t *info, void *context);
 
 #endif
