@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 13:51:12 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 16:50:28 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,10 @@ SRC_DIR =	./src/
 OBJ_DIR =	./obj/
 INC_DIR =	-I ./inc \
 			-I ./lib/libft \
-			-I ./lib/get_next_line/include \
-			-I /usr/include/readline
+			-I ./lib/get_next_line/include
 
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
-LIBRL = ./lib/readline/libreadline.a
 
 SRC =		builtin_cd.c \
 			builtin_echo.c \
@@ -73,7 +71,7 @@ SRC =		builtin_cd.c \
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
 # link libraries
-LINKER			=	-L lib/libft -l ft -l readline
+LINKER			=	-L lib/libft -l ft -L lib/get_next_line -l gnl -l readline
 
 MAC_BREW		=	/Users/${USER}/.brewconfig.zsh
 MAC_READLINE	=	~/.brew/opt/readline
@@ -82,27 +80,20 @@ MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
 
-# ifeq ($(UNAME), Darwin)
+#ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
-	@$(CC) $(OBJ) $(MAC_LINKER) $(LIBFT) $(LIBGNL) -o $(NAME)
+	@$(CC) $(OBJ) $(MAC_LINKER) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
-# else
-# 	$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(LIBRL) $(OBJ)
-# 		@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(LIBRL) -o $(NAME)
-# 	$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-# 		@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
-# endif
+#else
+$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
+	@$(CC) $(OBJ) $(LINKER) -o $(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+#endif
 
-# $(OBJ_DIR):
-# 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
-# $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-# 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
-
-# $(OBJ_TEST_DIR):
-# 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
-# $(OBJ_TEST_DIR)/%.o: $(SRC_TEST_DIR)/%.c
-# 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
+$(OBJ_DIR):
+	@mkdir -p ./obj
 
 $(LIBFT):
 	@$(MAKE) -C ./lib/libft
