@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 16:50:28 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 17:17:37 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,17 +80,17 @@ MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
 
-#ifeq ($(UNAME), Darwin)
+ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
-	@$(CC) $(OBJ) $(MAC_LINKER) -o $(NAME)
+	@$(CC) $(OBJ) $(MAC_LINKER) $(LINKER) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
-#else
+else
 $(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
 	@$(CC) $(OBJ) $(LINKER) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
-#endif
+endif
 
 $(OBJ_DIR):
 	@mkdir -p ./obj
