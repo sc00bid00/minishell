@@ -3,73 +3,58 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/13 10:41:06 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/27 16:55:34 by kczichow         ###   ########.fr        #
+#    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
+#    Updated: 2023/03/03 11:12:25 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SHELL			=	/bin/bash
-UNAME			=	$(shell uname)
-#MAKEFLAGS		=	--no-print-directory
-CFLAGS			= -g
-# -Wall -Wextra -Werror
-# CFLAGS			=	-g -fsanitize=address 
-# CFLAGS			=	-Wall -Wextra -Werror #-g #-fsanitize=address 
+UNAME = $(shell uname)
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
 
-NAME			=	minishell
-NAME_TEST		=	test
 
-# path to directories
+#FORMAT----------------------------------#
+DEFCL			=	$(shell echo -e "\033[0m")
+RED				=	$(shell echo -e "\033[0;31m")
+GREEN			=	$(shell echo -e "\033[0;32m")
+BGREEN			=	$(shell echo -e "\033[1;32m")
+YELLOW			=	$(shell echo -e "\033[0;33m")
+BLUE			=	$(shell echo -e "\033[0;34m")
+BBLUE			=	$(shell echo -e "\033[1;34m")
+PURPLE			=	$(shell echo -e "\033[0;35m")
+CYAN			=	$(shell echo -e "\033[0;36m")
+BCYAN			=	$(shell echo -e "\033[1;36m")
+GRAY			=	$(shell echo -e "\033[0m\033[38;5;239m")
+DEL_R			=	\033[K
+# ---------------------------------------#
 
-SRC_DIR			=	src
-OBJ_DIR			=	obj
-LIB_DIR			=	lib
-INC_DIR			=	inc
-SRC_TEST_DIR	= 	src
+NAME = minishell
 
-# color codes for command line messages
+SRC_DIR =	./src/
+OBJ_DIR =	./obj/
+INC_DIR =	-I ./inc \
+			-I ./lib/libft \
+			-I ./lib/get_next_line/include \
+			-I /usr/include/readline
 
-BOLD	= \033[1m
-BLACK	= \033[30;1m
-RED		= \033[31;1m
-GREEN	= \033[32;1m
-YELLOW	= \033[33;1m
-BLUE	= \033[34;1m
-MAGENTA	= \033[35;1m
-CYAN	= \033[36;1m
-WHITE	= \033[37;1m
-RESET	= \033[0m
+LIBFT= ./lib/libft/libft.a
+LIBGNL= ./lib/get_next_line/libgnl.a
+LIBRL = ./lib/readline/libreadline.a
 
-# souce and objects files
-
-SRC				=	temp_kathrin/main	\
-					prompt/prompt \
-					signals/signals \
-					env/env_build \
-					env/env_update \
-					env/env_transform \
-					utils/utils_list \
-					utils/utils_error \
-					builtin/builtin_pwd \
-					builtin/builtin_cd \
-					builtin/builtin_env \
-					builtin/builtin_echo
-
-SRC_TEST		=	main \
-					utils_lexer_mem \
-					lexer
-
-INC				=	${NAME}      \
-					libft                               
-LIB				=	libft
-SRC_FILES		=	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(SRC)))
-LIB_FILES		=	$(addsuffix .a, $(addprefix $(LIB_DIR)/$(LIB)/, $(LIB)))
-OBJ_FILES		=	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(SRC)))
-INC_FILES		=	$(addsuffix .h, $(addprefix $(INC_DIR)/, $(INC)))
-READLINE		=	/usr/include/readline/readline.h
-INCLUDES		=	-I ${INC_DIR}
+SRC =		main.c \
+			lexer.c \
+			utils_lexer.c \
+			parser.c \
+			utils_parser.c \
+			prexec.c \
+			utils_prexec.c \
+			executor.c\
+			utils_executor.c \
+			utils_init.c \
+			utils_cleanup.c \
+			utils_tmp.c
 
 # link libraries
 LINKER			=	-L lib/libft -l ft -l readline
@@ -80,10 +65,19 @@ MAC_INCLUDES	=	-I $(MAC_READLINE)/include
 MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
 all: $(NAME)
-$(LIB_FILES):
-	# make -j8 -C $(LIB_FILES)
-	@$(MAKE) MAKEFLAGS+=-j8 CFLAGS+="$(CFLAGS)" -C lib/libft
-	@ar -rc $(LIB_FILES) $$(find ./lib/libft -type f -name '*.o') 
+
+ifeq ($(UNAME), Darwin)
+$(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
+	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(MAC_LINKER) -o $(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
+else
+$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(LIBRL) $(OBJ)
+	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(LIBRL) -o $(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+endif
+
 $(OBJ_DIR):
 	@mkdir -p $(shell find src -type d | sed \s/src/obj/g)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -94,70 +88,41 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # $(OBJ_TEST_DIR)/%.o: $(SRC_TEST_DIR)/%.c
 # 	@$(CC) $(CFLAGS) $(INCLUDES) $(MAC_INCLUDES) -c $< -o $@
 
-# distinguish between Apple and Linux OS
-
-test: $(NAME_TEST)
-
-ifeq ($(UNAME), Darwin)
-$(NAME): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
-	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
-	@rm -f .tmp
-$(NAME_TEST): $(MAC_BREW) $(MAC_READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
-	@echo -en "\\r       ${BGREEN}$(NAME_TEST)${RESET}        ✔  ${BGREEN}./$(NAME_TEST)${RESET}${DEL_R}\n"
-	@$(CC) $(CFLAGS) -o $(NAME_TEST) $(OBJ_FILES) $(INCLUDES) $(MAC_INCLUDES) $(LINKER) $(MAC_LINKER)
-	@rm -f .tmp	
-else    
-$(NAME): $(READLINE) $(LIB_FILES) $(OBJ_DIR) $(OBJ_FILES)
-	@echo -en "\\r       ${BGREEN}$(NAME)${RESET}        ✔  ${BGREEN}./$(NAME)${RESET}${DEL_R}\n"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(INCLUDES) $(LINKER)
-	@rm -f .tmp
-endif
-
-# installing readline
+$(LIBFT):
+	@$(MAKE) -C ./lib/libft
+$(LIBGNL):
+	@$(MAKE) -C ./lib/get_next_line
 
 $(READLINE):
+	@echo -n "install...	  readline	   "
 	@-if pacman -Sy --noconfirm readline &>/dev/null; then  \
-		echo -e "\\rinstall...   readline     ✔  $(GREEN)apt install libreadline-dev$(RESET)\n"; \
+		echo -e "\\rinstall...	  readline	   ✔  $(GREEN)apt install libreadline-dev$(DEFCL)\n"; \
 	elif apt install -y libreadline-dev &>/dev/null; then \
-		echo -e "\\rinstall...   readline     ✔  $(GREEN)pacman -Sy readline$(RESET)\n"; \
-    fi
+		echo -e "\\rinstall...	  readline	   ✔  $(GREEN)pacman -Sy readline$(DEFCL)\n"; \
+	fi
 	@sleep 1
-	
-# installing brew
 
 $(MAC_BREW):
-	@echo "$(MAGENTA) INSTALLING BREW ... $(RESET)"
+	@echo "${CYAN}installing brew...${DEFCL}"
 	@curl -fsL https://rawgit.com/kube/42homebrew/master/install.sh | zsh;
 	@source ~/.zshrc
 	@brew install readline
 	@echo ""
 
-# installing readline
-
 $(MAC_READLINE):
-	@echo "$(MAGENTA) INSTALLING READLINE ...$(RESET)"
+	@echo "${CYAN}installing readline...${DEFCL}"
 	@brew install readline
 	@echo ""
 
 clean:
-	@echo -en "cleaning objects...\n";
-	@$(MAKE) fclean -C lib/libft
-	@if find $(OBJ_DIR) -type f -name '*.o' -delete > /dev/null 2>&1; then        \
-	echo -en "\\r$(GREEN)$(OBJ_DIR)/$(RESET)${DEL_R}";\
-	fi
-	@if find $(OBJ_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
-		:;                                                                      \
-	fi
-fclean: clean #header
-	@echo -en "cleanig bins...\n"
-	@if find $(LIB_DIR) -type d -empty -delete > /dev/null 2>&1; then         \
-		:; \
-	fi
-	@if [ -f "${NAME}" ]; then                                                    \
-		rm -f ${NAME};                                                          \
-		echo -e "\\r $(NAME)         $(GREEN)$(NAME)$(RESET)${DEL_R}"; \
-	fi
+	@rm -rf $(OBJ_DIR)
+	@make clean -C ./lib/libft
+	@make clean -C ./lib/get_next_line
+
+fclean: clean
+	@rm -f $(NAME)
+	@make fclean -C ./lib/libft
+	@make fclean -C ./lib/get_next_line
 
 re: fclean all
 

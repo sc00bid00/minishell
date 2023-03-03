@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/26 07:53:38 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 11:13:34 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ t_token	*ft_lex(char *str);
 void	ft_cleantkn(t_token *tkn);
 void	ft_cleanlst(t_list *lst);
 t_token	*ft_init_tkn(char *str);
+void	ft_helplexer(t_token *tkn);
+void	ft_save(t_token *tkn);
+t_token	*ft_unextkn(t_token *tkn);
 void	tmp_prtlst(t_token *tkn);
 
 #endif

@@ -1,0 +1,10 @@
+obj_test
+src_test
+lib
+*_v*
+test
+Makefile
+.vscode
+pipex
+out*
+testfile
