@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 11:24:38 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/03 13:56:30 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	return (ret);
 }
 
+// Katrhin Main Nr.1 - readline
 // int main (int argc, char **argv, char **envp)
 // {
 // 	char **copy;
@@ -63,6 +64,8 @@ int	main(int argc, char **argv, char **envp)
 // 	return (0);
 // }
 
+
+// Katrhin Main Nr.2 - builtins
 // int main (int argc, char **argv, char **envp)
 // {
 // 	t_env 	*env;

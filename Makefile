@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 13:38:33 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 13:51:12 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ all: $(NAME)
 
 # ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
-	@$(CC) $(OBJ) $(LIBFT) $(LIBGNL) $(MAC_LINKER) -o $(NAME)
+	@$(CC) $(OBJ) $(MAC_LINKER) $(LIBFT) $(LIBGNL) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
 # else
