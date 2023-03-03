@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/03 13:13:47 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/03 13:17:46 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,25 +46,28 @@ LIBRL = ./lib/readline/libreadline.a
 SRC =		builtin_cd.c \
 			builtin_echo.c \
 			builtin_env.c \
-			puilitin_pwd.c \
+			builtin_exit.c \
+			builtin_export.c \
+			builitin_pwd.c \
+			builtin_unset.c \
 			env_build.c \
 			env_transform.c \
 			env_update.c \
+			executor.c\
+			lexer.c \
 			main.c \
+			parser.c \
+			prexec.c \
 			prompt.c \
 			signals.c \
+			utils_cleanup.c \
 			utils_error.c \
-			utils_list.c \
-			lexer.c \
-			utils_lexer.c \
-			parser.c \
-			utils_parser.c \
-			prexec.c \
-			utils_prexec.c \
-			executor.c\
 			utils_executor.c \
 			utils_init.c \
-			utils_cleanup.c \
+			utils_lexer.c \
+			utils_list.c \
+			utils_parser.c \
+			utils_prexec.c \
 			utils_tmp.c
 
 # link libraries
