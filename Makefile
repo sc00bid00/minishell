@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/04 09:15:23 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/04 11:58:30 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ SRC =		builtin_cd.c \
 			env_update.c \
 			executor.c\
 			lexer.c \
-			main.c \
+			minishell.c \
 			parser.c \
 			prexec.c \
 			prompt.c \

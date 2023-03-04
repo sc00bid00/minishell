@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:46:49 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 12:36:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_scmd
 	t_env	*env;
 }			t_scmd;
 
-t_scmd	*ft_parse(t_token *tkn, char **arr);
-t_scmd	*ft_init_scmd(t_token *tkn, char **arr);
+t_scmd	*ft_parse(t_token *tkn, char **arr, t_env *env);
+t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env);
 int		ft_init_cmd(t_scmd *scmd);
 void	ft_gethdoc(t_token *tkn, t_scmd *cmd);
 void	ft_getredin(t_token *tkn, t_scmd *cmd);

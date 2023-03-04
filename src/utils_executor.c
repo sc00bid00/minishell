@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:17:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:38:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 12:13:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,25 @@ int	ft_builtin(t_scmd *scmd)
 	int	(*builtin)(t_cmd *cmd);
 	t_cmd	*tmp;
 
+	(void)(builtin);
 	tmp = scmd->cmd[scmd->count];
-	if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "cd", 2))
-		builtin = &builtin_cd;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "echo", 4))
-		builtin = &builtin_echo;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "exit", 4))
-		builtin = &builtin_exit;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "export", 6))
-		builtin = &builtin_export;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "env", 3))
-		builtin = &builtin_env;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "pwd", 3))
-		builtin = &builtin_pwd;
-	else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "unset", 5))
-		builtin = &builtin_unset;
-	else
-		return (0);
-	builtin(tmp);
+	// if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "cd", 2))
+	// 	builtin = &builtin_cd;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "echo", 4))
+	// 	builtin = &builtin_echo;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "exit", 4))
+	// 	builtin = &builtin_exit;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "export", 6))
+	// 	builtin = &builtin_export;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "env", 3))
+	// 	builtin = &builtin_env;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "pwd", 3))
+	// 	builtin = &builtin_pwd;
+	// else if (tmp && tmp->arr && !ft_strncmp(tmp->arr[0], "unset", 5))
+	// 	builtin = &builtin_unset;
+	// else
+	// 	return (0);
+	// builtin(tmp);
 	return (1);
 }
 
