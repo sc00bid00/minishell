@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:06:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_echo(int argc, char **argv, t_env *env)
 	int		i;
 	bool	option;
 
-	(void) env;
+	(void)env;
 	i = 1;
 	option = false;
 	if (argc == 1)

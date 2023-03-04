@@ -6,12 +6,10 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 13:40:45 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:31:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-#include <minishell.h>
 #include <minishell.h>
 
 /* wait children processes, feedback exitstatus */
@@ -117,19 +115,16 @@ int	ft_pipe(t_scmd *scmd)
 	{
 		if (pipe(scmd->fd) == -1)
 			return (0);
-		scmd->id = fork();
-		if (scmd->id == -1)
-			return (0);
-		if (scmd->id == 0)
+		if (!ft_builtin(scmd))
 		{
-			if (!ft_child(scmd))
+			if (!ft_helppipe(scmd))
 				return (0);
-		}
-		else
-		{
-			close(scmd->fd[1]);
-			dup2(scmd->fd[0], STDIN_FILENO);
-			close(scmd->fd[0]);
+			else
+			{
+				close(scmd->fd[1]);
+				dup2(scmd->fd[0], STDIN_FILENO);
+				close(scmd->fd[0]);
+			}
 		}
 		scmd->count++;
 	}

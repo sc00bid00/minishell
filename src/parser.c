@@ -6,11 +6,10 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:22:46 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 13:40:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:26:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
 #include <minishell.h>
 
 /* return t_scmd.lst ** of ordered simple cmds */
