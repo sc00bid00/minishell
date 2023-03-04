@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:17:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:47:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:00:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_helpexecutor(t_scmd *scmd)
 /* return 1 if cmd->arr[0] is a builtin */
 int	ft_builtin(t_scmd *scmd)
 {
-	int	(*builtin)(t_cmd *cmd);
+	int	(*builtin)(t_cmd *cmd, t_env *env);
 	t_cmd	*tmp;
 
 	(void)(builtin);
@@ -46,7 +46,7 @@ int	ft_builtin(t_scmd *scmd)
 		builtin = &builtin_unset;
 	else
 		return (0);
-	builtin(tmp);
+	builtin(tmp, scmd->env);
 	return (1);
 }
 

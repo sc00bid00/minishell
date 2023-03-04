@@ -6,18 +6,19 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 12:53:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:00:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*	imitate echo with -n option */
-int	builtin_echo(t_cmd	*cmd)
+int	builtin_echo(t_cmd	*cmd, t_env *env)
 {
 	int		i;
 	bool	option;
 
+	(void)env;
 	i = 0;
 	option = false;
 	if (cmd->argc == 1)
