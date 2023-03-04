@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:03:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	update_pwd(t_env *env)
 }
 
 /*	use chdir function to change dir */
-int	builtin_cd(int argc, char **argv, t_env *env)
+int	builtin_cd(t_cmd *cmd, t_env *env)
 {
 	char *dir;
 
-	dir = get_dir(argc, argv, env);
+	dir = get_dir(cmd->argc, cmd->arr, env);
 
 	if (dir == NULL)
 	{
@@ -73,7 +73,7 @@ int	builtin_cd(int argc, char **argv, t_env *env)
 	if (chdir(dir) == ERROR)
 	{
 		printf("%s\n", dir);
-		ft_error("cd", argv[1], 0);
+		ft_error("cd", cmd->arr[0], 0);
 		return (ERROR);
 	}
 	update_pwd(env);
