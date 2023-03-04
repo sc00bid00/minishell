@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:07:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ int	print_env(t_env *env, bool export)
 }
 
 /*	imitate behavior of env */
-int	builtin_env(int argc, char **argv, t_env *env)
+int	builtin_env(t_cmd *cmd, t_env *env)
 {
-	(void) argc;
-	(void) argv;
+	(void)cmd;
 	if (!print_env(env, false))
 		return (ERROR);
 	return (EXIT_SUCCESS);
