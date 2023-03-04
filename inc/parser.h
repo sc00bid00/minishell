@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 11:21:45 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:46:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_cmd
 	int		fd_out;
 	char	*path;
 	char	**arr;
+	int		argc;
 	int		err_flag;
 	int		hd_flag;
 	int		rule;
@@ -38,6 +39,7 @@ typedef struct s_scmd
 	t_list	*hdocs;
 	t_list	**arr;
 	t_cmd	**cmd;
+	t_env	*env;
 }			t_scmd;
 
 t_scmd	*ft_parse(t_token *tkn, char **arr);

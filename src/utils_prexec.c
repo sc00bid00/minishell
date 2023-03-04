@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:27:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:49:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_isword(t_list **lst, int *count, t_scmd *scmd)
 		*lst = (*lst)->next;
 		i++;
 	}
+	tmp->argc = i;
 	return (1);
 }
 

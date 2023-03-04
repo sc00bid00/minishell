@@ -6,14 +6,17 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 08:34:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 11:11:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/* extern int exitstatus needs to be re-declared also here in order to
+comply with linux compiler as well */
 int exitstatus;
 
+/* Luca lex, parse, prexec, exec */
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -21,8 +24,8 @@ int	main(int argc, char **argv, char **envp)
 	t_scmd	*scmd;
 	int		ret;
 
-	if (!argc && !argv)
-		return (1);
+	(void)argc;
+	(void)argv;
 	// BASTARDS LIST:
 	// heredoc not redirecting *** solved ***
 	str = "< testfile | < testfile cat -e >> out << stop";
@@ -47,42 +50,42 @@ int	main(int argc, char **argv, char **envp)
 	return (ret);
 }
 
-// // Katrhin Main Nr.1 - readline
-// int main (int argc, char **argv, char **envp)
-// {
-// 	if (!argc && !argv && !envp)
-// 		return (1);
-// 	// char **copy;
-// 	// copy = copy_env_to_heap(envp);
-// 	// temp_print_envs(copy);
-// 	signal(SIGQUIT, SIG_IGN);
-//     while (1)
-// 	{
-// 		setup_sigint();
-// 		get_input();
-// 		// restore_terminal();
-// 		// get_input();
-// 		//setup_sigexec(); put back default signals
-// 		// restore_terminal();
-// 	}
-// 	return (0);
-// }
+/* Kathrin Main Nr.1 - readline */
+int main (int argc, char **argv, char **envp)
+{
+	if (!argc && !argv && !envp)
+		return (1);
+	// char **copy;
+	// copy = copy_env_to_heap(envp);
+	// temp_print_envs(copy);
+	signal(SIGQUIT, SIG_IGN);
+    while (1)
+	{
+		setup_sigint();
+		get_input();
+		// restore_terminal();
+		// get_input();
+		//setup_sigexec(); put back default signals
+		// restore_terminal();
+	}
+	return (0);
+}
 
 
-// Katrhin Main Nr.2 - builtins
-// int main (int argc, char **argv, char **envp)
-// {
-// 	t_env 	*env;
-// 	env = NULL;
-// 	env = copy_envp_to_env(envp);
-// 	create_env_array(env);
-	// builtin_pwd();
-	// print_env(env);
-	// builtin_cd(argc, argv, env);
-	// ft_error("minishell", argv[5], 0);
-	// builtin_env(argc, argv, env);
-	// builtin_echo(argc, argv, env);
-	// print_env(env);
-	// ft_ms_lstclear(env);
-	// free (env);
-// }
+/* Kathrin Main Nr.2 - builtins */
+int main (int argc, char **argv, char **envp)
+{
+	t_env 	*env;
+	env = NULL;
+	env = copy_envp_to_env(envp);
+	create_env_array(env);
+	builtin_pwd();
+	print_env(env);
+	builtin_cd(argc, argv, env);
+	ft_error("minishell", argv[5], 0);
+	builtin_env(argc, argv, env);
+	builtin_echo(argc, argv, env);
+	print_env(env);
+	ft_ms_lstclear(env);
+	free (env);
+}

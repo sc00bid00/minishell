@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 17:39:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:52:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 
 #define enum
 
+/*	need to declare extern int exitstatus in order to comply with
+	linux compiler as well */
 extern int exitstatus;
 // utils
 
