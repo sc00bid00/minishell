@@ -6,17 +6,19 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:17:30 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*	getcwd returns pointer to path if sucessful, else it returns NULL */
-int	builtin_pwd(void)
+int	builtin_pwd(t_cmd *cmd, t_env *env)
 {
 	char	*pwd;
 
+	(void)cmd;
+	(void)env;
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
