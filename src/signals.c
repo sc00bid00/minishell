@@ -6,11 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 08:50:56 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 13:42:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 /*	SIGINT = Ctrl + C;
 *	SIGQUIT = Ctrl \

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 12:52:39 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include <minishell.h>
 
 /* returns var, if var does not exist, returns NULL */
 t_env	*ret_var(t_env *env, char *str)
 {
 	t_env *temp;
-	
+
 	temp = env;
 	while (temp->next)
 	{
@@ -31,7 +31,7 @@ t_env	*ret_var(t_env *env, char *str)
 t_env	*upd_var(t_env *env, char *var, char *new_val)
 {
 	t_env *temp;
-	
+
 	temp = ret_var(env, var);
 	if (temp)
 	{
@@ -46,7 +46,7 @@ t_env	*upd_var(t_env *env, char *var, char *new_val)
 int	del_var(t_env *env, char *var)
 {
 	t_env *temp;
-	
+
 	temp = ret_var(env, var);
 	if (temp)
 	{

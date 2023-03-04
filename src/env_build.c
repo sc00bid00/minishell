@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/27 11:12:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 /*	extract and return variable name from envp */
 char	*get_var_name(char *var)
@@ -74,7 +74,7 @@ t_env	*copy_envp_to_env(char **envp)
 	i = 0;
 	env = NULL;
 	while (envp && envp[i])
-	{	
+	{
 		temp = new_var(envp[i]);
 		if (!temp)
 			return (env);

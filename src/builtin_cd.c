@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 12:51:57 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 /*	if argument is cd (argc == 1) or cd ~, return home directory */
 char	*get_dir(int argc, char **argv, t_env *env)
 {
 	char	*dir;
 	t_env	*temp;
-	
+
 	if (argc == 1 || (argc == 2 && ft_strncmp(argv[1], "~", 2)))
 	{
 		temp = ret_var(env, "HOME");
@@ -25,7 +25,7 @@ char	*get_dir(int argc, char **argv, t_env *env)
 	}
 	else if (argc == 2 && ft_strncmp(argv[1], "-", 2))
 	{
-		temp =	ret_var(env, "OLDPWD");	
+		temp =	ret_var(env, "OLDPWD");
 		dir =	temp->var_content;
 	}
 	else
@@ -40,7 +40,7 @@ void	update_pwd(t_env *env)
 	char	*cwd;
 	char	*str;
 	t_env	*temp;
-	
+
 	cwd = getcwd(NULL, 0);
 	// printf("CWD is %s\n", cwd);
 	temp = ret_var(env, "PWD");
@@ -62,14 +62,14 @@ void	update_pwd(t_env *env)
 int	builtin_cd(int argc, char **argv, t_env *env)
 {
 	char *dir;
-	
+
 	dir = get_dir(argc, argv, env);
-		
+
 	if (dir == NULL)
 	{
 		ft_error("minishell", dir, 1);
 		return (ERROR);
-	}	
+	}
 	if (chdir(dir) == ERROR)
 	{
 		printf("%s\n", dir);

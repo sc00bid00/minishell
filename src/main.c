@@ -6,11 +6,13 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 17:40:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 08:24:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int exitstatus;
 
 // int	main(int argc, char **argv, char **envp)
 // {
@@ -44,7 +46,7 @@
 // 	ft_cleantkn(tkn);
 // 	return (ret);
 // }
-int exitstatus;
+
 // Katrhin Main Nr.1 - readline
 int main (int argc, char **argv, char **envp)
 {
