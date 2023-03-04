@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:15:59 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,25 @@ bool	existing_var(t_env *env, char *var)
 }
 
 /*	either update existing or add new variable */
-int	update_env(int argc, char **argv, t_env *env)
+int	update_env(t_cmd *cmd, t_env *env)
 {
 	int		i;
 	t_env	*temp;
 	char	*value;
 	char	*name;
 
-	i = 1;
-	while (argc > 1 && argv[i])
+	i = 0;
+	while (cmd->argc > 1 && cmd->arr && cmd->arr[i])
 	{
-		if (existing_var(env, argv[i]) == true)
+		if (existing_var(env, cmd->arr[i]) == true)
 		{
-			value = get_var_content(argv[i]);
-			name = get_var_name(argv[i]);
+			value = get_var_content(cmd->arr[i]);
+			name = get_var_name(cmd->arr[i]);
 			upd_var(env, name, value);
 		}
 		else
 		{
-			temp = new_var(argv[i]);
+			temp = new_var(cmd->arr[i]);
 			ms_lstadd_back(env, temp);
 		}
 		i++;
@@ -63,14 +63,14 @@ int	update_env(int argc, char **argv, t_env *env)
 }
 
 /*	imitate behavior of export bash builtin */
-int	builtin_export(int argc, char **argv, t_env *env)
+int	builtin_export(t_cmd *cmd, t_env *env)
 {
-	if (argc == 1)
+	if (cmd->argc == 1)
 	{
 		print_env(env, true);
 		return (0);
 	}
 	else
-		update_env(argc, argv, env);
+		update_env(cmd, env);
 	return (0);
 }
