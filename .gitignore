@@ -1,9 +1,5 @@
-obj_test
-src_test
 lib
-*_v*
-test
-.vscode
 pipex
 out*
 testfile
+minishell

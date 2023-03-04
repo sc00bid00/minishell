@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:04:31 by lsordo            #+#    #+#             */
-/*   Updated: 2023/02/13 12:52:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/02/05 11:26:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}					t_list;
+}				t_list;
 
 int			ft_atoi(const char *str);
 uint32_t	ft_atoi_base(const char *str, uint32_t str_base);
