@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:06:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:38:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:44:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ int exitstatus;
 
 
 /* Kathrin Main Nr.2 - builtins */
-int main (int argc, char **argv, char **envp)
-{
-	t_env 	*env;
-	env = NULL;
-	env = copy_envp_to_env(envp);
-	create_env_array(env);
-	builtin_pwd();
-	print_env(env,0);
-	builtin_cd(argc, argv, env);
-	ft_error("minishell", argv[5], 0);
-	builtin_env(argc, argv, env);
-	builtin_echo(argc, argv, env);
-	print_env(env,0);
-	ft_ms_lstclear(env);
-	free (env);
-}
+// int main (int argc, char **argv, char **envp)
+// {
+// 	t_env 	*env;
+// 	env = NULL;
+// 	env = copy_envp_to_env(envp);
+// 	create_env_array(env);
+// 	builtin_pwd();
+// 	print_env(env,0);
+// 	builtin_cd(argc, argv, env);
+// 	ft_error("minishell", argv[5], 0);
+// 	builtin_env(argc, argv, env);
+// 	builtin_echo(argc, argv, env);
+// 	print_env(env,0);
+// 	ft_ms_lstclear(env);
+// 	free (env);
+// }

@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/04 11:58:30 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/04 13:51:24 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ SRC =		builtin_cd.c \
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
 # link libraries
-LINKER			=	-L lib/libft -l ft -L lib/get_next_line -l gnl -l readline
+LINKER			=	-l readline -L lib/libft -l ft -L lib/get_next_line -l gnl
 
 MAC_BREW		=	/Users/${USER}/.brewconfig.zsh
 MAC_READLINE	=	~/.brew/opt/readline
@@ -89,9 +89,9 @@ all: $(NAME)
 ifeq ($(UNAME), Darwin)
 $(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
 	@echo "$(COLOR_MAKE)Make minishell for Darwin...$(DEFCL)"
-	@$(CC) $(OBJ) $(MAC_LINKER) $(LINKER) -o $(NAME)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MAC_LINKER) $(LINKER)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $^ -o $@
+	@$(CC) $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) -c $^ -o $@
 else
 $(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
 	@echo "$(COLOR_MAKE)Make minishell for Linux...$(DEFCL)"
