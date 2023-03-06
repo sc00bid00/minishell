@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 11:37:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 13:20:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	(void)env;
 	i = 0;
 	option = false;
-	if (cmd->argc == 1)
+	if (cmd->arr && cmd->arr[1] == NULL)
 		ft_putchar_fd('\n', 1);
-	else if (cmd->argc >= 3 && ft_strncmp(cmd->arr[1], "-n", 3))
+	else if (cmd->arr && ft_strncmp(cmd->arr[1], "-n", 3))
 	{
 		option = true;
 		i++;
@@ -31,9 +31,12 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	i = 1;
 	while (cmd->arr && cmd->arr[i])
 	{
-		ft_putstr_fd(cmd->arr[i], 1);
-		// if (cmd->arr[i + 1])
-			ft_putchar_fd(' ', 1);
+		if (ft_strncmp(cmd->arr[i], "-n", 3))
+		{
+			ft_putstr_fd(cmd->arr[i], 1);
+			if (cmd->arr[i + 1])
+				ft_putchar_fd(' ', 1);
+		}
 		i++;
 	}
 	if (option == false)
