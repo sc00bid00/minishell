@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:02:14 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:34:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,11 @@ void	ft_expand(t_token *tkn)
 		if (tmp->content && ((char *)tmp->content)[0] != '\'' \
 			&& ft_strchr(((char *)tmp->content), '$') && !flag)
 		{
-			// tmp_str = ft_strtrim((char *)tmp->content, "\"$");
-			env_var = ret_var(tkn->env, ft_strtrim((char *)tmp->content, "\"$"));
-			tmp_str = env_var->var_content;
-			printf("%s\n", tmp_str);
-			// free(tmp->content);
-			// tmp->content = ft_strdup(getenv(tmp_str));
-			// free(tmp_str);
+			tmp_str = ft_strtrim((char *)tmp->content, "\"$");
+			env_var = ret_var(tkn->env, tmp_str);
+			free(tmp->content);
+			tmp->content = ft_strdup(env_var->var_content);
+			free(tmp_str);
 		}
 		if (!ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;

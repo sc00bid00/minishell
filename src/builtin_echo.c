@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 10:30:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:37:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 		option = true;
 		i++;
 	}
+	i = 1;
 	while (cmd->arr && cmd->arr[i])
 	{
 		ft_putstr_fd(cmd->arr[i], 1);
-		if (cmd->arr[i + 1])
+		// if (cmd->arr[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
