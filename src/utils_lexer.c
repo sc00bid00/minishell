@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:34:19 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 13:22:29 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_token	*ft_unextkn(t_token *tkn)
 	tmp = tkn->lst;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->content, ">", 1) \
-		|| !ft_strncmp(tmp->content, "<", 1))
+		if (tmp->content && (!ft_strncmp(tmp->content, ">", 1) \
+		|| !ft_strncmp(tmp->content, "<", 1)))
 		{
 			if (token & 1)
 			{
@@ -58,9 +58,11 @@ void	ft_remquotes(t_token *tkn)
 	while (tmp)
 	{
 		if (tmp->content)
+		{
 			tmp_str = ft_strtrim(tmp->content, "\'\"");
-		free(tmp->content);
-		tmp->content = tmp_str;
+			free(tmp->content);
+			tmp->content = tmp_str;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -83,10 +85,13 @@ void	ft_expand(t_token *tkn)
 			tmp_str = ft_strtrim((char *)tmp->content, "\"$");
 			env_var = ret_var(tkn->env, tmp_str);
 			free(tmp->content);
-			tmp->content = ft_strdup(env_var->var_content);
+			if (env_var)
+				tmp->content = ft_strdup(env_var->var_content);
+			else
+				tmp->content = NULL;
 			free(tmp_str);
 		}
-		if (!ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
+		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;
 		else
 			flag = 0;
