@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 17:31:42 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_var_name(char *var)
 	char	*var_name;
 
 	i = 0;
+	
 	while (var[i] && var[i] != '=')
 		i++;
 	var_name = ft_substr(var, 0, i);
@@ -48,7 +49,7 @@ char	*get_var_content(char *var)
 }
 
 /*	create new node, assign var name and var content */
-t_env	*new_var(char *var)
+t_env	*new_var(char *var, bool export)
 {
 	t_env	*temp;
 
@@ -57,7 +58,15 @@ t_env	*new_var(char *var)
 		return (NULL);
 	else
 	{
-		temp->var_name = get_var_name(var);
+		if (export)
+			temp->var_name = get_var_name_export(var);
+		else
+			temp->var_name = get_var_name(var);
+		if (!temp->var_name)
+		{
+			free (temp);
+			return (NULL);
+		}
 		temp->var_content = get_var_content(var);
 		temp->next = NULL;
 	}
@@ -75,7 +84,7 @@ t_env	*copy_envp_to_env(char **envp)
 	env = NULL;
 	while (envp && envp[i])
 	{
-		temp = new_var(envp[i]);
+		temp = new_var(envp[i], false);
 		if (!temp)
 			return (env);
 		env = ms_lstadd_back(env, temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 13:03:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 15:56:21 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	update_pwd(t_env *env)
 	if (str)
 	{
 		if (!upd_var(env, "OLDPWD", str))
-			ft_error("cd", "PWD", 1);
+			ft_error("cd", "PWD", ERROR_1);
 	}
 	else
 		printf("ERROR\n");
@@ -67,13 +67,13 @@ int	builtin_cd(t_cmd *cmd, t_env *env)
 
 	if (dir == NULL)
 	{
-		ft_error("minishell", dir, 1);
+		ft_error("minishell", dir, ERROR_2);
 		return (ERROR);
 	}
 	if (chdir(dir) == ERROR)
 	{
 		printf("%s\n", dir);
-		ft_error("cd", cmd->arr[0], 0);
+		ft_error("cd", cmd->arr[0], NULL);
 		return (ERROR);
 	}
 	update_pwd(env);

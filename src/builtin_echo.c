@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 13:20:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 13:59:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 		}
 		i++;
 	}
-	if (option == false)
+	if (option == true)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
