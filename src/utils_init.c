@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:36:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:00:50 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_ctscmd(t_token *tkn)
 }
 
 /* return allocated and 0 initilized t_token */
-t_token	*ft_init_tkn(char *str)
+t_token	*ft_init_tkn(char *str, t_env *env)
 {
 	t_token	*tkn;
 
@@ -45,6 +45,7 @@ t_token	*ft_init_tkn(char *str)
 	tkn->curr = 0;
 	tkn->prev = 0;
 	tkn->count = 0;
+	tkn->env = env;
 	return (tkn);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 11:20:48 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:01:38 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ typedef struct s_token
 	int		p_sta;
 	int		c_sta;
 	int		count;
+	t_env	*env;
 }			t_token;
 
 t_token	*ft_lex(char *str);
 void	ft_cleantkn(t_token *tkn);
 void	ft_cleanlst(t_list *lst);
-t_token	*ft_init_tkn(char *str);
+t_token	*ft_init_tkn(char *str, t_env *env);
 void	ft_helplexer(t_token *tkn);
 void	ft_save(t_token *tkn);
 t_token	*ft_unextkn(t_token *tkn);
