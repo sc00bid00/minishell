@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:00:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 13:23:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_ctscmd(t_token *tkn)
 	i = 0;
 	while (tmp)
 	{
-		if (((char *)(tmp->content))[0] == '|')
+		if (tmp->content && ((char *)(tmp->content))[0] == '|')
 			i++;
 		tmp = tmp->next;
 	}
