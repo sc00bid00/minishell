@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 13:15:59 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:22:46 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	update_env(t_cmd *cmd, t_env *env)
 		}
 		i++;
 	}
-	print_env(env, false);
+	// print_env(env, false);
 	return (0);
 }
 
