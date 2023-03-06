@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 12:39:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:15:49 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_start(char **envp, t_env *env, char *input)
 char	*read_line(void)
 {
 	char *line;
-	line = readline("\033[36;1m$ \033[0m");
+	line = readline("\033[36;1mminishell$ \033[0m");
 	if (line == NULL)
 		exit(1);
 	return (line);
@@ -44,13 +44,21 @@ char	*read_line(void)
 int	get_input(char **envp, t_env *env)
 {
 	char *input;
-
-	if ((input = read_line()) != NULL)
+	
+	input = read_line();
+	if (input != NULL)
 	{
 		if (input && *input)
 			add_history(input);
 		exitstatus = ft_start(envp, env, input);
 		free(input);
 	}
+	return (exitstatus);
+}
+
+int	test_get_input(char **envp, t_env *env, char *input)
+{
+	if (input)
+		exitstatus = ft_start(envp, env, input);
 	return (exitstatus);
 }

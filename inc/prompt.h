@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:56:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 12:34:14 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:18:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 char	*read_line(void);
 int		get_input(char **envp, t_env *env);
+int		test_get_input(char **envp, t_env *env, char *input);
 
 #endif

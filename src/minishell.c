@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 10:56:35 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:32:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:50:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 
-	(void)argc;
-	(void)argv;
-	exitstatus = 0;
 	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	exitstatus = 0;
+	env = copy_envp_to_env(envp);
+	if (argc == 3 && !ft_strncmp(argv[1], "-c", 2))
 	{
-		setup_sigint();
-		env = copy_envp_to_env(envp);
-		exitstatus = get_input(envp, env);
+		exitstatus = test_get_input(envp, env, argv[2]);
+		exit (exitstatus);
+	}
+	else
+	{
+		while (1)
+		{
+			setup_sigint();
+			exitstatus = get_input(envp, env);
+		}
 	}
 	return (exitstatus);
 }
