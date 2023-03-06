@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/03 13:40:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:10:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	ft_getstatus(t_token *tkn)
 /* return t_token with t_list of tokens
 token is either a word or a metacharacter
 text in quotes is word */
-t_token	*ft_lex(char *str)
+t_token	*ft_lex(char *str, t_env *env)
 {
 	t_token	*tkn;
 
-	tkn = ft_init_tkn(str);
+	tkn = ft_init_tkn(str, env);
 	while (tkn->str && tkn->str[tkn->curr])
 	{
 		ft_getstatus(tkn);

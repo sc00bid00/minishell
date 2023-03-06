@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 10:15:49 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:10:55 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_start(char **envp, t_env *env, char *input)
 	t_token	*tkn;
 	t_scmd	*scmd;
 
-	tkn = ft_lex(input);
+	tkn = ft_lex(input, env);
 	if (!tkn)
 		return (2);
 	scmd = ft_parse(tkn, envp, env);
