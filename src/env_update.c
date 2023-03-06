@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 17:34:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:58:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_env	*ret_var(t_env *env, char *str)
 	{
 		if( ft_strlen(str) >= ft_strlen(temp->var_name))
 		{
-			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name)))
+			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name) + 1))
 				return (temp);
 		}
 		else
 		{
-			if (!ft_strncmp(temp->var_name, str, ft_strlen(str)))
+			if (!ft_strncmp(temp->var_name, str, ft_strlen(str) + 1))
 				return (temp);
 		}
 		if (temp->next)

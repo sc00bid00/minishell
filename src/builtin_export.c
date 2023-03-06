@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 17:51:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:57:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*get_var_name_export(char *var)
 		}
 	}
 	var_name = ft_substr(var, 0, i);
+	printf("var_name is: %s\n", var_name);
 	return (var_name);
 }
 
@@ -69,6 +70,7 @@ bool	existing_var(t_env *env, char *var)
 		if (ret_var(env, name))
 		{
 			free (name);
+			printf("true\n");
 			return (true);
 		}
 		else
