@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:27:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:17:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_cleanlst(t_list *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		free(lst->content);
+		if (tmp && tmp->content)
+			free(lst->content);
 		free(lst);
 		lst = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 13:22:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/08 10:59:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,21 @@ void	ft_remquotes(t_token *tkn)
 void	ft_expand(t_token *tkn)
 {
 	t_list	*tmp;
-	t_env	*env_var;
-	char	*tmp_str;
+	t_list	*new;
 	int		flag;
 
 	flag = 0;
+	new = NULL;
 	tmp = tkn->lst;
 	while (tmp)
 	{
 		if (tmp->content && ((char *)tmp->content)[0] != '\'' \
 			&& ft_strchr(((char *)tmp->content), '$') && !flag)
 		{
-			tmp_str = ft_strtrim((char *)tmp->content, "\"$");
-			env_var = ret_var(tkn->env, tmp_str);
-			free(tmp->content);
-			if (env_var)
-				tmp->content = ft_strdup(env_var->var_content);
-			else
-				tmp->content = NULL;
-			free(tmp_str);
+			ft_explode(&new, (char *)tmp->content);
+			ft_substitute(&new, tkn->env);
+			ft_reassemble(new, tmp);
+			ft_cleanlst(new);
 		}
 		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/08 09:50:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:09:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	ft_explode(t_list **lst, char *str)
 	while (str && str[p[1]])
 	{
 		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"'))
-		tmp = ft_substr(str, p[0], p[1] - p[0]);
-		ft_lstadd_back(lst, ft_lstnew(tmp));
-		p[0] = p[1];
+		{
+			tmp = ft_substr(str, p[0], p[1] - p[0]);
+			ft_lstadd_back(lst, ft_lstnew(tmp));
+			p[0] = p[1];
+		}
 		p[1]++;
 	}
 	if (str[p[0]] + 1)
@@ -34,17 +36,18 @@ void	ft_explode(t_list **lst, char *str)
 	}
 }
 
-void	ft_substitute(t_list *lst, t_env *var)
+void	ft_substitute(t_list **lst, t_env *var)
 {
 	t_list	*tmp;
 	t_env	*env_var;
 
-	tmp = lst;
+
+	tmp = *lst;
 	while (tmp)
 	{
 		if (tmp->content && ft_strchr((char *)tmp->content, '$'))
 		{
-			env_var = ret_var(var, (char *)tmp->content);
+			env_var = ret_var(var, &((char *)tmp->content)[1]);
 			if (env_var && env_var->var_content)
 			{
 				free(tmp->content);
@@ -71,7 +74,7 @@ static int	ft_len(t_list *lst)
 	return (len);
 }
 
-void	ft_reassemble(t_list *lst, char **str)
+void	ft_reassemble(t_list *lst, t_list *node)
 {
 	t_list	*tmp;
 	int		i;
@@ -80,9 +83,9 @@ void	ft_reassemble(t_list *lst, char **str)
 	i = ft_len(lst);
 	if (!i)
 		return ;
-	free(*str);
-	*str = ft_calloc(i + 1, 1);
-	if (*str)
+	free(node->content);
+	node->content = ft_calloc(i + 1, 1);
+	if (!node->content)
 		exit(1);
 	tmp = lst;
 	i = 0;
@@ -90,7 +93,7 @@ void	ft_reassemble(t_list *lst, char **str)
 	{
 		if (tmp->content)
 		{
-			ft_memcpy(&(*str)[i], (char *)tmp->content, \
+			ft_memcpy(&((char *)node->content)[i], (char *)tmp->content, \
 				ft_strlen((char *)tmp->content));
 			i += ft_strlen((char *)tmp->content);
 		}
