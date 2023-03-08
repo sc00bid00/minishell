@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/08 16:44:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:31:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,16 @@ void	ft_substitute(t_list **lst, t_env *var)
 		if (tmp->content && ft_strchr((char *)tmp->content, '$'))
 		{
 			env_var = ret_var(var, &((char *)tmp->content)[1]);
-			if (env_var && env_var->var_content)
+			if (env_var)
 			{
 				free(tmp->content);
-				tmp->content = ft_strdup(env_var->var_content);
+				if (env_var->var_content)
+					tmp->content = ft_strdup(env_var->var_content);
+			}
+			else
+			{
+				free(tmp->content);
+				tmp->content = NULL;
 			}
 		}
 		tmp = tmp->next;
@@ -80,9 +86,12 @@ void	ft_reassemble(t_list *lst, t_list *node)
 
 	i = 0;
 	i = ft_len(lst);
-	if (!i)
-		return ;
 	free(node->content);
+	if (!i)
+	{
+		node->content = NULL;
+		return ;
+	}
 	node->content = ft_calloc(i + 1, 1);
 	if (!node->content)
 		exit(1);
