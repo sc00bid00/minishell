@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/04 13:51:24 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/08 09:49:20 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRC =		builtin_cd.c \
 			utils_cleanup.c \
 			utils_error.c \
 			utils_executor.c \
+			utils_expand.c \
 			utils_init.c \
 			utils_lexer.c \
 			utils_list.c \

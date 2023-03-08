@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:11:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/08 09:50:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ t_token	*ft_init_tkn(char *str, t_env *env);
 void	ft_helplexer(t_token *tkn);
 void	ft_save(t_token *tkn);
 t_token	*ft_unextkn(t_token *tkn);
+void	ft_explode(t_list **lst, char *str);
+void	ft_substitute(t_list *lst, t_env *var);
+void	ft_reassemble(t_list *lst, char **str);
 void	tmp_prtlst(t_token *tkn);
 
 #endif
