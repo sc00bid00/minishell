@@ -1,6 +1,6 @@
 CC		=	cc
 AR		=	ar
-CFLAGS	=	-I. -Wall -Wextra -Werror
+CFLAGS	=	-I. -Wall -Wextra -Werror -g
 NAME	=	libft.a
 SRC		= 	ft_atoi.c\
 			ft_atoi_base.c\
