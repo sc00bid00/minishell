@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/08 18:31:05 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:45:25 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_explode(t_list **lst, char *str)
 	p[1] = 0;
 	while (str && str[p[1]])
 	{
-		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"'))
+		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"' || str[p[1]] == '\''))
 		{
 			tmp = ft_substr(str, p[0], p[1] - p[0]);
 			ft_lstadd_back(lst, ft_lstnew(tmp));
@@ -40,11 +40,15 @@ void	ft_substitute(t_list **lst, t_env *var)
 {
 	t_list	*tmp;
 	t_env	*env_var;
+	int		flag;
 
 	tmp = *lst;
+	flag = 0;
 	while (tmp)
 	{
-		if (tmp->content && ft_strchr((char *)tmp->content, '$'))
+		if (ft_strchr((char *)tmp->content, '\''))
+			flag ^= 1;
+		if (!flag && tmp->content && ft_strchr((char *)tmp->content, '$'))
 		{
 			env_var = ret_var(var, &((char *)tmp->content)[1]);
 			if (env_var)

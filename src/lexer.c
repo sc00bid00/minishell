@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 09:33:21 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:33:51 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_getstatus(t_token *tkn)
 {
 	if (tkn->str[tkn->curr] == '\'')
 		tkn->c_sta = tkn->c_sta ^ 0b0000001;
-	// else if (tkn->str[tkn->curr] == '\"')
-	// 	tkn->c_sta = tkn->c_sta ^ 0b0000010;
+	else if (tkn->str[tkn->curr] == '\"')
+		tkn->c_sta = tkn->c_sta ^ 0b0000010;
 	else
 	{
 		tkn->c_sta = tkn->c_sta & 0b0000011;
@@ -63,7 +63,7 @@ t_token	*ft_lex(char *str, t_env *env)
 			;
 		else
 		{
-			if (tkn->c_sta != tkn->p_sta && tkn->p_sta != 0)
+			if ((tkn->c_sta >> 2) != (tkn->p_sta >> 2) && tkn->p_sta != 0)
 				ft_save(tkn);
 			if (tkn->c_sta == 0)
 				tkn->prev = tkn->curr + 1;
