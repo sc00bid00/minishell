@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 11:07:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 13:00:59 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ void	ft_helpreassemble(t_list *tmp, void *content)
 	}
 }
 
-void	ft_reassemble(t_list *lst, t_list *node)
+void	ft_reassemble(t_list *lst, t_list **node)
 {
 	t_list	*tmp;
 	int		i;
 
 	i = 0;
 	i = ft_len(lst);
-	free(node->content);
+	free((*node)->content);
 	if (!i)
 	{
-		node->content = NULL;
+		(*node)->content = NULL;
 		return ;
 	}
-	node->content = ft_calloc(i + 1, 1);
-	if (!node->content)
+	(*node)->content = ft_calloc(i + 1, 1);
+	if (!(*node)->content)
 		exit(1);
 	tmp = lst;
-	ft_helpreassemble(tmp, node->content);
+	ft_helpreassemble(tmp, (*node)->content);
 }
