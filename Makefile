@@ -6,14 +6,14 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/09 11:02:03 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/09 13:14:57 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 UNAME = $(shell uname)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-
+SHELL = /bin/zsh
 
 #FORMAT----------------------------------#
 DEFCL			=	$(shell echo "\033[0m")
