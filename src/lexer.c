@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:10:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/09 09:33:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_getstatus(t_token *tkn)
 {
 	if (tkn->str[tkn->curr] == '\'')
 		tkn->c_sta = tkn->c_sta ^ 0b0000001;
-	else if (tkn->str[tkn->curr] == '\"')
-		tkn->c_sta = tkn->c_sta ^ 0b0000010;
+	// else if (tkn->str[tkn->curr] == '\"')
+	// 	tkn->c_sta = tkn->c_sta ^ 0b0000010;
 	else
 	{
 		tkn->c_sta = tkn->c_sta & 0b0000011;

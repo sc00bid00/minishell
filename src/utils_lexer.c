@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/08 18:07:01 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 09:51:43 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,26 @@ t_token	*ft_unextkn(t_token *tkn)
 	return (tkn);
 }
 
-/* return t_list without ' and/or " */
+void	ft_helpremquotes(char *dst, char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+			i++;
+		else
+		{
+			dst[j] = str[i];
+			j++;
+			i++;
+		}
+	}
+}
+
 void	ft_remquotes(t_token *tkn)
 {
 	t_list	*tmp;
@@ -57,14 +76,22 @@ void	ft_remquotes(t_token *tkn)
 	tmp = tkn->lst;
 	while (tmp)
 	{
-		if (tmp->content)
+		if (tmp->content && (ft_strchr((char *)tmp->content, '"') \
+			|| ft_strchr((char *)tmp->content, '\'')))
 		{
-			tmp_str = ft_strtrim(tmp->content, "\'\"");
-			free(tmp->content);
-			tmp->content = tmp_str;
+			tmp_str = ft_calloc(ft_strlen((char *)tmp->content), 1);
+			if (!tmp_str)
+				exit(1);
+			ft_helpremquotes(tmp_str, (char *)tmp->content);
+			if (tmp->content)
+			{
+				free(tmp->content);
+				tmp->content = tmp_str;
+			}
 		}
 		tmp = tmp->next;
 	}
+
 }
 
 /* return t_list expanding system variables as appropriate */
@@ -85,6 +112,7 @@ void	ft_expand(t_token *tkn)
 			ft_explode(&new, (char *)tmp->content);
 			ft_substitute(&new, tkn->env);
 			ft_reassemble(new, tmp);
+			ft_cleanlst(new);
 		}
 		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;
