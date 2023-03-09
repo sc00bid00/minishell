@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 13:00:59 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 16:27:30 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,20 @@ static int	ft_len(t_list *lst)
 	return (len);
 }
 
-void	ft_helpreassemble(t_list *tmp, void *content)
+void	ft_helpreassemble(t_list **tmp, void **content)
 {
 	int	i;
 
 	i = 0;
-	while (tmp)
+	while (*tmp)
 	{
-		if (tmp->content)
+		if ((*tmp)->content)
 		{
-			ft_memcpy(&((char *)content)[i], (char *)tmp->content, \
-				ft_strlen((char *)tmp->content));
-			i += ft_strlen((char *)tmp->content);
+			ft_memcpy(&((char *)*content)[i], (char *)(*tmp)->content, \
+				ft_strlen((char *)(*tmp)->content));
+			i += ft_strlen((char *)(*tmp)->content);
 		}
-		tmp = tmp->next;
+		*tmp = (*tmp)->next;
 	}
 }
 
@@ -86,5 +86,5 @@ void	ft_reassemble(t_list *lst, t_list **node)
 	if (!(*node)->content)
 		exit(1);
 	tmp = lst;
-	ft_helpreassemble(tmp, (*node)->content);
+	ft_helpreassemble(&tmp, &(*node)->content);
 }

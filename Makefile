@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/09 13:14:57 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/09 14:27:58 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,10 +108,10 @@ $(OBJ_DIR):
 
 $(LIBFT):
 	@echo "$(COLOR_MAKE)Make libft...$(DEFCL)"
-	@$(MAKE) -C ./lib/libft
+	@$(MAKE) -s -C ./lib/libft
 $(LIBGNL):
 	@echo "$(COLOR_MAKE)Make libgnl...$(DEFCL)"
-	@$(MAKE) -C ./lib/get_next_line
+	@$(MAKE) -s -C ./lib/get_next_line
 
 $(READLINE):
 	@echo -n "install...	  readline	   "
@@ -138,15 +138,15 @@ clean:
 	@echo "$(BRED)Clean objects...$(DEFCL)"
 	@rm -rf $(OBJ_DIR)
 	@echo "$(BRED)Clean libft...$(DEFCL)"
-	@make clean -C ./lib/libft
+	@make clean -s -C ./lib/libft
 	@echo "$(BRED)Clean libgnl...$(DEFCL)"
-	@make clean -C ./lib/get_next_line
+	@make clean -s -C ./lib/get_next_line
 
 fclean: clean
 	@echo "$(BRED)Clean exec...$(DEFCL)"
 	@rm -f $(NAME)
-	@make fclean -C ./lib/libft
-	@make fclean -C ./lib/get_next_line
+	@make fclean -s -C ./lib/libft
+	@make fclean -s -C ./lib/get_next_line
 
 re: fclean all
 

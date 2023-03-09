@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/08 18:08:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 17:26:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_start(char **envp, t_env *env, char *input)
 char	*read_line(void)
 {
 	char *line;
-	
+
 	line = readline("\033[36;1mminishell$ \033[0m");
 	if (line == NULL)
 		exit(1);

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:55:17 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 12:57:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/09 14:29:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_helpsubstitute(int flag, void **content, t_env *var)
 			if (env_var->var_content)
 			{
 				free(*content);
-				*content = ft_strdup(env_var->var_content);
+				*content = env_var->var_content;
 			}
 		}
 		else
