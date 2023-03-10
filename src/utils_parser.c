@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:20:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 12:55:46 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/10 10:38:43 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_getwords(t_token *tkn, t_scmd *cmd)
 		}
 		if (tmp->content)
 		{
-			ft_lstadd_back(&arr[cmd->count], \
+			ft_lstadd_back(&(arr[cmd->count]), \
 				ft_lstnew(ft_strdup(tmp->content)));
 			free(tmp->content);
 			tmp->content = NULL;

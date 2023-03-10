@@ -6,14 +6,14 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/06 18:54:41 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/10 14:43:44 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 UNAME = $(shell uname)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-
+SHELL = /bin/zsh
 
 #FORMAT----------------------------------#
 DEFCL			=	$(shell echo "\033[0m")
@@ -67,13 +67,15 @@ SRC =		builtin_cd.c \
 			utils_cleanup.c \
 			utils_error.c \
 			utils_executor.c \
+			utils_expand.c \
 			utils_init.c \
 			utils_lexer.c \
 			utils_list.c \
 			utils_parser.c \
 			utils_prexec.c \
-			utils_tmp.c \
-			utils_unextkn.c
+			utils_remquotes.c \
+			utils_substitute.c \
+			utils_tmp.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
@@ -106,10 +108,10 @@ $(OBJ_DIR):
 
 $(LIBFT):
 	@echo "$(COLOR_MAKE)Make libft...$(DEFCL)"
-	@$(MAKE) -C ./lib/libft
+	@$(MAKE) -s -C ./lib/libft
 $(LIBGNL):
 	@echo "$(COLOR_MAKE)Make libgnl...$(DEFCL)"
-	@$(MAKE) -C ./lib/get_next_line
+	@$(MAKE) -s -C ./lib/get_next_line
 
 $(READLINE):
 	@echo -n "install...	  readline	   "
@@ -136,15 +138,15 @@ clean:
 	@echo "$(BRED)Clean objects...$(DEFCL)"
 	@rm -rf $(OBJ_DIR)
 	@echo "$(BRED)Clean libft...$(DEFCL)"
-	@make clean -C ./lib/libft
+	@make clean -s -C ./lib/libft
 	@echo "$(BRED)Clean libgnl...$(DEFCL)"
-	@make clean -C ./lib/get_next_line
+	@make clean -s -C ./lib/get_next_line
 
 fclean: clean
 	@echo "$(BRED)Clean exec...$(DEFCL)"
 	@rm -f $(NAME)
-	@make fclean -C ./lib/libft
-	@make fclean -C ./lib/get_next_line
+	@make fclean -s -C ./lib/libft
+	@make fclean -s -C ./lib/get_next_line
 
 re: fclean all
 
