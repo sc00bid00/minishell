@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 18:46:08 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:00:58 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_explode(t_list **lst, char *str);
 void	ft_substitute(t_list **lst, t_env *var);
 void	ft_reassemble(t_list *lst, t_list **node);
 void	ft_remquotes(t_token *tkn);
+int		ft_istoken(void *content);
 void	tmp_prtlst(t_token *tkn);
 
 #endif
