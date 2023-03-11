@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:12:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/11 08:16:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_pipe(t_scmd *scmd)
 	{
 		if (pipe(scmd->fd) == -1)
 			return (0);
-		if (!ft_builtin(scmd))
+		if (!ft_builtin(scmd) ||(scmd && scmd->n_scmd > 1))
 		{
 			if (!ft_helppipe(scmd))
 				return (0);
