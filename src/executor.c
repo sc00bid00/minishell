@@ -6,15 +6,57 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/11 14:16:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/11 15:23:34 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	ft_wait(t_scmd *scmd)
+{
+	t_list	*tmp;
+
+	while (1)
+	{
+		if (waitpid(-1, &scmd->wstatus, 0) == -1)
+			break ;
+		scmd->flag = WEXITSTATUS(scmd->wstatus);
+	}
+	tmp = scmd->hdocs;
+	while (tmp)
+	{
+		unlink(tmp->content);
+		tmp = tmp->next;
+	}
+}
+
 void	ft_execute(t_scmd *scmd)
 {
+	t_cmd	*cmd;
+	int		err;
 
+	cmd = scmd->cmd[scmd->count];
+	cmd->err_flag = 0;
+	if (!cmd->path)
+	{
+		if (cmd->arr && cmd->arr[0])
+		{
+			ft_eerr(cmd, 127, "minishell : command not found : ", cmd->arr[0]);
+			return ;
+		}
+		err = execve(cmd->path, cmd->arr, scmd->envp);
+		{
+			if (err == -1)
+			{
+				if (cmd->arr && cmd->arr[0])
+				{
+					ft_eerr(cmd, errno, "minishell : ", \
+						strerror(cmd->err_flag));
+					return ;
+				}
+			}
+		}
+	}
 }
 
 void	ft_dupfiles(t_scmd *scmd)
@@ -36,7 +78,7 @@ void	ft_dupfiles(t_scmd *scmd)
 		dup2(scmd->cmd[scmd->count]->fd_out, STDOUT_FILENO);
 		close(cmd->fd_out);
 	}
-	else if(scmd->id != 0)
+	else if (scmd->id != 0)
 	{
 		if (cmd->fd_in > 0)
 			close(cmd->fd_in);
@@ -63,7 +105,7 @@ void	ft_duppipe(t_scmd *scmd)
 	}
 }
 
-void	fun(t_scmd *scmd)
+void	ft_exec(t_scmd *scmd)
 {
 	scmd->count = 0;
 	while (scmd && scmd->cmd && scmd->cmd[scmd->count])
@@ -76,6 +118,8 @@ void	fun(t_scmd *scmd)
 		ft_duppipe(scmd);
 		ft_dupfiles(scmd);
 		ft_execute(scmd);
+		ft_wait(scmd);
 		scmd->count++;
 	}
+	return ;
 }

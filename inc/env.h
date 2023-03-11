@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:52:24 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/03 12:49:26 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:15:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ char	**create_env_array(t_env *env);
 t_env	*ret_var(t_env *env, char *str);
 t_env	*upd_var(t_env *env, char *var, char *new_val);
 int		del_var(t_env *env, char *var);
+
+char	**ft_arrenv(t_env *env);
 
 #endif

@@ -6,11 +6,33 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/11 15:15:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	**ft_arrenv(t_env *env)
+{
+	t_env	*tmp;
+	int		size;
+	char	**arr;
+	int		i;
+
+	size = ms_lstsize(env);
+	arr = ft_calloc(size + 1, sizeof(char *));
+	if (!arr)
+		exit(EXIT_FAILURE);
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		arr[i] = ms_multijoin(tmp->var_name, '=', tmp->var_content);
+		tmp = tmp->next;
+		i++;
+	}
+	return (arr);
+}
 
 /*	extract and return variable name from envp */
 char	*get_var_name(char *var)
