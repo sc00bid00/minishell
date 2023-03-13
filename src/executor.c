@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/11 15:23:34 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/13 10:33:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,17 @@ void	ft_execute(t_scmd *scmd)
 	t_cmd	*cmd;
 	int		err;
 
-	cmd = scmd->cmd[scmd->count];
-	cmd->err_flag = 0;
-	if (!cmd->path)
+	if (scmd->id == 0)
 	{
-		if (cmd->arr && cmd->arr[0])
+		cmd = scmd->cmd[scmd->count];
+		cmd->err_flag = 0;
+		if (!cmd->path)
 		{
-			ft_eerr(cmd, 127, "minishell : command not found : ", cmd->arr[0]);
-			return ;
+			if (cmd->arr && cmd->arr[0])
+			{
+				ft_eerr(cmd, 127, "minishell : command not found : ", cmd->arr[0]);
+				return ;
+			}
 		}
 		err = execve(cmd->path, cmd->arr, scmd->envp);
 		{
@@ -63,7 +66,7 @@ void	ft_dupfiles(t_scmd *scmd)
 {
 	t_cmd	*cmd;
 
-	if (scmd->cmd[scmd->count])
+	if (scmd && scmd->cmd && scmd->cmd[scmd->count])
 		cmd = scmd->cmd[scmd->count];
 	if (scmd->id == 0 && cmd->fd_in > 0)
 	{
@@ -71,11 +74,10 @@ void	ft_dupfiles(t_scmd *scmd)
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(cmd->fd_in);
 	}
-	if (scmd->id == 0 && scmd && scmd->cmd \
-		&& scmd->cmd[scmd->count]->fd_out > 1)
+	if (scmd->id == 0 && cmd->fd_out > 1)
 	{
 		cmd->fd_out = open(cmd->out_name, cmd->rule, 0644);
-		dup2(scmd->cmd[scmd->count]->fd_out, STDOUT_FILENO);
+		dup2(cmd->fd_out, STDOUT_FILENO);
 		close(cmd->fd_out);
 	}
 	else if (scmd->id != 0)
@@ -118,8 +120,8 @@ void	ft_exec(t_scmd *scmd)
 		ft_duppipe(scmd);
 		ft_dupfiles(scmd);
 		ft_execute(scmd);
-		ft_wait(scmd);
 		scmd->count++;
 	}
+	ft_wait(scmd);
 	return ;
 }

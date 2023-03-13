@@ -12,6 +12,7 @@
             "cwd": "${workspaceFolder}",
             "request": "launch",
             "externalConsole": true,
+            "autoAttachChildProcess": true,
             "MIMode": "lldb"
         }
     ]
