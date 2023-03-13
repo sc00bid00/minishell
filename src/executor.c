@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/13 17:51:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/13 19:19:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	ft_execute(t_scmd *scmd)
 	t_cmd	*cmd;
 	int		err;
 
+	cmd = scmd->cmd[scmd->count];
 	if (scmd->id == 0)
 	{
-		cmd = scmd->cmd[scmd->count];
 		cmd->err_flag = 0;
 		if (!cmd->path)
 		{
