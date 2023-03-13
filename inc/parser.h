@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/11 15:22:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/13 14:25:17 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_scmd
 	int		count;
 	int		n_scmd;
 	int		fd[2];
+	int		store[2];
 	int		id;
 	char	**envp;
 	int		wstatus;
