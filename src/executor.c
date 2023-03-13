@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/13 14:28:39 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/13 17:51:20 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ void	ft_execute(t_scmd *scmd)
 		{
 			if (cmd->arr && cmd->arr[0])
 			{
-				ft_eerr(cmd, 127, "minishell : command not found : ", cmd->arr[0]);
+				ft_eerr(cmd, 127, "minishell : ", "command not found : ", cmd->arr[0]);
+				ft_fdreset(scmd);
+				exit(cmd->err_flag);
+			}
+			else
+			{
+				cmd->err_flag = 1;
 				ft_fdreset(scmd);
 				exit(cmd->err_flag);
 			}
@@ -61,7 +67,7 @@ void	ft_execute(t_scmd *scmd)
 				if (cmd->arr && cmd->arr[0])
 				{
 					ft_eerr(cmd, errno, "minishell : ", \
-						strerror(cmd->err_flag));
+						strerror(cmd->err_flag), NULL);
 					ft_fdreset(scmd);
 					exit(cmd->err_flag);
 				}
@@ -81,6 +87,12 @@ void	ft_dupfiles(t_scmd *scmd)
 		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(cmd->fd_in);
+	}
+	else if (scmd->id == 0 && cmd->fd_in < 0)
+	{
+		ft_eerr(cmd, 1, "minishell : ", cmd->in_name, ": No such file or directory");
+		ft_fdreset(scmd);
+		exit(cmd->err_flag);
 	}
 	if (scmd->id == 0 && cmd->fd_out > 1)
 	{
@@ -102,14 +114,14 @@ void	ft_duppipe(t_scmd *scmd)
 	if (scmd->id == 0)
 	{
 		close(scmd->fd[0]);
-		if (scmd->count < scmd->n_scmd - 1)
+		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
 			dup2(scmd->fd[1], STDOUT_FILENO);
 		close(scmd->fd[1]);
 	}
 	else
 	{
 		close(scmd->fd[1]);
-		if (scmd->count < scmd->n_scmd - 1)
+		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
 			dup2(scmd->fd[0], STDIN_FILENO);
 		close(scmd->fd[0]);
 	}
