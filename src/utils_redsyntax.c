@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 19:05:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:25:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,20 @@
 
 t_token	*ft_syntaxerror(t_token *tkn, char *str)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	ft_putstr_fd(str, 2);
-	write (2, "\'\n", 2);
+	ft_eerr(NULL, 2, "minishell: syntax error near unexpected token `", str, "\'");
 	ft_cleantkn(tkn);
 	return (NULL);
 }
 
 void	ft_helpistoken(char ***t)
 {
-	*t = ft_calloc(6, sizeof(char *));
+	*t = ft_calloc(5, sizeof(char *));
 	if (!*t)
 		exit (EXIT_FAILURE);
 	(*t)[0] = "<";
 	(*t)[1] = "<<";
 	(*t)[2] = ">";
 	(*t)[3] = ">>";
-	(*t)[4] = "|";
-	(*t)[5] = NULL;
 }
 
 int	ft_istoken(void *content)
