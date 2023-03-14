@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/13 13:01:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/14 11:35:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,26 @@ void	tmp_prtcmd(t_scmd *scmd)
 	i = 0;
 	while (tmp && tmp[i])
 	{
-		ft_printf("Infile  %s\nfd      %d\nOutfile %s\nfd      %d\n"\
-			, tmp[i]->in_name, tmp[i]->fd_in, tmp[i]->out_name, tmp[i]->fd_out);
-		ft_printf("rule    %d\npath    %s\n", tmp[i]->rule, tmp[i]->path);
+		ft_putstr_fd("Infile\t", 2);
+		ft_putendl_fd(tmp[i]->in_name, 2);
+		ft_putstr_fd("fd_in\t", 2);
+		ft_putnbr_fd(tmp[i]->fd_in, 2);
+		ft_putstr_fd("\nOutfile\t", 2);
+		ft_putendl_fd(tmp[i]->out_name, 2);
+		ft_putstr_fd("fd_out\t", 2);
+		ft_putnbr_fd(tmp[i]->fd_out, 2);
+		ft_putstr_fd("\nrule\t", 2);
+		ft_putnbr_fd(tmp[i]->rule, 2);
+		ft_putstr_fd("\nPath\t", 2);
+		ft_putendl_fd(tmp[i]->path, 2);
 		j = 0;
 		while (tmp[i]->arr && tmp[i]->arr[j])
 		{
-			ft_printf("%d.%d     %s\n", i, j, tmp[i]->arr[j]);
+			ft_putendl_fd(tmp[i]->arr[j], 2);
 			j++;
 		}
 		if (tmp[i] && tmp[i]->arr)
-			ft_printf("%d.%d     %s\n", i, j, tmp[i]->arr[j]);
+			ft_putendl_fd(tmp[i]->arr[j], 2);
 		write(1, "\n", 1);
 		i++;
 	}
