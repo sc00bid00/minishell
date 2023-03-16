@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/13 14:25:17 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 07:51:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ t_scmd	*ft_parse(t_token *tkn, char **arr, t_env *env);
 t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env);
 int		ft_init_cmd(t_scmd *scmd);
 void	ft_gethdoc(t_token *tkn, t_scmd *cmd);
-void	ft_getredin(t_token *tkn, t_scmd *cmd);
-void	ft_getredout(t_token *tkn, t_scmd *cmd);
-void	ft_getappend(t_token *tkn, t_scmd *cmd);
+void	ft_getred(t_token *tkn, t_scmd *cmd);
 void	ft_getwords(t_token *tkn, t_scmd *cmd);
 int		ft_prexec(t_scmd *scmd);
 void	ft_isin(t_list *lst, t_scmd *scmd);

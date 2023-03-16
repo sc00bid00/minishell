@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:22:46 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:35:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 07:49:43 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ t_scmd	*ft_parse(t_token *tkn, char **arr, t_env *env)
 	while (scmd->count < scmd->n_scmd)
 	{
 		ft_gethdoc(tkn, scmd);
-		ft_getredin(tkn, scmd);
-		ft_getredout(tkn, scmd);
-		ft_getappend(tkn, scmd);
+		ft_getred(tkn, scmd);
+		// ft_getredin(tkn, scmd);
+		// ft_getredout(tkn, scmd);
+		// ft_getappend(tkn, scmd);
 		ft_getwords(tkn, scmd);
 		scmd->count++;
 	}
