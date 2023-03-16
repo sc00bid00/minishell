@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 15:15:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:36:25 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_fdreset(t_scmd *scmd)
 {
 	dup2(scmd->store[0], STDIN_FILENO);
 	dup2(scmd->store[1], STDOUT_FILENO);
+	close(scmd->store[0]);
+	close(scmd->store[1]);
 }
 
 void	ft_wait(t_scmd *scmd)
