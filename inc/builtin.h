@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:16:01 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 17:31:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/16 11:59:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <minishell.h>
 
+int		ft_builtin(t_scmd *scmd);
 int		builtin_pwd(t_cmd *cmd, t_env *env);
 int		builtin_cd(t_cmd *cmd, t_env *env);
 int		builtin_env(t_cmd *cmd, t_env *env);

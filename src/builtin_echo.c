@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/16 10:56:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:40:37 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,26 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	bool	option;
 
 	(void)env;
-	i = 0;
+	i = 1;
+	// printf("TEST\n");
+	// while (cmd->arr[i])
+	// {
+	// 	printf("arr at %d is %s\n",i, cmd->arr[i]);
+	// 	i++;
+	// }
 	option = false;
 	if (cmd->arr && cmd->arr[1] == NULL)
 		ft_putchar_fd('\n', 1);
-	else if (cmd->arr && !ft_strncmp(cmd->arr[1], "-n", 3))
+	else if (cmd->arr && !ft_strncmp(cmd->arr[1], "-n", 2))
 	{
 		option = true;
 		i++;
 	}
-	i = 1;
 	while (cmd->arr && cmd->arr[i])
-	{
-		if (ft_strncmp(cmd->arr[i], "-n", 3))
-		{
-			ft_putstr_fd(cmd->arr[i], 1);
-			if (cmd->arr[i + 1])
-				ft_putchar_fd(' ', 1);
-		}
+	{	
+		ft_putstr_fd(cmd->arr[i], 1);
+		if (cmd->arr[i + 1])
+			ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (option == true)
