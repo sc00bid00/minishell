@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 12:36:37 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:14:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,12 @@ void	ft_exec(t_scmd *scmd)
 		scmd->id = fork();
 		if (scmd->id == -1)
 			exit(EXIT_FAILURE);
-		// if (scmd->cmd[scmd->count + 1])
-			ft_builtin(scmd);
-		ft_duppipe(scmd);
-		ft_dupfiles(scmd);
-		ft_execute(scmd);
+		if (!ft_builtin(scmd))
+		{
+			ft_duppipe(scmd);
+			ft_dupfiles(scmd);
+			ft_execute(scmd);
+		}
 		scmd->count++;
 	}
 	ft_wait(scmd);
