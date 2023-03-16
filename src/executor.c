@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 12:52:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:15:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,95 +36,38 @@ void	ft_wait(t_scmd *scmd)
 	}
 }
 
+void	ft_parent(t_scmd *scmd)
+{
+	close(scmd->fd[1]);
+	if (scmd->count < scmd->n_scmd - 1)
+		dup2(scmd->fd[0], STDIN_FILENO);
+	close(scmd->fd[0]);
+
+}
+
 void	ft_execute(t_scmd *scmd)
 {
 	t_cmd	*cmd;
 	int		err;
 
 	cmd = scmd->cmd[scmd->count];
-	if (scmd->id == 0)
+	err = execve(cmd->path, cmd->arr, scmd->envp);
+	if (err == -1)
 	{
-		cmd->err_flag = 0;
-		if (!cmd->path)
-		{
-			if (cmd->arr && cmd->arr[0])
-			{
-				ft_eerr(cmd, 127, "minishell : ", "command not found : ", cmd->arr[0]);
-				ft_fdreset(scmd);
-				exit(cmd->err_flag);
-			}
-			else
-			{
-				cmd->err_flag = 1;
-				ft_fdreset(scmd);
-				exit(cmd->err_flag);
-			}
-		}
-		err = execve(cmd->path, cmd->arr, scmd->envp);
-		{
-			if (err == -1)
-			{
-				if (cmd->arr && cmd->arr[0])
-				{
-					ft_eerr(cmd, errno, "minishell : ", \
-						strerror(cmd->err_flag), NULL);
-					ft_fdreset(scmd);
-					exit(cmd->err_flag);
-				}
-			}
-		}
+		ft_eerr(cmd, errno, "minishell: ", strerror(errno), NULL);
+		exit(cmd->err_flag);
 	}
 }
 
-void	ft_dupfiles(t_scmd *scmd)
+void	ft_noredirect(t_scmd *scmd)
 {
 	t_cmd	*cmd;
 
-	if (scmd && scmd->cmd && scmd->cmd[scmd->count])
-		cmd = scmd->cmd[scmd->count];
-	if (scmd->id == 0 && cmd->fd_in > 0)
-	{
-		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
-		dup2(cmd->fd_in, STDIN_FILENO);
-		close(cmd->fd_in);
-	}
-	else if (scmd->id == 0 && cmd->fd_in < 0)
-	{
-		ft_eerr(cmd, 1, "minishell : ", cmd->in_name, ": No such file or directory");
-		ft_fdreset(scmd);
-		exit(cmd->err_flag);
-	}
-	if (scmd->id == 0 && cmd->fd_out > 1)
-	{
-		cmd->fd_out = open(cmd->out_name, cmd->rule, 0644);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_out);
-	}
-	else if (scmd->id != 0)
-	{
-		if (cmd->fd_in > 0)
-			close(cmd->fd_in);
-		if (cmd->fd_out > 1)
-			close(cmd->fd_out);
-	}
-}
-
-void	ft_duppipe(t_scmd *scmd)
-{
-	if (scmd->id == 0)
-	{
-		close(scmd->fd[0]);
-		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
-			dup2(scmd->fd[1], STDOUT_FILENO);
-		close(scmd->fd[1]);
-	}
-	else
-	{
-		close(scmd->fd[1]);
-		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
-			dup2(scmd->fd[0], STDIN_FILENO);
-		close(scmd->fd[0]);
-	}
+	cmd = scmd->cmd[scmd->count];
+	close(scmd->fd[0]);
+	if (!(cmd->stat & 0b001100) && scmd->count < scmd->n_scmd - 1)
+		dup2(scmd->fd[1], STDOUT_FILENO);
+	close(scmd->fd[1]);
 }
 
 void	ft_redirect(t_scmd *scmd)
@@ -132,9 +75,19 @@ void	ft_redirect(t_scmd *scmd)
 	t_cmd	*cmd;
 
 	cmd = scmd->cmd[scmd->count];
-	if (cmd->stat & IN_OK)
+	if (cmd->stat & IN_OK && cmd->stat & EX_OK)
 	{
 		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+		close(scmd->fd[0]);
+	}
+	if (cmd->stat & OUT_OK && cmd->stat & EX_OK)
+	{
+		cmd->fd_out = open(cmd->out_name, cmd->rule, 0644);
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
+		close(scmd->fd[1]);
 	}
 }
 
@@ -178,11 +131,12 @@ void	ft_child(t_scmd *scmd)
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
 	if (cmd->stat & CMD_KO)
-		ft_ftcmdissues(scmd);
+		ft_cmdissues(scmd);
 	if (cmd->stat & RED_OK)
 		ft_redirect(scmd);
-	// if (cmd->stat & EX_OK)
-		// ft_execute(scmd);
+	ft_noredirect(scmd);
+	if (cmd->stat & EX_OK)
+		ft_execute(scmd);
 }
 
 void	ft_exec(t_scmd *scmd)
