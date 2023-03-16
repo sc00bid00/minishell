@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/16 12:40:37 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:48:13 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	option = false;
 	if (cmd->arr && cmd->arr[1] == NULL)
 		ft_putchar_fd('\n', 1);
-	else if (cmd->arr && !ft_strncmp(cmd->arr[1], "-n", 2))
-	{
-		option = true;
+	while (cmd->arr && cmd->arr[i] && !ft_strncmp(cmd->arr[i], "-n", 2))
 		i++;
-	}
+	if (i == 1)
+		option = true;
 	while (cmd->arr && cmd->arr[i])
 	{	
 		ft_putstr_fd(cmd->arr[i], 1);
