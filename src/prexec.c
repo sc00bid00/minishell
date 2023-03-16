@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 12:17:05 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:34:08 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_validpath(char *path)
 	return (0);
 }
 
-char	**ft_helppaths(t_scmd *scmd)
+char	**ft_arrpaths(t_scmd *scmd)
 {
 	t_env	*env_var;
 	char	**arr;
@@ -39,10 +39,9 @@ void	ft_paths(t_scmd *scmd)
 {
 	int		j;
 	char	**arr;
-	char	*tmp;
 	t_cmd	*cmd;
 
-	arr = ft_helppaths(scmd);
+	arr = ft_arrpaths(scmd);
 	j = 0;
 	while (arr && arr[j])
 	{
@@ -51,9 +50,7 @@ void	ft_paths(t_scmd *scmd)
 			cmd->path = NULL;
 		else
 		{
-			tmp = ft_strjoin(arr[j], "/");
-			cmd->path = ft_strjoin(tmp, cmd->arr[0]);
-			free(tmp);
+			ft_helppaths(cmd, arr, j);
 			if (ft_validpath(cmd->path))
 			{
 				cmd->stat |= 0b100000;

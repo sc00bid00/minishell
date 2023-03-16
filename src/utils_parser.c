@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:20:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 07:51:42 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:50:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	ft_getred(t_token *tkn, t_scmd *cmd)
 		if (tmp->content && ((char *)tmp->content)[0] == '|')
 			break ;
 		if (tmp->content && (!ft_strncmp(tmp->content, ">", 1)
-			|| !ft_strncmp(tmp->content, ">>", 1)
-			|| !ft_strncmp(tmp->content, "<", 1) || flag))
+				|| !ft_strncmp(tmp->content, ">>", 1)
+				|| !ft_strncmp(tmp->content, "<", 1) || flag))
 		{
 			flag = flag ^ 1;
 			ft_lstadd_back(&arr[cmd->count], \

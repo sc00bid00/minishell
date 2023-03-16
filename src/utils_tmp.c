@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 09:21:19 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:41:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	tmp_prtlst(t_token *tkn)
 		ft_putendl_fd(tmp->content, 2);
 		tmp = tmp->next;
 	}
-
 	ft_putstr_fd("=== output end ===\nchain with", 2);
 	ft_putnbr_fd(tkn->count, 2);
 	ft_putendl_fd(" nodes\n*****", 2);
@@ -55,11 +54,26 @@ void	tmp_prtarrlst(t_scmd *cmd)
 	ft_printf("=== output end ===\n");
 }
 
+void	tmp_helpprtcmd(int i, t_cmd **tmp)
+{
+	int	j;
+
+	j = 0;
+	while (tmp[i]->arr && tmp[i]->arr[j])
+	{
+		ft_putendl_fd(tmp[i]->arr[j], 2);
+		j++;
+	}
+	if (tmp[i] && tmp[i]->arr)
+		ft_putendl_fd(tmp[i]->arr[j], 2);
+	write(1, "\n", 1);
+	i++;
+}
+
 void	tmp_prtcmd(t_scmd *scmd)
 {
 	t_cmd	**tmp;
 	int		i;
-	int		j;
 
 	tmp = scmd->cmd;
 	i = 0;
@@ -78,16 +92,7 @@ void	tmp_prtcmd(t_scmd *scmd)
 		ft_putnbr_fd(tmp[i]->rule, 2);
 		ft_putstr_fd("\nPath\t", 2);
 		ft_putendl_fd(tmp[i]->path, 2);
-		j = 0;
-		while (tmp[i]->arr && tmp[i]->arr[j])
-		{
-			ft_putendl_fd(tmp[i]->arr[j], 2);
-			j++;
-		}
-		if (tmp[i] && tmp[i]->arr)
-			ft_putendl_fd(tmp[i]->arr[j], 2);
-		write(1, "\n", 1);
-		i++;
+		tmp_helpprtcmd(i, tmp);
 	}
 }
 

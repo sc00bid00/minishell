@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 17:01:53 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:48:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_token	*ft_syntaxerror(t_token *tkn, char *str)
 {
-	ft_eerr(NULL, 2, "minishell: syntax error near unexpected token `", str, "\'");
+	ft_eerr("minishell: syntax error near unexpected token `", str, "\'");
 	ft_cleantkn(tkn);
 	return (NULL);
 }

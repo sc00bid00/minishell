@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 12:44:14 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:34:43 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_gethdoc(t_token *tkn, t_scmd *cmd);
 void	ft_getred(t_token *tkn, t_scmd *cmd);
 void	ft_getwords(t_token *tkn, t_scmd *cmd);
 int		ft_prexec(t_scmd *scmd);
+void	ft_helppaths(t_cmd *cmd, char **arr, int j);
 void	ft_isin(t_list *lst, t_scmd *scmd);
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd);
 int		ft_isword(t_list **lst, int *count, t_scmd *scmd);
