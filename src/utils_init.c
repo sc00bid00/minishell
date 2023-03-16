@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 13:23:28 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 08:39:29 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 {
 	t_scmd	*scmd;
 
+	(void)arr;
 	scmd = malloc(sizeof(t_scmd));
 	if (!scmd)
 		return (NULL);
@@ -69,7 +70,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 	}
 	scmd->count = 0;
 	scmd->arr[scmd->n_scmd] = NULL;
-	scmd->envp = arr;
+	scmd->envp = ft_arrenv(env);
 	scmd->wstatus = 0;
 	scmd->flag = 0;
 	scmd->env = env;
@@ -94,5 +95,6 @@ int	ft_init_cmd(t_scmd *scmd)
 	tmp->hd_flag = 0;
 	tmp->err_flag = 0;
 	tmp->rule = 0;
+	tmp->stat = 0b000000;
 	return (1);
 }

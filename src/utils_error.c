@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:57:28 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 15:49:10 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/16 11:00:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,13 @@ void	ft_error(char *s1, char *s2, char *mes)
 	else
 		str = mes;
 	ft_putstr_fd(str, 2);
+}
+
+void	ft_eerr(t_cmd *cmd, int err, void *fst_msg, void *snd_msg, void *trd_msg)
+{
+	ft_putstr_fd((char *)fst_msg, STDERR_FILENO);
+	ft_putstr_fd((char *)snd_msg, STDERR_FILENO);
+	ft_putendl_fd((char *)trd_msg, STDERR_FILENO);
+	if (cmd)
+		cmd->err_flag = err;
 }

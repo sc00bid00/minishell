@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/06 11:10:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:45:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*ft_lex(char *str, t_env *env)
 			;
 		else
 		{
-			if (tkn->c_sta != tkn->p_sta && tkn->p_sta != 0)
+			if ((tkn->c_sta >> 2) != (tkn->p_sta >> 2) && tkn->p_sta != 0)
 				ft_save(tkn);
 			if (tkn->c_sta == 0)
 				tkn->prev = tkn->curr + 1;
@@ -72,7 +72,7 @@ t_token	*ft_lex(char *str, t_env *env)
 		tkn->curr++;
 	}
 	ft_helplexer(tkn);
-	if (!ft_unextkn(tkn))
+	if (!ft_redsyntax(tkn))
 		return (NULL);
 	return (tkn);
 }

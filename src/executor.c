@@ -5,14 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 09:13:27 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 12:12:37 by lsordo           ###   ########.fr       */
+/*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
+/*   Updated: 2023/03/13 19:19:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* wait children processes, feedback exitstatus */
+void	ft_fdreset(t_scmd *scmd)
+{
+	dup2(scmd->store[0], STDIN_FILENO);
+	dup2(scmd->store[1], STDOUT_FILENO);
+}
+
 void	ft_wait(t_scmd *scmd)
 {
 	t_list	*tmp;
@@ -31,103 +36,115 @@ void	ft_wait(t_scmd *scmd)
 	}
 }
 
-/* infile to STDIN, if existing and accessible */
-int	ft_firstcmd(t_scmd *scmd)
+void	ft_execute(t_scmd *scmd)
 {
-	t_cmd	*tmp;
-
-	tmp = scmd->cmd[scmd->count];
-	if (!tmp->in_name)
-		dup2(scmd->fd[0], STDIN_FILENO);
-	else
-	{
-		tmp->fd_in = open(tmp->in_name, O_RDONLY, 0644);
-		if (tmp->fd_in < 0)
-		{
-			perror(tmp->in_name);
-			return (0);
-		}
-		dup2(tmp->fd_in, STDIN_FILENO);
-		close(tmp->fd_in);
-	}
-	return (1);
-}
-
-/* STDOUT to pipe, or to outfile if last cmd */
-int	ft_pipein(t_scmd *scmd)
-{
-	t_cmd	*tmp;
-
-	tmp = scmd->cmd[scmd->count];
-	if (tmp->fd_out == 1 && (scmd->count == scmd->n_scmd - 1))
-		dup2(tmp->fd_out, STDOUT_FILENO);
-	else if (!tmp->out_name || access(tmp->out_name, F_OK))
-		dup2(scmd->fd[1], STDOUT_FILENO);
-	else
-	{
-		tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
-		if (tmp->fd_out == -1)
-		{
-			perror(tmp->out_name);
-			return (0);
-		}
-		dup2(tmp->fd_out, STDOUT_FILENO);
-		if (tmp->fd_out > 1)
-			close(tmp->fd_out);
-	}
-	return (1);
-}
-
-/* child processes execve*/
-int	ft_child(t_scmd	*scmd)
-{
+	t_cmd	*cmd;
 	int		err;
-	t_cmd	*tmp;
 
-	tmp = scmd->cmd[scmd->count];
-	if (!ft_helpexecutor(scmd))
-		return (0);
-	if (!tmp->path)
+	cmd = scmd->cmd[scmd->count];
+	if (scmd->id == 0)
 	{
-		if (tmp->arr)
+		cmd->err_flag = 0;
+		if (!cmd->path)
 		{
-			ft_putstr_fd("command not found : ", STDERR_FILENO);
-			ft_putstr_fd(tmp->arr[0], STDERR_FILENO);
-			ft_putstr_fd("\n", STDERR_FILENO);
+			if (cmd->arr && cmd->arr[0])
+			{
+				ft_eerr(cmd, 127, "minishell : ", "command not found : ", cmd->arr[0]);
+				ft_fdreset(scmd);
+				exit(cmd->err_flag);
+			}
+			else
+			{
+				cmd->err_flag = 1;
+				ft_fdreset(scmd);
+				exit(cmd->err_flag);
+			}
 		}
-		return (0);
+		err = execve(cmd->path, cmd->arr, scmd->envp);
+		{
+			if (err == -1)
+			{
+				if (cmd->arr && cmd->arr[0])
+				{
+					ft_eerr(cmd, errno, "minishell : ", \
+						strerror(cmd->err_flag), NULL);
+					ft_fdreset(scmd);
+					exit(cmd->err_flag);
+				}
+			}
+		}
 	}
-	err = execve(tmp->path, tmp->arr, scmd->envp);
-	if (err == -1)
-	{
-		if (tmp->arr)
-			perror(tmp->arr[0]);
-		return (0);
-	}
-	return (1);
 }
 
-/* pipe, fork, STDIN to pipe (parent process)*/
-int	ft_pipe(t_scmd *scmd)
+void	ft_dupfiles(t_scmd *scmd)
 {
+	t_cmd	*cmd;
+
+	if (scmd && scmd->cmd && scmd->cmd[scmd->count])
+		cmd = scmd->cmd[scmd->count];
+	if (scmd->id == 0 && cmd->fd_in > 0)
+	{
+		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+	}
+	else if (scmd->id == 0 && cmd->fd_in < 0)
+	{
+		ft_eerr(cmd, 1, "minishell : ", cmd->in_name, ": No such file or directory");
+		ft_fdreset(scmd);
+		exit(cmd->err_flag);
+	}
+	if (scmd->id == 0 && cmd->fd_out > 1)
+	{
+		cmd->fd_out = open(cmd->out_name, cmd->rule, 0644);
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
+	}
+	else if (scmd->id != 0)
+	{
+		if (cmd->fd_in > 0)
+			close(cmd->fd_in);
+		if (cmd->fd_out > 1)
+			close(cmd->fd_out);
+	}
+}
+
+void	ft_duppipe(t_scmd *scmd)
+{
+	if (scmd->id == 0)
+	{
+		close(scmd->fd[0]);
+		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
+			dup2(scmd->fd[1], STDOUT_FILENO);
+		close(scmd->fd[1]);
+	}
+	else
+	{
+		close(scmd->fd[1]);
+		if (scmd->count < scmd->n_scmd - 1 && scmd->cmd[scmd->count]->arr)
+			dup2(scmd->fd[0], STDIN_FILENO);
+		close(scmd->fd[0]);
+	}
+}
+
+void	ft_exec(t_scmd *scmd)
+{
+	scmd->store[0] = dup(STDIN_FILENO);
+	scmd->store[1] = dup(STDOUT_FILENO);
 	scmd->count = 0;
 	while (scmd && scmd->cmd && scmd->cmd[scmd->count])
 	{
 		if (pipe(scmd->fd) == -1)
-			return (0);
-		if (!ft_builtin(scmd))
-		{
-			if (!ft_helppipe(scmd))
-				return (0);
-			else
-			{
-				close(scmd->fd[1]);
-				dup2(scmd->fd[0], STDIN_FILENO);
-				close(scmd->fd[0]);
-			}
-		}
+			exit(EXIT_FAILURE);
+		scmd->id = fork();
+		if (scmd->id == -1)
+			exit(EXIT_FAILURE);
+		ft_duppipe(scmd);
+		ft_dupfiles(scmd);
+		ft_execute(scmd);
 		scmd->count++;
 	}
 	ft_wait(scmd);
-	return (scmd->flag);
+	ft_fdreset(scmd);
+	return ;
 }

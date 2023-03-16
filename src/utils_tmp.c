@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:27:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 09:21:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ void	tmp_prtlst(t_token *tkn)
 {
 	t_list	*tmp;
 
-	ft_printf("*****\ntemp output for debugginig purpose\n");
-	ft_printf("*****\ninput string \"%s\"\n=== output start ===\n", tkn->str);
+	ft_putendl_fd("*****\ntemp output for debugginig purpose", 2);
+	ft_putstr_fd("*****\ninput string", 2);
+	ft_putstr_fd(tkn->str, 2);
+	ft_putendl_fd("\n=== output start ===", 2);
 	tmp = tkn->lst;
 	while (tmp)
 	{
-		ft_printf("%s \n", tmp->content);
+		ft_putendl_fd(tmp->content, 2);
 		tmp = tmp->next;
 	}
-	ft_printf("=== output end ===\nchain with %d nodes\n*****\n", tkn->count);
+
+	ft_putstr_fd("=== output end ===\nchain with", 2);
+	ft_putnbr_fd(tkn->count, 2);
+	ft_putendl_fd(" nodes\n*****", 2);
 }
 
 /* print *lst->content to stdout*/
@@ -60,17 +65,27 @@ void	tmp_prtcmd(t_scmd *scmd)
 	i = 0;
 	while (tmp && tmp[i])
 	{
-		ft_printf("Infile  %s\nfd      %d\nOutfile %s\nfd      %d\n"\
-			, tmp[i]->in_name, tmp[i]->fd_in, tmp[i]->out_name, tmp[i]->fd_out);
-		ft_printf("rule    %d\npath    %s\n", tmp[i]->rule, tmp[i]->path);
+		ft_putnbr_fd(tmp[i]->stat, 2);
+		ft_putstr_fd("\nInfile\t", 2);
+		ft_putendl_fd(tmp[i]->in_name, 2);
+		ft_putstr_fd("fd_in\t", 2);
+		ft_putnbr_fd(tmp[i]->fd_in, 2);
+		ft_putstr_fd("\nOutfile\t", 2);
+		ft_putendl_fd(tmp[i]->out_name, 2);
+		ft_putstr_fd("fd_out\t", 2);
+		ft_putnbr_fd(tmp[i]->fd_out, 2);
+		ft_putstr_fd("\nrule\t", 2);
+		ft_putnbr_fd(tmp[i]->rule, 2);
+		ft_putstr_fd("\nPath\t", 2);
+		ft_putendl_fd(tmp[i]->path, 2);
 		j = 0;
 		while (tmp[i]->arr && tmp[i]->arr[j])
 		{
-			ft_printf("%d.%d     %s\n", i, j, tmp[i]->arr[j]);
+			ft_putendl_fd(tmp[i]->arr[j], 2);
 			j++;
 		}
 		if (tmp[i] && tmp[i]->arr)
-			ft_printf("%d.%d     %s\n", i, j, tmp[i]->arr[j]);
+			ft_putendl_fd(tmp[i]->arr[j], 2);
 		write(1, "\n", 1);
 		i++;
 	}

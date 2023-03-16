@@ -7,10 +7,12 @@
         {
             "name": "Launch",
             "type": "cppdbg",
-            "program": "/Users/lsordo/Documents/42HN/42_minishell/executor",
+            "program": "/Users/lsordo/Documents/42HN/42_minishell/minishell",
             "args": [],
             "cwd": "${workspaceFolder}",
             "request": "launch",
+            "externalConsole": true,
+            "autoAttachChildProcess": true,
             "MIMode": "lldb"
         }
     ]
