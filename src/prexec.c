@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 12:05:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:17:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	ft_paths(t_scmd *scmd)
 			cmd->path = ft_strjoin(tmp, cmd->arr[0]);
 			free(tmp);
 			if (ft_validpath(cmd->path))
+			{
+				cmd->stat |= 0b100000;
 				break ;
+			}
 			free(cmd->path);
 			cmd->path = NULL;
 		}
@@ -90,6 +93,7 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 int	ft_prexec(t_scmd *scmd)
 {
 	t_list	*tmp;
+	t_cmd	*cmd;
 	int		count;
 
 	scmd->count = 0;
@@ -99,6 +103,7 @@ int	ft_prexec(t_scmd *scmd)
 		count = ft_lstsize(tmp);
 		if (!ft_init_cmd(scmd))
 			return (0);
+		cmd = scmd->cmd[scmd->count];
 		while (tmp)
 		{
 			if (!ft_direct(&tmp, &count, scmd))
@@ -107,6 +112,8 @@ int	ft_prexec(t_scmd *scmd)
 				tmp = tmp->next;
 		}
 		ft_paths(scmd);
+		if (!(cmd->path) && cmd->arr && cmd->arr[0])
+			cmd->stat |= 0b010000;
 		scmd->count++;
 	}
 	return (1);
