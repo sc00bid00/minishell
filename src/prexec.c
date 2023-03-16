@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 14:36:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:05:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 		ft_isout(*tmp, count, scmd);
 		*tmp = (*tmp)->next;
 	}
-	else if (tmp && *tmp)
+	else if (tmp && *tmp
+		&& !(scmd->cmd[scmd->count]->stat & 0b000101))
 	{
 		if (!ft_isword(tmp, count, scmd))
 			return (0);
