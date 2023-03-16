@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 10:43:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 16:00:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	ft_cleanscmd(t_scmd *cmd)
 	free(cmd->arr);
 	if (cmd->hdocs)
 		ft_cleanlst(cmd->hdocs);
+	if (cmd->envp)
+		ft_freesplit(cmd->envp);
 	free(cmd);
 }
 
