@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/13 19:19:49 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:52:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,64 @@ void	ft_duppipe(t_scmd *scmd)
 	}
 }
 
+void	ft_redirect(t_scmd *scmd)
+{
+	t_cmd	*cmd;
+
+	cmd = scmd->cmd[scmd->count];
+	if (cmd->stat & IN_OK)
+	{
+		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
+	}
+}
+
+void	ft_cmdissues(t_scmd *scmd)
+{
+	t_cmd	*cmd;
+
+	cmd = scmd->cmd[scmd->count];
+	if (cmd->stat & CMD_KO)
+		ft_eerr(cmd, 127, "minishell: ", cmd->arr[0], ": command not found");
+	else if (cmd->stat & 0)
+		cmd->err_flag = 0;
+	if (cmd->stat & IN_OK)
+		close(cmd->fd_in);
+	if (cmd->stat & OUT_OK)
+		close(cmd->fd_out);
+	close(scmd->fd[0]);
+	close(scmd->fd[1]);
+	exit(cmd->err_flag);
+}
+
+void	ft_fileissues(t_scmd *scmd)
+{
+	t_cmd	*cmd;
+
+	cmd = scmd->cmd[scmd->count];
+	if (cmd->stat & IN_KO)
+		ft_eerr(cmd, 1, "minishell: ", cmd->in_name, ": No such file or directory");
+	else if (cmd->stat & OUT_KO)
+		ft_eerr(cmd, 1, "minishell: ", cmd->out_name, ": Permission denied");
+	close(scmd->fd[0]);
+	close(scmd->fd[1]);
+	exit(cmd->err_flag);
+}
+
+void	ft_child(t_scmd *scmd)
+{
+	t_cmd	*cmd;
+
+	cmd = scmd->cmd[scmd->count];
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(scmd);
+	if (cmd->stat & CMD_KO)
+		ft_ftcmdissues(scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(scmd);
+	// if (cmd->stat & EX_OK)
+		// ft_execute(scmd);
+}
+
 void	ft_exec(t_scmd *scmd)
 {
 	scmd->store[0] = dup(STDIN_FILENO);
@@ -139,9 +197,10 @@ void	ft_exec(t_scmd *scmd)
 		scmd->id = fork();
 		if (scmd->id == -1)
 			exit(EXIT_FAILURE);
-		ft_duppipe(scmd);
-		ft_dupfiles(scmd);
-		ft_execute(scmd);
+		if (scmd->id == 0)
+			ft_child(scmd);
+		else
+			ft_parent(scmd);
 		scmd->count++;
 	}
 	ft_wait(scmd);

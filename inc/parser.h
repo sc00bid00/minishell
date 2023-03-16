@@ -6,12 +6,20 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 10:37:46 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:44:14 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+# define FILE_KO 0b000101
+# define IN_KO 0b000001
+# define OUT_KO 0b000100
+# define RED_OK 0b001010
+# define IN_OK 0b000010
+# define OUT_OK 0b001000
+# define CMD_KO 0b010000
+# define EX_OK 0b100000
 
 /* cmd to be used in execution */
 typedef struct s_cmd
