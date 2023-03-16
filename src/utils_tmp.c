@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/14 11:35:56 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 09:21:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	tmp_prtcmd(t_scmd *scmd)
 	i = 0;
 	while (tmp && tmp[i])
 	{
-		ft_putstr_fd("Infile\t", 2);
+		ft_putnbr_fd(tmp[i]->stat, 2);
+		ft_putstr_fd("\nInfile\t", 2);
 		ft_putendl_fd(tmp[i]->in_name, 2);
 		ft_putstr_fd("fd_in\t", 2);
 		ft_putnbr_fd(tmp[i]->fd_in, 2);

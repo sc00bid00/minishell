@@ -6,13 +6,14 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 07:51:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 10:37:46 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+/* cmd to be used in execution */
 typedef struct s_cmd
 {
 	char	*in_name;
@@ -25,8 +26,10 @@ typedef struct s_cmd
 	int		err_flag;
 	int		hd_flag;
 	int		rule;
+	int		stat;
 }			t_cmd;
 
+/* simple cmd used in parser and prexec */
 typedef struct s_scmd
 {
 	int		count;

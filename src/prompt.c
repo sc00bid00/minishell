@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/11 15:20:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 09:21:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_start(char **envp, t_env *env, char *input)
 	scmd = ft_parse(tkn, envp, env);
 	if (!scmd)
 		return (1);
+	tmp_prtcmd(scmd);
 	ft_exec(scmd);
 	ret = scmd->flag;
 	ft_cleancmd(scmd);

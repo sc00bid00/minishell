@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/04 10:49:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/16 10:09:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ void	ft_isout(t_list *lst, int *count, t_scmd *scmd)
 			free(tmp->out_name);
 		tmp->out_name = ft_strdup(lst->next->content);
 		tmp->fd_out = open(tmp->out_name, tmp->rule, 0644);
+		if (tmp->fd_out == -1 && !(tmp->stat & 0b000101))
+		{
+			if (tmp->stat & 0b000010)
+				tmp->stat ^= 0b000010;
+			tmp->stat |= 0b000100;
+		}
+		else if (!(tmp->stat & 0b000101))
+			tmp->stat |= 0b001000;
 		close(tmp->fd_out);
 	}
 	*count -= 2;
@@ -78,6 +86,8 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 		free(block);
 	}
 	close(tmp->fd_in);
+	if (!(tmp->stat & 0b000101))
+		tmp->stat |= 0b000010;
 }
 
 static void	ft_invalid(char	*filename, t_scmd *scmd)
@@ -91,14 +101,17 @@ static void	ft_invalid(char	*filename, t_scmd *scmd)
 			free(tmp->in_name);
 		tmp->in_name = ft_strdup(filename);
 		tmp->fd_in = -1;
-		tmp->err_flag = 1;
+		if (tmp->stat & 0b000010)
+			tmp->stat ^= 0b000010;
+		tmp->stat |= 0b000001;
 	}
-	else if (!tmp->hd_flag)
+	else
 	{
 		if (tmp->in_name)
 			free(tmp->in_name);
 		tmp->in_name = ft_strdup(filename);
 		tmp->fd_in = 3;
+		tmp->stat |= 0b000010;
 	}
 }
 
@@ -121,7 +134,7 @@ void	ft_isin(t_list *lst, t_scmd *scmd)
 		}
 		else
 		{
-			if (!tmp->err_flag)
+			if (!(tmp->stat & 0b000101))
 				ft_invalid(lst->next->content, scmd);
 		}
 	}
