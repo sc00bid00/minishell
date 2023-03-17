@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 13:17:30 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/17 11:28:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*	getcwd returns pointer to path if sucessful, else it returns NULL */
+/*	getcwd returns pointer to path if sucessfull, else it returns NULL */
 int	builtin_pwd(t_cmd *cmd, t_env *env)
 {
 	char	*pwd;
@@ -28,7 +28,8 @@ int	builtin_pwd(t_cmd *cmd, t_env *env)
 	}
 	else
 	{
-		write (1, "\n", 1);
+		ft_error("minishell :", "pwd: ", NULL);
+		free(pwd);
 		return (EXIT_FAILURE);
 	}
 }

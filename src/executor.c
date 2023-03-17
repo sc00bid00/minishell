@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 18:00:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/17 11:19:12 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,24 @@ void	ft_parent(t_scmd *scmd)
 void	ft_child(t_scmd *scmd)
 {
 	t_cmd	*cmd;
+	int	(*fun)(t_cmd *, t_env *);
+	fun = ft_builtin(scmd);
 
 	cmd = scmd->cmd[scmd->count];
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
-	if (cmd->stat & CMD_KO)
+	if ((cmd->stat & CMD_KO) && !cmd->builtin)
 		ft_cmdissues(scmd);
 	if (cmd->stat & RED_OK)
 		ft_redirect(scmd);
 	ft_noredirect(scmd);
-	if (cmd->stat & EX_OK)
+	if ((cmd->stat & EX_OK) && !cmd->builtin)
 		ft_execute(scmd);
+	else if (cmd->stat & EX_OK)
+	{
+		fun(cmd, scmd->env);
+		exit (EXIT_SUCCESS);
+	}
 }
 
 void	ft_exec(t_scmd *scmd)

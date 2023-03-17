@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 18:34:43 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/17 10:31:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_cmd
 	int		hd_flag;
 	int		rule;
 	int		stat;
+	int		builtin;
 }			t_cmd;
 
 /* simple cmd used in parser and prexec */

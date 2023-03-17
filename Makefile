@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/16 18:35:09 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/17 10:14:01 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ INC_DIR =	-I ./inc \
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
 
-SRC =		builtin_cd.c \
+SRC =		builtin.c \
+			builtin_cd.c \
 			builtin_echo.c \
 			builtin_env.c \
 			builtin_exit.c \

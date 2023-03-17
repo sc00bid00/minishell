@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 17:58:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,22 @@ t_env	*ret_var(t_env *env, char *str)
 	t_env *temp;
 
 	temp = env;
-	while (temp->next)
+	while (temp)
 	{
-		if (!ft_strncmp(temp->var_name, str, strlen(str)))
-			return (temp);
-		temp = temp->next;
+		if( ft_strlen(str) >= ft_strlen(temp->var_name))
+		{
+			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name) + 1))
+				return (temp);
+		}
+		else
+		{
+			if (!ft_strncmp(temp->var_name, str, ft_strlen(str) + 1))
+				return (temp);
+		}
+		if (temp->next)
+			temp = temp->next;
+		else
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -51,8 +62,10 @@ int	del_var(t_env *env, char *var)
 	if (temp)
 	{
 		free(temp->var_content);
+		temp->var_content = NULL;
 		free (temp->var_name);
-		free (temp);
+		temp->var_name = NULL;
+		temp = NULL;
 		return (0);
 	}
 	return (1);

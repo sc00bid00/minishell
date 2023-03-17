@@ -3,34 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 13:03:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/17 11:53:00 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*	if argument is cd (argc == 1) or cd ~, return home directory */
-char	*get_dir(int argc, char **argv, t_env *env)
+/*	if argument is cd without additional parameter, return home directory */
+char	*get_dir(t_cmd *cmd, t_env *env)
 {
 	char	*dir;
 	t_env	*temp;
+	
+	(void)	env;
+	int i;
 
-	if (argc == 1 || (argc == 2 && ft_strncmp(argv[1], "~", 2)))
+	i = 0;
+	// while (cmd->arr[i])
+	// {
+	// 	printf("arg is %s\n", cmd->arr[i]);
+	// 	i++;	
+	// }
+	if (cmd->arr && cmd->arr[1] == NULL)
 	{
 		temp = ret_var(env, "HOME");
 		dir = temp->var_content;
 	}
-	else if (argc == 2 && ft_strncmp(argv[1], "-", 2))
-	{
-		temp =	ret_var(env, "OLDPWD");
-		dir =	temp->var_content;
-	}
+	// else if (cmd->arr && cmd->arr[2] == NULL && !ft_strncmp(cmd->arr[1], "-", 2))
+	// {
+	// 	temp =	ret_var(env, "OLDPWD");
+	// 	dir =	temp->var_content;
+	// }
 	else
-		dir = argv[1];
-	// printf("%s\n", dir);
+		dir = cmd->arr[1];
+	printf("directory is: %s\n", dir);
 	return (dir);
 }
 
@@ -49,7 +58,7 @@ void	update_pwd(t_env *env)
 	if (str)
 	{
 		if (!upd_var(env, "OLDPWD", str))
-			ft_error("cd", "PWD", 1);
+			ft_error("cd: ", "PWD: ", ERROR_1);
 	}
 	else
 		printf("ERROR\n");
@@ -63,33 +72,33 @@ int	builtin_cd(t_cmd *cmd, t_env *env)
 {
 	char *dir;
 
-	dir = get_dir(cmd->argc, cmd->arr, env);
+	dir = get_dir(cmd, env);
 
 	if (dir == NULL)
 	{
-		ft_error("minishell", dir, 1);
+		ft_error("minishell: ", dir, ERROR_2);
 		return (ERROR);
 	}
 	if (chdir(dir) == ERROR)
 	{
 		printf("%s\n", dir);
-		ft_error("cd", cmd->arr[0], 0);
+		ft_error("cd", cmd->arr[0], NULL);
 		return (ERROR);
 	}
 	update_pwd(env);
-	//test_print
-	char *pwd;
-	char *oldpwd;
-	t_env *temp;
-	t_env *temp2;
-	temp = ret_var(env, "PWD");
-	pwd = temp->var_content;
-	printf("PWD is %s\n", pwd);
-	temp2 = ret_var(env, "OLDPWD");
-	if (temp2)
-	{
-		oldpwd = temp2->var_content;
-		printf("OLDPWD is %s\n", oldpwd);
-	}
+	// //test_print
+	// char *pwd;
+	// char *oldpwd;
+	// t_env *temp;
+	// t_env *temp2;
+	// temp = ret_var(env, "PWD");
+	// pwd = temp->var_content;
+	// printf("PWD is %s\n", pwd);
+	// temp2 = ret_var(env, "OLDPWD");
+	// if (temp2)
+	// {
+	// 	oldpwd = temp2->var_content;
+	// 	printf("OLDPWD is %s\n", oldpwd);
+	// }
 	return (EXIT_SUCCESS);
 }

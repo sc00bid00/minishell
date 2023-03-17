@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:57:28 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/16 18:48:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/17 11:23:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_error(char *s1, char *s2, int i)
+void	ft_error(char *s1, char *s2, char *mes)
 {
 	char	*str;
 
 	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd (s2, 2);
-	ft_putstr_fd(": ", 2);
-	if (i == 0)
+	ft_putstr_fd(s2, 2);
+	if (!mes)
 		str = strerror(errno);
 	else
-		str = "meine Fehlermeldung";
+		str = mes;
 	ft_putstr_fd(str, 2);
 }
 

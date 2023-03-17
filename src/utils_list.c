@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:05:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:37:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_env	*ms_lstlast(t_env *lst)
 t_env	*ms_lstadd_back(t_env *env, t_env *temp)
 {
 	t_env	*ptr;
-	ptr = NULL;
 
+	ptr = NULL;
 	ptr = ms_lstlast(env);
 	if (ptr)
 		ptr->next = temp;

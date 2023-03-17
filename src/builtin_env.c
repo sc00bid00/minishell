@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 13:35:13 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/06 15:10:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	print_env(t_env *env, bool ex)
 		return (ERROR);
 	while (env != NULL)
 	{
-		if (ex)
-			printf("declare -x ");
 		if (env->var_name)
 		{
+			if (ex)
+				printf("declare -x ");
 			printf("%s", env->var_name);
 			if (env->var_content)
 				printf("=");
