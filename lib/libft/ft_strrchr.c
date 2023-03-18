@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:41:49 by lsordo            #+#    #+#             */
-/*   Updated: 2022/11/03 14:28:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/18 10:26:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	*ft_strrchr(const char *s, int c)
 	len = ft_strlen(s);
 	while (len > 0)
 	{
-		if (s[len] == ch)
+		if (s && s[len] == ch)
 			return ((char *)&s[len]);
 		len--;
 	}
-	if (s[0] == ch)
+	if (s && s[0] == ch)
 		return ((char *)&s[len]);
 	return (NULL);
 }
