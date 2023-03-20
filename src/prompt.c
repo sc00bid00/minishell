@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/17 10:12:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:35:25 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_start(char **envp, t_env *env, char *input)
 
 	tkn = ft_lex(input, env);
 	if (!tkn)
-		return (2);
+		return (EXIT_FAILURE);
 	scmd = ft_parse(tkn, envp, env);
 	if (!scmd)
-		return (1);
+		return (EXIT_FAILURE);
 	ft_exec(scmd);
-	ret = scmd->flag;
+	ret = exitstatus;
 	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);
 	ft_cleantkn(tkn);
@@ -51,7 +51,7 @@ int	get_input(char **envp, t_env *env)
 	{
 		if (input && *input)
 			add_history(input);
-		exitstatus = ft_start(envp, env, input);
+		ft_start(envp, env, input);
 		free(input);
 	}
 	return (exitstatus);

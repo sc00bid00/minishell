@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 14:15:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:22:41 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ void	ft_wait(t_scmd *scmd)
 {
 	t_list	*tmp;
 
-	while (1)
+	while (waitpid(-1, &scmd->wstatus, 0) != -1)
 	{
-		if (waitpid(-1, &scmd->wstatus, 0) == -1)
-			break ;
-		scmd->flag = WEXITSTATUS(scmd->wstatus);
+		if (WIFEXITED(scmd->wstatus))
+			exitstatus = WEXITSTATUS(scmd->wstatus);
+		ft_putstr_fd("status ", 2);
+		ft_putnbr_fd(exitstatus, 2);
+		ft_putchar_fd(' ', 2);
+		ft_putnbr_fd((int)getpid(), 2);
+		ft_putchar_fd('\n', 2);
 	}
 	tmp = scmd->hdocs;
 	while (tmp)
@@ -95,7 +99,10 @@ void	ft_exec(t_scmd *scmd)
 			scmd->count++;
 		}
 	}
-	ft_wait(scmd);
-	ft_fdreset(scmd);
+	if (scmd->id != 0)
+	{
+		ft_wait(scmd);
+		ft_fdreset(scmd);
+	}
 	return ;
 }
