@@ -6,16 +6,16 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 11:56:09 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/17 10:47:21 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:37:33 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int (*ft_builtin(t_scmd *scmd))(t_cmd *, t_env *)
+int	(*ft_builtin(t_scmd *scmd))(t_cmd *cmd, t_env *env)
 {
 	int	(*fun)(t_cmd *, t_env *);
-	
+
 	if (!ft_strncmp(scmd->cmd[scmd->count]->arr[0], "exit", 4))
 		fun = &builtin_exit;
 	else if (!ft_strncmp(scmd->cmd[scmd->count]->arr[0], "echo", 4))
@@ -32,6 +32,6 @@ int (*ft_builtin(t_scmd *scmd))(t_cmd *, t_env *)
 		fun = &builtin_export;
 	else
 		return (NULL);
-	scmd->cmd[scmd->count]->builtin = 1; 
+	scmd->cmd[scmd->count]->builtin = 1;
 	return (fun);
 }

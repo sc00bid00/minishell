@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 17:57:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:35:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_valid_arg(char c, bool first)
 	}
 	else
 	{
-		if(!ft_isdigit(c) || (c >= 'A' && c <= 'Z') || c == '_')
+		if (!ft_isdigit(c) || (c >= 'A' && c <= 'Z') || c == '_')
 			return (true);
 	}
 	return (false);
@@ -36,7 +36,6 @@ char	*get_var_name_export(char *var)
 	char	*var_name;
 
 	i = 0;
-
 	if (is_valid_arg(var[0], true))
 		i++;
 	else

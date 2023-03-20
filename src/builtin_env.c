@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 15:10:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:34:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	print_env(t_env *env, bool ex)
 			else
 				printf("\n");
 		}
-		if(env->var_content)
+		if (env->var_content)
 			printf("%s\n", env->var_content);
 		if (env->next)
 			env = env->next;

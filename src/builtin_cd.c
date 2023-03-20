@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 14:16:23 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:34:07 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_dir(t_cmd *cmd, t_env *env)
 	}
 	else if (cmd->arr && !ft_strncmp(cmd->arr[1], "-", 2))
 	{
-		temp =	ret_var(env, "OLDPWD");
+		temp = ret_var(env, "OLDPWD");
 		if (temp)
 			dir = temp->var_content;
 		else
@@ -64,10 +64,9 @@ int	update_pwd(t_env *env)
 /*	use chdir function to change dir */
 int	builtin_cd(t_cmd *cmd, t_env *env)
 {
-	char *dir;
+	char	*dir;
 
 	dir = get_dir(cmd, env);
-
 	if (cmd && cmd->arr && chdir(dir) == ERROR)
 	{
 		ft_error("minishell: cd: ", cmd->arr[1], NULL);
@@ -77,7 +76,7 @@ int	builtin_cd(t_cmd *cmd, t_env *env)
 	else
 		update_pwd(env);
 	if (cmd->arr && !ft_strncmp(cmd->arr[1], "-", 2))
-		printf("%s\n", getcwd(NULL,0));
+		printf("%s\n", getcwd(NULL, 0));
 	exitstatus = 0;
 	return (EXIT_SUCCESS);
 }

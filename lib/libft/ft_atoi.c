@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:19:04 by lsordo            #+#    #+#             */
-/*   Updated: 2022/11/02 16:55:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:59:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_atoi(const char *str)
 {
 	int	num;
 	int	sign;
+	if (str == NULL)
+		return (0);
 
 	num = 0;
 	sign = 1;

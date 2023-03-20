@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 14:15:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:50:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_wait(t_scmd *scmd)
 	{
 		if (waitpid(-1, &scmd->wstatus, 0) == -1)
 			break ;
-		scmd->flag = WEXITSTATUS(scmd->wstatus);
+		scmd->fl add ag = WEXITSTATUS(scmd->wstatus);
 	}
 	tmp = scmd->hdocs;
 	while (tmp)
