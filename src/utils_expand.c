@@ -6,30 +6,50 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 13:46:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 10:42:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	ft_helpexplode(char *str, int p[2], t_list ***lst, int *flag)
+{
+	char	*tmp;
+
+	while (str && str[p[1]])
+	{
+		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"' || \
+			str[p[1]] == '\'' || str[p[1]] == '~'
+				|| (*flag && !ft_iscapital(str[p[1]]))))
+		{
+			if (str[p[1]] == '$' || (*flag && !ft_iscapital(str[p[1]])))
+				*flag ^= 1;
+			tmp = ft_substr(str, p[0], p[1] - p[0]);
+			ft_lstadd_back(*lst, ft_lstnew(tmp));
+			p[0] = p[1];
+		}
+		else if (!p[1] && str[p[1]] == '~')
+		{
+			tmp = ft_strdup("~");
+			ft_lstadd_back(*lst, ft_lstnew(tmp));
+			p[0] = 1;
+		}
+		p[1]++;
+	}
+}
+
 void	ft_explode(t_list **lst, char *str)
 {
 	int		p[2];
 	char	*tmp;
+	int		flag;
 
 	p[0] = 0;
 	p[1] = 0;
-	while (str && str[p[1]])
-	{
-		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"' || \
-			str[p[1]] == '\'' || str[p[1]] == '~'))
-		{
-			tmp = ft_substr(str, p[0], p[1] - p[0]);
-			ft_lstadd_back(lst, ft_lstnew(tmp));
-			p[0] = p[1];
-		}
-		p[1]++;
-	}
+	flag = 0;
+	if (!p[1] && str[p[1]] == '$')
+		flag ^= 1;
+	ft_helpexplode(str, p, &lst, &flag);
 	if (p[1] - p[0] >= 1)
 	{
 		tmp = ft_substr(str, p[0], p[1] - p[0]);

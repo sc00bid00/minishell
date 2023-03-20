@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/17 10:31:48 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:50:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_helppaths(t_cmd *cmd, char **arr, int j);
 void	ft_isin(t_list *lst, t_scmd *scmd);
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd);
 int		ft_isword(t_list **lst, int *count, t_scmd *scmd);
+void	ft_helpisheredoc(t_scmd	*scmd, t_cmd **tmp);
 void	ft_cleancmd(t_scmd *scmd);
 void	ft_cleanscmd(t_scmd *cmd);
 void	tmp_prtarrlst(t_scmd *cmd);

@@ -1,6 +1,6 @@
-lib
 pipex
 out*
 testfile
 minishell
-obj
+*.o
+*.a

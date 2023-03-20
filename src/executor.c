@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:15:25 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:15:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	ft_parent(t_scmd *scmd)
 void	ft_child(t_scmd *scmd)
 {
 	t_cmd	*cmd;
-	int	(*fun)(t_cmd *, t_env *);
-	fun = ft_builtin(scmd);
+	int		(*fun)(t_cmd *, t_env *);
 
+	fun = ft_builtin(scmd);
 	cmd = scmd->cmd[scmd->count];
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
-	if ((cmd->stat & CMD_KO) && !cmd->builtin)
+	if (cmd->stat & CMD_KO)
 		ft_cmdissues(scmd);
 	if (cmd->stat & RED_OK)
 		ft_redirect(scmd);

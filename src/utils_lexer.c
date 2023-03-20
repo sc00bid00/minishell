@@ -6,11 +6,18 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/17 09:41:30 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 10:40:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	ft_iscapital(int c)
+{
+	if ((c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
 
 void	ft_expandtilde(t_token *tkn)
 {
@@ -53,7 +60,6 @@ void	ft_expand(t_token *tkn)
 			ft_substitute(&new, tkn->env);
 			ft_reassemble(new, &tmp);
 			ft_cleanlst(new);
-			ft_expandtilde(tkn);
 		}
 		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;
