@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/16 10:57:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:59:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*get_var_name(char *var)
 	char	*var_name;
 
 	i = 0;
-	
 	while (var[i] && var[i] != '=')
 		i++;
 	var_name = ft_substr(var, 0, i);

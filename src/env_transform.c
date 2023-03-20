@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_transform.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:05:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/04 08:23:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 17:00:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ char	**create_env_array(t_env *env)
 		i++;
 	}
 	env_array[i] = NULL;
-	// print_env_array(env_array);
 	return (env_array);
 }

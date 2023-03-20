@@ -6,23 +6,23 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 12:39:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:01:19 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <minishell.h>
+#include <minishell.h>
 
 /* returns var, if var does not exist, returns NULL */
 t_env	*ret_var(t_env *env, char *str)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	if (str == NULL)
 		return (NULL);
 	temp = env;
 	while (temp)
 	{
-		if( ft_strlen(str) <= ft_strlen(temp->var_name))
+		if (ft_strlen(str) <= ft_strlen(temp->var_name))
 		{
 			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name) + 1))
 				return (temp);
@@ -43,7 +43,7 @@ t_env	*ret_var(t_env *env, char *str)
 /* update existing node with new variable content */
 char	*upd_var(t_env *env, char *var, char *new_val)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	temp = ret_var(env, var);
 	if (temp && temp->var_content)
@@ -60,7 +60,7 @@ char	*upd_var(t_env *env, char *var, char *new_val)
 /* delete variable from list */
 int	del_var(t_env *env, char *var)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	temp = ret_var(env, var);
 	if (temp)
