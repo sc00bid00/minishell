@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 11:56:09 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 14:45:41 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:26:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int (*ft_builtin(t_scmd *scmd))(t_cmd *, t_env *)
 {
 	int	(*fun)(t_cmd *, t_env *);
 
+	if (!scmd->cmd[scmd->count] || !scmd->cmd[scmd->count]->arr[0])
+		return (NULL);
 	if (!ft_strncmp(scmd->cmd[scmd->count]->arr[0], "exit", 4))
 		fun = &builtin_exit;
 	else if (!ft_strncmp(scmd->cmd[scmd->count]->arr[0], "echo", 5))
