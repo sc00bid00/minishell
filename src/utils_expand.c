@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 13:46:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/18 10:20:24 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	ft_explode(t_list **lst, char *str)
 			tmp = ft_substr(str, p[0], p[1] - p[0]);
 			ft_lstadd_back(lst, ft_lstnew(tmp));
 			p[0] = p[1];
+		}
+		else if (!p[1] && str[p[1]] == '~')
+		{
+			tmp = ft_strdup("~");
+			ft_lstadd_back(lst, ft_lstnew(tmp));
+			p[0] = 1;
 		}
 		p[1]++;
 	}

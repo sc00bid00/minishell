@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/17 09:41:30 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/19 20:43:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_expand(t_token *tkn)
 			ft_substitute(&new, tkn->env);
 			ft_reassemble(new, &tmp);
 			ft_cleanlst(new);
-			ft_expandtilde(tkn);
 		}
 		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
 			flag = 1;

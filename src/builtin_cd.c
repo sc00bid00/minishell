@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/17 11:53:00 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/18 10:13:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ char	*get_dir(t_cmd *cmd, t_env *env)
 {
 	char	*dir;
 	t_env	*temp;
-	
+
 	(void)	env;
+	/* commented this block to avoid build break on linux
 	int i;
 
-	i = 0;
+	i = 0; */
 	// while (cmd->arr[i])
 	// {
 	// 	printf("arg is %s\n", cmd->arr[i]);
-	// 	i++;	
+	// 	i++;
 	// }
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
