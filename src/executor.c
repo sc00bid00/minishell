@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 09:32:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 13:40:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_child(t_scmd *scmd)
 	cmd = scmd->cmd[scmd->count];
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
-	if ((cmd->stat & CMD_KO) && !cmd->builtin)
+	if (cmd->stat & CMD_KO)
 		ft_cmdissues(scmd);
 	if (cmd->stat & RED_OK)
 		ft_redirect(scmd);
