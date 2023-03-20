@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/17 11:19:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 09:32:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_parent(t_scmd *scmd)
 void	ft_child(t_scmd *scmd)
 {
 	t_cmd	*cmd;
-	int	(*fun)(t_cmd *, t_env *);
-	fun = ft_builtin(scmd);
+	int		(*fun)(t_cmd *, t_env *);
 
+	fun = ft_builtin(scmd);
 	cmd = scmd->cmd[scmd->count];
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
