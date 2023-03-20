@@ -1,13 +1,16 @@
 
 #include <minishell.h>
 
-bool is_numeric(char *str)
-{
-	int i;
+// bool is_numeric(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i])
-}
+// 	i = 0;
+// 	while (str[i] && ft_isdigit((int)str[i]))
+// 	{
+// 		i++;
+// 	}
+// 	return (true);
 
 int builtin_exit(t_cmd *cmd, t_env *env)
 {
@@ -18,9 +21,9 @@ int builtin_exit(t_cmd *cmd, t_env *env)
 	i = 0;
 	if (cmd->arr && cmd->arr[i] && cmd->arr[2] == NULL)
 	{
-		if (!is_numeric(cmd->arr[i]))
+		// if (!is_numeric(cmd->arr[i]))
 		exitstatus = 128;
 	}
-	else if (cmd->)
+	// else if (cmd->)
 	return (0);
 }
