@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/17 11:56:05 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:19:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 {
 	int		i;
 	bool	option;
-	// int j = 0;
-	// while(cmd->arr[j])
-	// {
-	// 	printf("%s\n", cmd->arr[j]);
-	// 	j++;
-	// }
-	// printf("TEST\n");
+
 	(void)env;
 	i = 1;
 	option = false;

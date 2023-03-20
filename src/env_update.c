@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/06 17:58:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:39:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ t_env	*ret_var(t_env *env, char *str)
 {
 	t_env *temp;
 
+	if (str == NULL)
+		return (NULL);
 	temp = env;
 	while (temp)
 	{
-		if( ft_strlen(str) >= ft_strlen(temp->var_name))
+		if( ft_strlen(str) <= ft_strlen(temp->var_name))
 		{
 			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name) + 1))
 				return (temp);
@@ -39,17 +41,19 @@ t_env	*ret_var(t_env *env, char *str)
 }
 
 /* update existing node with new variable content */
-t_env	*upd_var(t_env *env, char *var, char *new_val)
+char	*upd_var(t_env *env, char *var, char *new_val)
 {
 	t_env *temp;
 
 	temp = ret_var(env, var);
-	if (temp)
+	if (temp && temp->var_content)
 	{
 		free(temp->var_content);
 		temp->var_content = ft_strdup(new_val);
-		return (temp);
+		return (temp->var_content);
 	}
+	else
+		return (NULL);
 	return (NULL);
 }
 
