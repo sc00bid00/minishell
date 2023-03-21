@@ -34,6 +34,7 @@ char	**create_env_array(t_env *env);
 t_env	*ret_var(t_env *env, char *str);
 char	*upd_var(t_env *env, char *var, char *new_val);
 int		del_var(t_env *env, char *var);
+void	del_first_var(t_env **env);
 
 char	**ft_arrenv(t_env *env);
 

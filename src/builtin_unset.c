@@ -12,26 +12,35 @@
 
 #include <minishell.h>
 
-/*	imitates behavior of bash builtin unset, i.e deletes the var from env*/
+/*	if variable is not in env head, delete node, else call separate function*/
+void	remove_var(char *str, t_env *env)
+{
+	if (!strncmp (env->var_name, str, ft_strlen(env->var_name)))
+	{
+		del_first_var(&env);
+		print_env(env, false);
+	}
+	else
+		del_var(env, str);
+}
+
+/*	imitates behavior of bash builtin unset, i.e. deletes the var from env*/
 int	builtin_unset(t_cmd *cmd, t_env *env)
 {
 	int	i;
 
 	i = 1;
-	printf(("TEST\n"));
 	while (cmd->arr && cmd->arr[i])
 	{
-		if (!ret_var(env, cmd->arr[i]))
+		if (!ft_isalpha(cmd->arr[i][0]))
 		{
-			ft_error("unset", cmd->arr[i], NULL);
-			i++;
-			return (0);
+			ft_error("minishell: unset: ", cmd->arr[i], ERROR_4);
+			exitstatus = 1;
 		}
 		else
-		{
-			del_var(env, cmd->arr[i]);
-			i++;
-		}
+			remove_var(cmd->arr[i], env);
+		i++;
 	}
+	printf("%s\n", env->var_name);
 	return (0);
 }

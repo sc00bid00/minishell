@@ -70,7 +70,18 @@ int	del_var(t_env *env, char *var)
 		free (temp->var_name);
 		temp->var_name = NULL;
 		temp = NULL;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
-	return (1);
+	return (EXIT_FAILURE);
+}
+
+void	del_first_var(t_env **env)
+{
+	t_env	*temp;
+
+	temp = (*env)->next;
+	free ((*env)->var_content);
+	free ((*env)->var_name);
+	free (*env);
+	env = &temp;
 }
