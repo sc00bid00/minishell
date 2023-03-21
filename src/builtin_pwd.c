@@ -30,6 +30,7 @@ int	builtin_pwd(t_cmd *cmd, t_env *env)
 	{
 		ft_error("minishell :", "pwd: ", NULL);
 		free(pwd);
+		exitstatus = errno;
 		return (EXIT_FAILURE);
 	}
 }
