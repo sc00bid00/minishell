@@ -13,10 +13,11 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-# define ERROR_1 "message to be created\n"
-# define ERROR_2 "numeric argument required\n"
-# define ERROR_3 "too many arguments\n"
-# define ERROR_4 "not a valid identifier\n"
+# define ERROR_1 "No such file or directory"
+# define ERROR_2 "numeric argument required"
+# define ERROR_3 "too many arguments"
+# define ERROR_4 "not a valid identifier"
+# define ERROR_5 "environment not set"
 
 t_env	*ms_lstlast(t_env *lst);
 t_env	*ms_lstadd_back(t_env *env, t_env *temp);

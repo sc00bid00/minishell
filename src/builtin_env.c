@@ -12,25 +12,28 @@
 
 #include <minishell.h>
 
-/*	print environment list */
+/*	print environment list, if called from export builtin, with declare -x */
 int	print_env(t_env *env, bool ex)
 {
 	if (!env)
-		return (ERROR);
+	{
+		ft_error("minishell: env: ", NULL, ERROR_5);
+		return (EXIT_FAILURE);
+	}
 	while (env != NULL)
 	{
 		if (env->var_name)
 		{
 			if (ex)
-				printf("declare -x ");
-			printf("%s", env->var_name);
+				ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(env->var_name, STDOUT_FILENO);
 			if (env->var_content)
-				printf("=");
+				ft_putstr_fd("=", STDOUT_FILENO);
 			else
-				printf("\n");
+				ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		if (env->var_content)
-			printf("%s\n", env->var_content);
+			ft_putendl_fd(env->var_content,STDOUT_FILENO);
 		if (env->next)
 			env = env->next;
 		else
@@ -42,8 +45,13 @@ int	print_env(t_env *env, bool ex)
 /*	imitate behavior of env */
 int	builtin_env(t_cmd *cmd, t_env *env)
 {
-	(void)cmd;
+	if (cmd->arr[1] != NULL)
+	{
+		ft_error("env: ", cmd->arr[1], ERROR_1);
+		exitstatus = 127;
+		return (EXIT_FAILURE);
+	}
 	if (!print_env(env, false))
-		return (ERROR);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
