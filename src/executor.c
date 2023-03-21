@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 17:22:41 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/21 09:37:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,8 @@ void	ft_wait(t_scmd *scmd)
 	t_list	*tmp;
 
 	while (waitpid(-1, &scmd->wstatus, 0) != -1)
-	{
 		if (WIFEXITED(scmd->wstatus))
 			exitstatus = WEXITSTATUS(scmd->wstatus);
-		ft_putstr_fd("status ", 2);
-		ft_putnbr_fd(exitstatus, 2);
-		ft_putchar_fd(' ', 2);
-		ft_putnbr_fd((int)getpid(), 2);
-		ft_putchar_fd('\n', 2);
-	}
 	tmp = scmd->hdocs;
 	while (tmp)
 	{
@@ -73,16 +66,20 @@ void	ft_child(t_scmd *scmd)
 	}
 }
 
-
 void	ft_exec(t_scmd *scmd)
 {
+	int	(*fun)(t_cmd *, t_env *);
+
 	scmd->store[0] = dup(STDIN_FILENO);
 	scmd->store[1] = dup(STDOUT_FILENO);
 	scmd->count = 0;
-	int	(*fun)(t_cmd *, t_env *);
 	fun = ft_builtin(scmd);
 	if (scmd->n_scmd == 1 && ft_builtin(scmd))
+	{
 		fun(*scmd->cmd, scmd->env);
+		close(scmd->store[0]);
+		close(scmd->store[1]);
+	}
 	else
 	{
 		while (scmd && scmd->cmd && scmd->cmd[scmd->count])
