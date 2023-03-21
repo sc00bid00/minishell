@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/21 09:46:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:51:59 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	{
 		ft_putnbr_fd(exitstatus, 1);
 		ft_putchar_fd('\n', 1);
+		exitstatus = 0;
 		return (EXIT_SUCCESS);
 	}
 	while (cmd->arr && cmd->arr[i] && !ft_strncmp(cmd->arr[i], "-n", 2))

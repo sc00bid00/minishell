@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 09:28:12 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:40:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void	ft_cmdissues(t_scmd *scmd)
 	if (cmd->stat & CMD_KO)
 	{
 		ft_eerr("minishell: ", cmd->arr[0], ": command not found");
-		scmd->wstatus = 127;
+		cmd->err_flag = 127;
 	}
 	else if (cmd->stat & 0)
-		scmd->wstatus = 0;
+		cmd->err_flag = 0;
 	if (cmd->stat & IN_OK)
 		close(cmd->fd_in);
 	if (cmd->stat & OUT_OK)
 		close(cmd->fd_out);
 	close(scmd->fd[0]);
 	close(scmd->fd[1]);
-	exit(scmd->wstatus);
+	exit(cmd->err_flag);
 }
 
 void	ft_fileissues(t_scmd *scmd)
@@ -63,16 +63,16 @@ void	ft_fileissues(t_scmd *scmd)
 	{
 		ft_eerr("minishell: ", cmd->in_name, \
 			": No such file or directory");
-		scmd->wstatus = 1;
+		cmd->err_flag = 1;
 	}
 	else if (cmd->stat & OUT_KO)
 	{
 		ft_eerr("minishell: ", cmd->out_name, ": Permission denied");
-		scmd->wstatus = 1;
+		cmd->err_flag = 1;
 	}
 	close(scmd->fd[0]);
 	close(scmd->fd[1]);
-	exit(scmd->wstatus);
+	exit(cmd->err_flag);
 }
 
 void	ft_execute(t_scmd *scmd)
@@ -85,8 +85,7 @@ void	ft_execute(t_scmd *scmd)
 	if (err == -1)
 	{
 		ft_eerr("minishell: ", strerror(errno), NULL);
-		scmd->wstatus = errno;
-		exit(scmd->wstatus);
+		exit(1);
 	}
 }
 
