@@ -24,6 +24,7 @@ int		builtin_unset(t_cmd *cmd, t_env *env);
 int		builtin_export(t_cmd *cmd, t_env *env);
 char	*get_var_name_export(char *var);
 int		builtin_exit(t_cmd *cmd, t_env *env);
+unsigned long long	ft_atoi_long_long(char *str);
 int		print_env(t_env *env, bool ex);
 
 #endif
