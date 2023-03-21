@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 17:24:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/21 09:28:12 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ void	ft_cmdissues(t_scmd *scmd)
 	if (cmd->stat & CMD_KO)
 	{
 		ft_eerr("minishell: ", cmd->arr[0], ": command not found");
-		ft_putstr_fd("PID ", 2);
-		ft_putnbr_fd((int)getpid(),2);
-		ft_putchar_fd('\n', 2);
 		scmd->wstatus = 127;
 	}
 	else if (cmd->stat & 0)
