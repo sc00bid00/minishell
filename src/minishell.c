@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 10:56:35 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 16:22:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:55:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		while (1)
 		{
 			setup_sigint();
-			exitstatus = get_input(envp, env);
+ 			exitstatus = get_input(envp, env);
 		}
 	}
 	return (exitstatus);

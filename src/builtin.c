@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 11:56:09 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 16:55:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/21 09:47:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+int	(*ft_builtin(t_scmd *scmd))(t_cmd *cmd, t_env *env)
 int	(*ft_builtin(t_scmd *scmd))(t_cmd *cmd, t_env *env)
 {
 	int	(*fun)(t_cmd *, t_env *);
