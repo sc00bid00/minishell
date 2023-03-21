@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-/*	getcwd returns pointer to path if sucessfull, else it returns NULL */
+/*	getcwd returns pointer to path if sucessfull, else it returns failure */
 int	builtin_pwd(t_cmd *cmd, t_env *env)
 {
 	char	*pwd;
