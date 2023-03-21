@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 09:46:43 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:52:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	ft_wait(t_scmd *scmd)
 {
 	t_list	*tmp;
 
+	while (waitpid(scmd->id, &scmd->wstatus, 0) != -1)
+		exitstatus = WEXITSTATUS(scmd->wstatus);
 	while (waitpid(-1, &scmd->wstatus, 0) != -1)
-		if (WIFEXITED(scmd->wstatus))
-			exitstatus = WEXITSTATUS(scmd->wstatus);
+		continue ;
 	tmp = scmd->hdocs;
 	while (tmp)
 	{
