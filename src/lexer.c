@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/10 18:45:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 17:00:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ t_token	*ft_lex(char *str, t_env *env)
 		ft_getstatus(tkn);
 		if (tkn->curr == 0)
 			tkn->p_sta = tkn->c_sta;
-		if (tkn->p_sta & 0b0000011)
+		if (tkn->c_sta & 0b0000011)
 			;
-		else
+		else if (!(tkn->c_sta & 0b0000011) && !(tkn->p_sta & 0b0000001))
 		{
 			if ((tkn->c_sta >> 2) != (tkn->p_sta >> 2) && tkn->p_sta != 0)
 				ft_save(tkn);
