@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 08:50:56 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 17:03:49 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:32:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	handle_sigint(int signal, siginfo_t *info, void *context)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		exitstatus = 1;
 	}
 }
 
@@ -58,4 +59,16 @@ void	setup_sigint(void)
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
+}
+
+/*	restore signals to dfault behavior in non-interactive mode (child process)*/
+void	restore_signal(void)
+{
+	struct sigaction	default_action;
+
+	default_action.sa_handler = SIG_DFL;
+	sigemptyset(&default_action.sa_mask);
+	default_action.sa_flags = 0;
+	sigaction(SIGQUIT, &default_action, NULL);
+	sigaction(SIGINT, &default_action, NULL);
 }

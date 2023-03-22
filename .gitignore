@@ -4,3 +4,4 @@ testfile
 minishell
 *.o
 *.a
+.vscode

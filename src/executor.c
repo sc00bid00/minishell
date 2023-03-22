@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 18:52:28 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:26:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ void	ft_wait(t_scmd *scmd)
 	t_list	*tmp;
 
 	while (waitpid(scmd->id, &scmd->wstatus, 0) != -1)
-		exitstatus = WEXITSTATUS(scmd->wstatus);
+	{
+		if (WIFSIGNALED(scmd->wstatus))
+			exitstatus = 128 + WTERMSIG(scmd->wstatus);
+		else
+			exitstatus = WEXITSTATUS(scmd->wstatus);
+	}
 	while (waitpid(-1, &scmd->wstatus, 0) != -1)
 		continue ;
 	tmp = scmd->hdocs;
@@ -38,6 +43,8 @@ void	ft_fdreset(t_scmd *scmd)
 
 void	ft_parent(t_scmd *scmd)
 {
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	close(scmd->fd[1]);
 	if (scmd->count < scmd->n_scmd - 1)
 		dup2(scmd->fd[0], STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 17:04:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:59:58 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_cleancmd(t_scmd *scmd)
 	free(scmd->cmd);
 }
 
+/*	clean up environment */
 void	ft_clean_env(t_env *env)
 {
 	t_env	*tmp;
@@ -97,3 +98,5 @@ void	ft_clean_env(t_env *env)
 		free(tmp);
 	}
 }
+
+// void	ft_clean_up()

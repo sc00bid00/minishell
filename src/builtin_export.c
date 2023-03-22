@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 14:35:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:25:28 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ bool	is_valid_arg(char c, bool first)
 {
 	if (first)
 	{
-		if ((c >= 'A' && c <= 'Z') || c == '_')
+		if (ft_isalpha(c) || c == '_' )
 			return (true);
 		else
 			return (false);
 	}
 	else
 	{
-		if (!ft_isdigit(c) || (c >= 'A' && c <= 'Z') || c == '_')
+		if (ft_isdigit(c) || ft_isalpha(c) || c == '_')
 			return (true);
 	}
 	return (false);
@@ -40,7 +40,7 @@ char	*get_var_name_export(char *var)
 		i++;
 	else
 	{
-		ft_error("minishell: export", var, ERROR_4);
+		ft_error("minishell: export: ", var, ERROR_4);
 		return (NULL);
 	}
 	while (var[i] && var[i] != '=')
@@ -49,7 +49,7 @@ char	*get_var_name_export(char *var)
 			i++;
 		else
 		{
-			ft_error("minishell: export", var, ERROR_4);
+			ft_error("minishell: export: ", var, ERROR_4);
 			return (NULL);
 		}
 	}
