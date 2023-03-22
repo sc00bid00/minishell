@@ -6,31 +6,21 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/22 15:23:20 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/22 15:32:11 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 UNAME = $(shell uname)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SHELL = /bin/zsh
 
-#FORMAT----------------------------------#
-DEFCL			=	$(shell echo "\033[0m")
-RED				=	$(shell echo "\033[0;31m")
-BRED			=	$(shell echo "\033[1;31m")
-GREEN			=	$(shell echo "\033[0;32m")
-BGREEN			=	$(shell echo "\033[1;32m")
-YELLOW			=	$(shell echo "\033[0;33m")
-BYELLOW			=	$(shell echo "\033[1;33m")
-BLUE			=	$(shell echo "\033[0;34m")
-BBLUE			=	$(shell echo "\033[1;34m")
-PURPLE			=	$(shell echo "\033[0;35m")
-CYAN			=	$(shell echo "\033[0;36m")
-BCYAN			=	$(shell echo "\033[1;36m")
-GRAY			=	$(shell echo "\033[0m\033[38;5;239m")
-DEL_R			=	\033[K
-# ---------------------------------------#
+#COLORS-----------------------------------------------------------------------#
+BRED	=	\033[1;31m
+BGREEN	=	\033[1;32m
+BYELLOW	=	\033[1;33m
+BLUE	=	\033[1;34m
+WHITE	=	\033[0m
+#-----------------------------------------------------------------------------#
 
 COLOR_MAKE = $(BGREEN)
 COLOR_INSTALL = $(BYELLOW)
