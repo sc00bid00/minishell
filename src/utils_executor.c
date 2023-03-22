@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 18:40:49 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 10:56:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	ft_redirect(t_scmd *scmd)
 	t_cmd	*cmd;
 
 	cmd = scmd->cmd[scmd->count];
+	if (!cmd->arr)
+	{
+		if (cmd->stat & OUT_OK)
+			exit(0);
+		if (cmd->stat & IN_OK)
+			exit(1);
+	}
 	if (cmd->stat & IN_OK && cmd->stat & EX_OK)
 	{
 		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
