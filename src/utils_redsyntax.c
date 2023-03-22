@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 18:40:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:11:32 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_helpistoken(char ***t)
 	(*t)[1] = "<<";
 	(*t)[2] = ">";
 	(*t)[3] = ">>";
-	(*t)[4] = "|";
 }
 
 int	ft_istoken(void *content)
@@ -60,11 +59,15 @@ t_token	*ft_redsyntax(t_token *tkn)
 {
 	t_list	*tmp;
 	int		flag;
+	int		i;
 
 	flag = 0b0;
 	tmp = tkn->lst;
+	i = 0;
 	while (tmp)
 	{
+		if (tmp->content && ((char *)tmp->content)[0] == '|')
+			return(ft_syntaxerror(tkn, "|"));
 		if (flag && ft_istoken(tmp->content))
 			return (ft_syntaxerror(tkn, (char *)tmp->content));
 		else if (flag && !ft_istoken(tmp->content))
@@ -72,6 +75,7 @@ t_token	*ft_redsyntax(t_token *tkn)
 		if (ft_istoken(tmp->content))
 			flag |= 1;
 		tmp = tmp->next;
+		i++;
 	}
 	if (flag)
 		return (ft_syntaxerror(tkn, "newline"));
