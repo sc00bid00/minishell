@@ -5,14 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "name": "Attach",
             "type": "cppdbg",
-            "program": "/Users/lsordo/Documents/42HN/42_minishell/minishell",
+            "program": "/Users/kczichow/Documents/projects/minishell/42_minishell/minishell",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "request": "launch",
+            "request": "attach",
             "externalConsole": true,
-            "autoAttachChildProcess": true,
             "MIMode": "lldb"
         }
     ]

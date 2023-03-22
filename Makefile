@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/20 14:29:16 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/22 08:42:34 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 UNAME = $(shell uname)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SHELL = /bin/zsh
+SHELL = /bin/bash
 
 #FORMAT----------------------------------#
 DEFCL			=	$(shell echo "\033[0m")

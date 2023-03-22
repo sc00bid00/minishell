@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/21 18:40:49 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:11:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_execute(t_scmd *scmd)
 	int		err;
 
 	cmd = scmd->cmd[scmd->count];
+	restore_signal();
 	err = execve(cmd->path, cmd->arr, scmd->envp);
 	if (err == -1)
 	{

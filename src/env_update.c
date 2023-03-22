@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 17:01:19 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:24:47 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ void	del_first_var(t_env **env)
 
 	temp = (*env)->next;
 	free ((*env)->var_content);
+	(*env)->var_content = NULL;
 	free ((*env)->var_name);
+	(*env)->var_name = NULL;
 	free (*env);
+	(*env) = NULL;
 	env = &temp;
 }

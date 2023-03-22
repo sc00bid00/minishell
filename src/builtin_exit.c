@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 17:00:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 08:45:07 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtin_exit(t_cmd *cmd, t_env *env)
 			return (EXIT_FAILURE);
 		}
 	}
-	// printf("Exitstatus is:%d\n", exitstatus);
+	printf("Exitstatus is:%d\n", exitstatus);
 	ft_clean_env(env);
 	exit (exitstatus);
 }
@@ -77,9 +77,9 @@ unsigned long long	ft_atoi_long_long(char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-		if (num < 0 && sign < 0)
+		if (sign < 0)
 			return (0);
-		if (num < 0 && sign > 0)
+		if (sign > 0)
 			return (-1);
 		num = 10 * num + *str - '0';
 		str++;
