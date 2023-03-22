@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 11:26:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:53:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 void	ft_wait(t_scmd *scmd)
 {
 	t_list	*tmp;
+	int		ret;
 
-	while (waitpid(scmd->id, &scmd->wstatus, 0) != -1)
+	scmd->count = 0;
+	while (scmd->n_scmd && scmd->count < scmd->n_scmd)
 	{
-		if (WIFSIGNALED(scmd->wstatus))
-			exitstatus = 128 + WTERMSIG(scmd->wstatus);
-		else
+		ret = waitpid(-1, &scmd->wstatus, 0);
+		if (ret == scmd->id)
 			exitstatus = WEXITSTATUS(scmd->wstatus);
+		if (WIFSIGNALED(scmd->wstatus) && scmd->wstatus != 13)
+			exitstatus = 128 + WTERMSIG(scmd->wstatus);
+		scmd->count++;
 	}
-	while (waitpid(-1, &scmd->wstatus, 0) != -1)
-		continue ;
 	tmp = scmd->hdocs;
 	while (tmp)
 	{
@@ -46,7 +48,7 @@ void	ft_parent(t_scmd *scmd)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	close(scmd->fd[1]);
-	if (scmd->count < scmd->n_scmd - 1)
+	if (scmd->count != 0 || scmd->count < scmd->n_scmd - 1)
 		dup2(scmd->fd[0], STDIN_FILENO);
 	close(scmd->fd[0]);
 }

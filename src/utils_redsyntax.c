@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 11:11:32 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 12:22:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ t_token	*ft_redsyntax(t_token *tkn)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->content && ((char *)tmp->content)[0] == '|')
-			return(ft_syntaxerror(tkn, "|"));
+		// if (tmp->content && ((char *)tmp->content)[0] == '|')
+		// 	return(ft_syntaxerror(tkn, "|"));
 		if (flag && ft_istoken(tmp->content))
 			return (ft_syntaxerror(tkn, (char *)tmp->content));
 		else if (flag && !ft_istoken(tmp->content))
