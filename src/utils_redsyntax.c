@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 12:22:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 15:17:44 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ t_token	*ft_redsyntax(t_token *tkn)
 {
 	t_list	*tmp;
 	int		flag;
-	int		i;
+	int		i[2];
 
 	flag = 0b0;
 	tmp = tkn->lst;
-	i = 0;
+	i[0] = 0;
+	i[1] = ft_lstsize(tmp) - 1;
 	while (tmp)
 	{
-		// if (tmp->content && ((char *)tmp->content)[0] == '|')
-		// 	return(ft_syntaxerror(tkn, "|"));
+		if ((i[0] == 0 || i[0] == i[1]) && tmp->content
+			&& ((char *)tmp->content)[0] == '|')
+			return (ft_syntaxerror(tkn, "|"));
 		if (flag && ft_istoken(tmp->content))
 			return (ft_syntaxerror(tkn, (char *)tmp->content));
 		else if (flag && !ft_istoken(tmp->content))
@@ -75,7 +77,7 @@ t_token	*ft_redsyntax(t_token *tkn)
 		if (ft_istoken(tmp->content))
 			flag |= 1;
 		tmp = tmp->next;
-		i++;
+		i[0]++;
 	}
 	if (flag)
 		return (ft_syntaxerror(tkn, "newline"));
