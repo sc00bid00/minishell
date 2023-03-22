@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 17:11:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_cmdissues(t_scmd *scmd)
 	cmd = scmd->cmd[scmd->count];
 	if (cmd->stat & CMD_KO)
 	{
-		ft_eerr("minishell: ", cmd->arr[0], ": command not found");
+		ft_eerr("minishell: ", cmd->arr[0], ERROR_6);
 		cmd->err_flag = 127;
 	}
 	else if (cmd->stat & 0)
@@ -69,12 +69,12 @@ void	ft_fileissues(t_scmd *scmd)
 	if (cmd->stat & IN_KO)
 	{
 		ft_eerr("minishell: ", cmd->in_name, \
-			": No such file or directory");
+			ERROR_7);
 		cmd->err_flag = 1;
 	}
 	else if (cmd->stat & OUT_KO)
 	{
-		ft_eerr("minishell: ", cmd->out_name, ": Permission denied");
+		ft_eerr("minishell: ", cmd->out_name, ERROR_8);
 		cmd->err_flag = 1;
 	}
 	close(scmd->fd[0]);
