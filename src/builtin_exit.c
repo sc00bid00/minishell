@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 08:45:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	is_numeric(char *str)
 
 /*	checks for numeric and non numeric parameters */
 /*	checks for number of paramters */
-int	builtin_exit(t_cmd *cmd, t_env *env)
+int	builtin_exit(t_cmd *cmd, t_env **env)
 {
 	(void)env;
 

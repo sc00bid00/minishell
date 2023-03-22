@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 16:35:25 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:39:34 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_start(char **envp, t_env *env, char *input)
+int	ft_start(char **envp, t_env **env, char *input)
 {
 	int		ret;
 	t_token	*tkn;
 	t_scmd	*scmd;
 
-	tkn = ft_lex(input, env);
+	tkn = ft_lex(input, *env);
 	if (!tkn)
 		return (EXIT_FAILURE);
-	scmd = ft_parse(tkn, envp, env);
+	scmd = ft_parse(tkn, envp, *env);
 	if (!scmd)
 		return (EXIT_FAILURE);
 	ft_exec(scmd);
@@ -42,7 +42,7 @@ char	*read_line(void)
 	return (line);
 }
 
-int	get_input(char **envp, t_env *env)
+int	get_input(char **envp, t_env **env)
 {
 	char	*input;
 
@@ -57,7 +57,7 @@ int	get_input(char **envp, t_env *env)
 	return (exitstatus);
 }
 
-int	test_get_input(char **envp, t_env *env, char *input)
+int	test_get_input(char **envp, t_env **env, char *input)
 {
 	if (input)
 		exitstatus = ft_start(envp, env, input);

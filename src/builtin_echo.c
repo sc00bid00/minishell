@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/21 18:51:59 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:41:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*	imitate echo with -n option */
-int	builtin_echo(t_cmd	*cmd, t_env *env)
+int	builtin_echo(t_cmd	*cmd, t_env **env)
 {
 	int		i;
 	bool	option;

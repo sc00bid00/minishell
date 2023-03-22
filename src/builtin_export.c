@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 10:25:28 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:18:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_var_name_export(char *var)
 }
 
 /*	check if variable is already in env list*/
-bool	existing_var(t_env *env, char *var)
+bool	existing_var(t_env **env, char *var)
 {
 	char	*name;
 
@@ -79,7 +79,7 @@ bool	existing_var(t_env *env, char *var)
 }
 
 /*	either update existing or add new variable */
-int	update_env(t_cmd *cmd, t_env *env)
+int	update_env(t_cmd *cmd, t_env **env)
 {
 	int		i;
 	t_env	*temp;
@@ -93,13 +93,12 @@ int	update_env(t_cmd *cmd, t_env *env)
 		{
 			name = get_var_name_export(cmd->arr[i]);
 			value = get_var_content(cmd->arr[i]);
-			if (value)
-				upd_var(env, name, value);
+			upd_var(env, name, value);
 		}
 		else
 		{
 			temp = new_var(cmd->arr[i], true);
-			ms_lstadd_back(env, temp);
+			(*env) = ms_lstadd_back(*env, temp);
 		}
 		i++;
 	}
@@ -107,7 +106,7 @@ int	update_env(t_cmd *cmd, t_env *env)
 }
 
 /*	imitate behavior of export bash builtin */
-int	builtin_export(t_cmd *cmd, t_env *env)
+int	builtin_export(t_cmd *cmd, t_env **env)
 {
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
@@ -116,5 +115,6 @@ int	builtin_export(t_cmd *cmd, t_env *env)
 	}
 	else
 		update_env(cmd, env);
+	print_env(env, false);
 	return (0);
 }

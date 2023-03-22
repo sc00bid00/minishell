@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prexec.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 18:34:08 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:58:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**ft_arrpaths(t_scmd *scmd)
 	t_env	*env_var;
 	char	**arr;
 
-	env_var = ret_var(scmd->env, "PATH");
+	env_var = ret_var(&scmd->env, "PATH");
 	if (env_var && env_var->var_content)
 	{
 		arr = ft_split(env_var->var_content, ':');

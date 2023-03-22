@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 16:59:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:06:49 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_env	*copy_envp_to_env(char **envp)
 
 	i = 0;
 	env = NULL;
+	print_env_array(envp);
 	while (envp && envp[i])
 	{
 		temp = new_var(envp[i], false);

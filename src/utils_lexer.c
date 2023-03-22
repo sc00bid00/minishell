@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:40:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:58:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_expandtilde(t_token *tkn)
 	{
 		if (tmp->content && !ft_strncmp((char *)tmp->content, "~", 1))
 		{
-			env_var = ret_var(tkn->env, "HOME");
+			env_var = ret_var(&tkn->env, "HOME");
 			free(tmp->content);
 			if (env_var)
 				tmp->content = ft_strdup(env_var->var_content);
