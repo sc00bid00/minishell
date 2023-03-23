@@ -12,30 +12,36 @@
 
 #include <minishell.h>
 
+/* returns node previous to var, if prev does not exist, returns NULL */
+t_env	*ret_prev_var(t_env **env, char *str)
+{
+	t_env	*temp;
+
+	if (!str || !(*env))
+		return (NULL);
+	temp = (*env);
+	while (temp && temp->next)
+	{
+		if (!ft_my_strcmp(temp->next->var_name, str))
+				return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 /* returns var, if var does not exist, returns NULL */
 t_env	*ret_var(t_env **env, char *str)
 {
 	t_env	*temp;
 
-	if (str == NULL)
+	if (!str || !(*env))
 		return (NULL);
 	temp = (*env);
 	while (temp)
 	{
-		if (ft_strlen(str) <= ft_strlen(temp->var_name))
-		{
-			if (!ft_strncmp(temp->var_name, str, ft_strlen(temp->var_name) + 1))
+		if (!ft_my_strcmp(temp->var_name, str))
 				return (temp);
-		}
-		else
-		{
-			if (!ft_strncmp(temp->var_name, str, ft_strlen(str) + 1))
-				return (temp);
-		}
-		if (temp->next)
-			temp = temp->next;
-		else
-			return (NULL);
+		temp = temp->next;
 	}
 	return (NULL);
 }
@@ -44,7 +50,7 @@ t_env	*ret_var(t_env **env, char *str)
 char	*upd_var(t_env **env, char *var, char *new_val)
 {
 	t_env	*temp;
-
+	
 	temp = ret_var(env, var);
 	if (temp)
 	{
@@ -56,38 +62,45 @@ char	*upd_var(t_env **env, char *var, char *new_val)
 			temp->var_content = ft_strdup(new_val);
 		return (temp->var_content);	
 	}
-	else
-		return (NULL);
 	return (NULL);
 }
 
 /* delete variable from list */
-int	del_var(t_env **env, char *var)
+t_env	*del_var(t_env **env, char *var)
 {
 	t_env	*temp;
+	t_env	*prev;
 
 	temp = ret_var(env, var);
-	if (temp)
+	prev = ret_prev_var(env, var);
+	if (temp && prev)
 	{
+		prev->next = temp->next;
 		free(temp->var_content);
 		temp->var_content = NULL;
 		free (temp->var_name);
 		temp->var_name = NULL;
-		temp = NULL;
-		return (EXIT_SUCCESS);
+		free (temp);
 	}
-	return (EXIT_FAILURE);
+	return (*(env));
 }
 
-void	del_first_var(t_env **env)
+/* deletes first var from list and sets new head */
+t_env	*del_first_var(t_env **env)
 {
 	t_env	*temp;
+	t_env	*second;
 
-	temp = (*env)->next;
-	printf("var_content = %s\n", (*env)->var_content);
-	free ((*env)->var_content);
-	printf("var_name = %s\n", (*env)->var_name);
-	free ((*env)->var_name);
-	free (*env);
-	*env = temp;
+	second = (*env)->next;
+	printf("second is: %s\n", second->var_name);
+	temp = (*env);
+	printf("var_content = %s\n", temp->var_content);
+	free (temp->var_content);
+	printf("var_name = %s\n", temp->var_name);
+	free (temp->var_name);
+	free (temp);
+	printf("second is: %s\n", second->var_name);
+	(*env) = second;
+	print_env(env, false);
+	return (*(env));
 }

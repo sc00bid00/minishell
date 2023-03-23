@@ -56,16 +56,11 @@ char	*get_var_content(char *var)
 
 	i = 0;
 	len = 0;
-	while (var[i] && var[i] != '=')
+	while (var && var[i] != '=')
 		i++;
-	if (var[i] != '=')
-		return (NULL);
-	else
-	{
-		while (var[len])
-			len++;
-		var_content = ft_substr(var, i + 1, len);
-	}
+	while (var[len])
+		len++;
+	var_content = ft_substr(var, i + 1, len);
 	return (var_content);
 }
 

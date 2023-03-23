@@ -71,6 +71,7 @@ SRC =		builtin.c \
 			utils_expand.c \
 			utils_init.c \
 			utils_lexer.c \
+			utils_libhelper.c \
 			utils_list.c \
 			utils_parser.c \
 			utils_prexec.c \

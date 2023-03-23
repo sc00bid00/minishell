@@ -16,14 +16,14 @@ bool	is_valid_arg(char c, bool first)
 {
 	if (first)
 	{
-		if (ft_isalpha(c) || c == '_' )
+		if ((c >= 'A' && c <= 'Z') || c == '_' )
 			return (true);
 		else
 			return (false);
 	}
 	else
 	{
-		if (ft_isdigit(c) || ft_isalpha(c) || c == '_')
+		if (!ft_isdigit(c) || !ft_isalpha(c) || c == '_')
 			return (true);
 	}
 	return (false);
@@ -115,6 +115,6 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 	}
 	else
 		update_env(cmd, env);
-	print_env(env, false);
+	// print_env(env, false);
 	return (0);
 }
