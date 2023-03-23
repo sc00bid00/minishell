@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:51:43 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/09 10:52:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/23 16:13:34 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@ void	ft_helpremquotes(char *dst, char *str)
 {
 	int	i;
 	int	j;
+	int	flag;
 
+	flag = 0b00;
 	i = 0;
 	j = 0;
 	while (str && str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+
+		if ((str[i] == '"' && !(flag & 0b10)) || (str[i] == '\'' && !(flag & 0b01)))
+		{
+			if (str[i]== '"')
+				flag ^= 0b01;
+			else
+				flag ^= 0b10;
 			i++;
+		}
 		else
 		{
 			dst[j] = str[i];
