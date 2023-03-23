@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:50:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/23 11:48:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	ft_cleancmd(t_scmd *scmd);
 void	ft_cleanscmd(t_scmd *cmd);
 void	tmp_prtarrlst(t_scmd *cmd);
 void	tmp_prtcmd(t_scmd *scmd);
+void	tmp_prtarray(char **arr);
 
 #endif

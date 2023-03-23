@@ -6,11 +6,27 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/21 18:51:59 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/23 12:12:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+bool	ft_checkoption(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str && !ft_strncmp(str, "-n", 2))
+	{
+		i++;
+		while (str && str[i] == 'n')
+			i++;
+	}
+	if ((size_t)i == ft_strlen(str))
+		return (false);
+	return (true);
+}
 
 /*	imitate echo with -n option */
 int	builtin_echo(t_cmd	*cmd, t_env *env)
@@ -19,8 +35,6 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	bool	option;
 
 	(void)env;
-	i = 1;
-	option = false;
 	if (cmd->arr && cmd->arr[1] == NULL)
 		ft_putchar_fd('\n', 1);
 	else if(cmd->arr && !ft_strncmp(cmd->arr[1], "$?", 3))
@@ -30,10 +44,10 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 		exitstatus = 0;
 		return (EXIT_SUCCESS);
 	}
-	while (cmd->arr && cmd->arr[i] && !ft_strncmp(cmd->arr[i], "-n", 2))
-		i++;
-	if (i == 1)
-		option = true;
+	option = ft_checkoption(cmd->arr[1]);
+	i = 1;
+	if (!option)
+		i = 2;
 	while (cmd->arr && cmd->arr[i])
 	{
 		ft_putstr_fd(cmd->arr[i], 1);
