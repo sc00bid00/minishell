@@ -6,11 +6,45 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:40:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/24 10:59:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	ft_isquote(char c1, char c2)
+{
+	if ((c1 == '\'' && c2 == '\'') || (c1 == '"' && c2 == '"'))
+		return (1);
+	return (0);
+}
+
+void	*ft_quotepairs(char *str)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+
+	newstr = ft_calloc(ft_strlen(str) + 1, 1);
+	if (!newstr)
+		exit(EXIT_FAILURE);
+	j = 0;
+	i = 0;
+	while (str && str[i] && str[i + 1])
+	{
+		if (ft_isquote(str[i], str[i + 1]))
+			i += 2;
+		else
+		{
+			newstr[j] = str[i];
+			j++;
+			i++;
+		}
+	}
+	newstr[j] = str[i];
+	free(str);
+	return (newstr);
+}
 
 int	ft_iscapital(int c)
 {
@@ -51,6 +85,8 @@ void	ft_expand(t_token *tkn)
 	tmp = tkn->lst;
 	while (tmp)
 	{
+		if (tmp->content)
+			tmp->content = ft_quotepairs((char *)(tmp->content));
 		if (!flag && tmp->content && ((char *)tmp->content)[0] != '\'' \
 			&& (ft_strchr(((char *)tmp->content), '$') \
 				|| ft_strchr(((char *)tmp->content), '~')))
