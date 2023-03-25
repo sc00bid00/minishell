@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 12:09:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/01/18 17:29:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/24 16:54:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	if (!s || !*s)
+	if (!s || (s && !*s))
 		return (0);
-	while (s[i] != '\0')
+	while (s && s[i] != '\0')
 		i++;
 	return (i);
 }

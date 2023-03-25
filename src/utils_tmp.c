@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 10:58:58 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/25 10:12:58 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,13 @@ void	tmp_prtlst2(t_list *lst)
 	t_list	*tmp;
 
 	tmp = lst;
-	ft_putendl_fd("=== cechkin  debug  - tmp_prtlst2 ===", 2);
+	ft_putendl_fd("=== checkin  debug  - tmp_prtlst2 ===", 2);
 	while (tmp)
 	{
-		ft_putstr_fd(tmp->content, 2);
+		if (!tmp->content)
+			ft_putstr_fd("(null)", 2);
+		else
+			ft_putstr_fd(tmp->content, 2);
 		ft_putchar_fd('\n', 2);
 		tmp = tmp->next;
 	}

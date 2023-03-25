@@ -2,9 +2,8 @@ tests/
 out*
 testfile
 minishell*
-./minishell_tester
+minishell_tester/
 *.o
 *.a
 .vscode
 *.json
-

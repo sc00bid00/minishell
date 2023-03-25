@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/23 18:05:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/25 11:01:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	builtin_echo(t_cmd	*cmd, t_env *env)
 	}
 	while (cmd->arr && cmd->arr[i])
 	{
-		if (!ft_isvoption(cmd->arr[i]) && option[1])
+		if (ft_isvoption(cmd->arr[i]))
+			option[1] ^= 1;
+		else if (option[1] && !ft_strncmp(cmd->arr[i], " ", 1))
 			option[1] = 0;
 		if (!option[1])
 			ft_putstr_fd(cmd->arr[i], 1);
-		if (cmd->arr[i + 1] && !option[1])
-			ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (!option[0])

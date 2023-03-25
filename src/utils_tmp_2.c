@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:13:07 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 10:58:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/25 11:12:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	tmp_prtarray(char **arr)
 {
 	int	i;
 
-	ft_putendl_fd("=== checkin debug  - tmp_prtarray ===", 2);
+	ft_putendl_fd("=== checkin  debug - tmp_prtarray ===", 2);
 	i = 0;
 	while (arr && arr[i])
 	{

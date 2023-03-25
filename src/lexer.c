@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 08:29:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/25 10:58:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_getstatus(t_token *tkn)
 			tkn->c_sta = tkn->c_sta | 0b0001000;
 		else if (tkn->str[tkn->curr] == '<')
 			tkn->c_sta = tkn->c_sta | 0b0010000;
-		else if (tkn->str[tkn->curr] == '&')
+		else if (tkn->str[tkn->curr] == ' ')
 			tkn->c_sta = tkn->c_sta | 0b0100000;
 		else if (tkn->str[tkn->curr] > 32)
 			tkn->c_sta = tkn->c_sta | 0b1000000;

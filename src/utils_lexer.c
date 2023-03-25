@@ -6,11 +6,40 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 10:59:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/25 10:58:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	ft_checkdollarnodes(t_token *tkn)
+{
+	t_list	*tmp;
+	char	*tmp2;
+	int		i;
+
+	i = 0;
+	tmp = tkn->lst;
+	while (tmp)
+	{
+		if (tmp->content && ((char *)tmp->content)[0] == '$'
+			&& ft_isdigit(((char *)(tmp->content))[1]))
+		{
+			tmp2 = ft_strdup(&((char *)tmp->content)[2]);
+			free(tmp->content);
+			tmp->content = tmp2;
+		}
+		if (tmp->content && i == 1 && ((char *)tmp->content)[0] == ' ')
+		{
+			tmp2 = ft_strtrim((char *)tmp->content, " ");
+			free(tmp->content);
+			tmp->content = tmp2;
+		}
+		i++;
+		tmp = tmp->next;
+	}
+
+}
 
 int	ft_isquote(char c1, char c2)
 {
@@ -109,6 +138,7 @@ void	ft_helplexer(t_token *tkn)
 {
 	if (!tkn->str[tkn->curr] && tkn->str[tkn->curr] != tkn->str[tkn->prev])
 		ft_save(tkn);
+	ft_checkdollarnodes(tkn);
 	ft_expand(tkn);
 	ft_remquotes(tkn);
 }
