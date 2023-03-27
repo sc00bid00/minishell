@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/26 17:50:25 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 08:36:06 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,21 @@ int	ft_flag(char c)
 void	ft_go(t_token *tkn)
 {
 	char	*tmp;
+	int		tmp2;
 
 	tmp = ft_substr(&tkn->str[tkn->prev], 0, tkn->curr - tkn->prev);
-	tkn->curr++;
 	tkn->prev = tkn->curr;
-	ft_lstadd_back(&tkn->lst, ft_lstnew(tmp));
+	if (ft_strncmp(tmp, " ", 1))
+		ft_lstadd_back(&tkn->lst, ft_lstnew(tmp));
+	else
+		free(tmp);
+	if (tkn->c_sta & (SINGLE_Q | DOUBLE_Q)
+		&& tkn->p_sta & (SINGLE_Q | DOUBLE_Q))
+	{
+		tmp2 = tkn->p_sta & 0b000000011;
+		tkn->p_sta ^= tmp2;
+		tkn->c_sta ^= tmp2;
+	}
 }
 
 t_token *ft_lex(char *str, t_env *env)
@@ -120,20 +130,16 @@ t_token *ft_lex(char *str, t_env *env)
 	{
 		tkn->p_sta = ft_flag(tkn->str[tkn->prev]);
 		tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
-		if (tkn->c_sta & (SINGLE_Q | DOUBLE_Q) || tkn->c_sta == tkn->p_sta)
-		{
-			ft_putnbr_fd(tkn->c_sta & (SINGLE_Q | DOUBLE_Q), 2);
-			ft_putendl_fd(" checkin - debug", 2);
+
+		if (tkn->p_sta & (SINGLE_Q | DOUBLE_Q) || tkn->c_sta>>2 == tkn->p_sta>>2)
 			tkn->curr++;
-		}
-		else if (!(tkn->c_sta &(SINGLE_Q | DOUBLE_Q))
+		else if (!(tkn->p_sta &(SINGLE_Q | DOUBLE_Q))
 			&& (tkn->c_sta & SPCE || tkn->c_sta != tkn->p_sta))
 			ft_go(tkn);
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_go(tkn);
 	tmp_prtlst(tkn);
-	exit (1);
 	ft_helplexer(tkn);
 	if (!ft_redsyntax(tkn))
 		return (NULL);

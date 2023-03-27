@@ -6,17 +6,17 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/26 17:04:14 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 07:26:51 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# define SINGLE_Q '\''
-# define DOUBLE_Q '"'
-# define SPCE ' '
-# define RIN '<'
+# define SINGLE_Q 0b000000001
+# define DOUBLE_Q 0b000000010
+# define SPCE 0b000000100
+# define RIN 0b000001000
 # define ROUT 0b000010000
 # define PIPE 0b000100000
 # define DOLLAR 0b001000000
