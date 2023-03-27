@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 13:26:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 15:59:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	ft_flag(char c)
 		flag |= PIPE;
 	else if (c == '$')
 		flag |= DOLLAR;
-	else if (c == '~')
-		flag |= TILDE;
+	// else if (c == '~')
+	// 	flag |= TILDE;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);
@@ -76,8 +76,8 @@ void	ft_go(t_token *tkn)
 	}
 	else
 		free(tmp);
-	if (tkn->str[tkn->curr])
-		tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
+	tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
+
 }
 
 t_token *ft_lex(char *str, t_env *env)
@@ -88,16 +88,11 @@ t_token *ft_lex(char *str, t_env *env)
 	tkn->c_sta = ft_flag(tkn->str[0]);
 	while(tkn->str && tkn->str[tkn->curr])
 	{
-			tkn->curr++;
-		if (tkn->c_sta & SOME_Q || ft_flag(tkn->str[tkn->curr]) == tkn->c_sta)
-		{
-			if (ft_flag(tkn->str[tkn->curr]) & SOME_Q)
-			{
-				tkn->c_sta ^= ft_flag(tkn->str[tkn->curr]);
-			}
-		}
-		else
+		tkn->curr++;
+		if (!(tkn->c_sta & SOME_Q) && ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
 			ft_go(tkn);
+		else if ((tkn->c_sta & SOME_Q) && ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr]) & SOME_Q)))
+			tkn->c_sta ^= (ft_flag(tkn->str[tkn->curr]) & SOME_Q);
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_go(tkn);
