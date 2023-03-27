@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_substitute.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:55:17 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 15:10:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:59:50 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_substdollar(t_list **lst, t_env *var)
 {
 	t_env	*env_var;
 
-	env_var = ret_var(var, &((char *)(*lst)->content)[1]);
+	env_var = ret_var(&var, &((char *)(*lst)->content)[1]);
 	if (env_var)
 	{
 		if (env_var->var_content)
@@ -36,7 +36,7 @@ void	ft_substtilde(t_list **lst, t_env *var)
 		|| ((*lst)->next && (*lst)->next->content
 			&& !ft_strncmp((*lst)->next->content, "/", 1)))
 	{
-		env_var = ret_var(var, "HOME");
+		env_var = ret_var(&var, "HOME");
 		(*lst)->content = ft_strdup(env_var->var_content);
 	}
 	else

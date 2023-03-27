@@ -6,14 +6,14 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/17 11:28:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:41:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*	getcwd returns pointer to path if sucessfull, else it returns failure */
-int	builtin_pwd(t_cmd *cmd, t_env *env)
+int	builtin_pwd(t_cmd *cmd, t_env **env)
 {
 	char	*pwd;
 

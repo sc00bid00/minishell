@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 14:53:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:22:15 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_parent(t_scmd *scmd)
 void	ft_child(t_scmd *scmd)
 {
 	t_cmd	*cmd;
-	int		(*fun)(t_cmd *, t_env *);
+	int		(*fun)(t_cmd *, t_env **);
 
 	fun = ft_builtin(scmd);
 	cmd = scmd->cmd[scmd->count];
@@ -71,14 +71,14 @@ void	ft_child(t_scmd *scmd)
 		ft_execute(scmd);
 	else if (cmd->stat & EX_OK)
 	{
-		fun(cmd, scmd->env);
+		fun(cmd, &scmd->env);
 		exit (EXIT_SUCCESS);
 	}
 }
 
 void	ft_exec(t_scmd *scmd)
 {
-	int	(*fun)(t_cmd *, t_env *);
+	int	(*fun)(t_cmd *, t_env **);
 
 	scmd->store[0] = dup(STDIN_FILENO);
 	scmd->store[1] = dup(STDOUT_FILENO);
@@ -86,7 +86,7 @@ void	ft_exec(t_scmd *scmd)
 	fun = ft_builtin(scmd);
 	if (scmd->n_scmd == 1 && ft_builtin(scmd))
 	{
-		fun(*scmd->cmd, scmd->env);
+		fun(*scmd->cmd, &scmd->env);
 		close(scmd->store[0]);
 		close(scmd->store[1]);
 	}

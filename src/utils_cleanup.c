@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 09:59:58 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:51:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,20 @@ void	ft_cleancmd(t_scmd *scmd)
 }
 
 /*	clean up environment */
-void	ft_clean_env(t_env *env)
+void	ft_clean_env(t_env **env)
 {
 	t_env	*tmp;
 
 	if (!env)
 		return ;
-	while (env && env->next)
+	while ((*env) && (*env)->next)
 	{
-		if (env->var_name)
-			free(env->var_name);
-		if (env->var_content)
-			free (env->var_content);
-		tmp = env;
-		env = env->next;
+		if ((*env)->var_name)
+			free((*env)->var_name);
+		if ((*env)->var_content)
+			free ((*env)->var_content);
+		tmp =(*env);
+		(*env) = (*env)->next;
 		free(tmp);
 	}
 }

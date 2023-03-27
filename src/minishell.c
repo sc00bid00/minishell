@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 10:56:35 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 15:19:43 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:21:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	env = copy_envp_to_env(envp);
 	if (argc == 3 && !ft_strncmp(argv[1], "-c", 2))
 	{
-		exitstatus = test_get_input(envp, env, argv[2]);
+		exitstatus = test_get_input(envp, &env, argv[2]);
 		exit (exitstatus);
 	}
 	else
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		while (1)
 		{
 			setup_sigint();
-			exitstatus = get_input(envp, env);
+ 			exitstatus = get_input(envp, &env);
 		}
 	}
 	return (exitstatus);

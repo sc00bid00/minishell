@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 14:34:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:06:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*	if argument is cd without additional parameter, return home directory */
 /*	if parameter is "-", return OLD PWD */
-char	*get_dir(t_cmd *cmd, t_env *env)
+char	*get_dir(t_cmd *cmd, t_env **env)
 {
 	char	*dir;
 	t_env	*temp;
@@ -38,7 +38,7 @@ char	*get_dir(t_cmd *cmd, t_env *env)
 }
 
 /*	set value OLDPWD = PWD and get new value for PWD */
-int	update_pwd(t_env *env)
+int	update_pwd(t_env **env)
 {
 	char	*cwd;
 	char	*str;
@@ -47,7 +47,7 @@ int	update_pwd(t_env *env)
 	cwd = getcwd(NULL, 0);
 	temp = ret_var(env, "PWD");
 	if (!temp)
-		new_var("PWD", false);
+		new_var("PWD");
 	str = temp->var_content;
 	if (str)
 	{
@@ -62,7 +62,7 @@ int	update_pwd(t_env *env)
 }
 
 /*	use chdir function to change dir */
-int	builtin_cd(t_cmd *cmd, t_env *env)
+int	builtin_cd(t_cmd *cmd, t_env **env)
 {
 	char	*dir;
 

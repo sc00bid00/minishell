@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 11:56:09 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/21 09:49:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:43:24 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	(*ft_builtin(t_scmd *scmd))(t_cmd *cmd, t_env *env)
+int	(*ft_builtin(t_scmd *scmd))(t_cmd *cmd, t_env **env)
 {
-	int	(*fun)(t_cmd *, t_env *);
+	int	(*fun)(t_cmd *, t_env **);
 
 	if (!scmd->cmd[scmd->count] || !scmd->cmd[scmd->count]->arr
 		|| !scmd->cmd[scmd->count]->arr[0])

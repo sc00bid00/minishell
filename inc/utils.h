@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 17:50:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:19:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ms_multijoin(char const *s1, char c, char const *s2);
 void	ft_ms_lstclear(t_env *lst);
 void	ft_ms_lstdelone(t_env *env);
 void	ft_error(char *s1, char *s2, char *mes);
-void	ft_clean_env(t_env *env);
+void	ft_clean_env(t_env **env);
+int     ft_my_strcmp(const char *s1, const char *s2);
+
 #endif
 
