@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 07:26:51 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 10:30:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define SINGLE_Q 0b000000001
 # define DOUBLE_Q 0b000000010
+# define SOME_Q 0b000000011
 # define SPCE 0b000000100
 # define RIN 0b000001000
 # define ROUT 0b000010000
