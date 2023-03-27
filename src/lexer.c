@@ -6,11 +6,75 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 15:59:07 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 17:31:44 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+
+char	*ft_dollarsubst(char *str, t_token *tkn)
+{
+	t_env	*env_var;
+	char	*tmp;
+
+	tmp = NULL;
+	if (str && str[0] == '0')
+	{
+		env_var = ret_var(tkn->env, "SHELL");
+		if (env_var && env_var->var_content)
+			tmp = ft_strjoin(env_var->var_content, &str[1]);
+	}
+	else if (str)
+	{
+		env_var = ret_var(tkn->env, str);
+		tmp = ft_strdup(env_var->var_content);
+	}
+	return (tmp);
+}
+
+void	ft_dollarcurr(t_list **lst, t_token *tkn)
+{
+	char	*tmp;
+	char	*tmp2;
+	t_env	*env_var;
+
+	tmp = ft_strtrim(((char *)(*lst)->content), "\'\"$");
+	tmp2 = ft_dollarsubst(tmp, tkn);
+	free(tmp);
+	free((*lst)->content);
+	tmp = ft_strjoin("\'", env_var->var_content);
+	(*lst)->content = ft_strjoin(tmp, "\'");
+	free(tmp);
+}
+
+
+void	ft_expdollar(t_token *tkn)
+{
+	t_list	*lst;
+	char	*tmp;
+
+	lst = tkn->lst;
+	while (lst)
+	{
+		if (lst->content && ((char *)lst->content)[0] == '$' && lst->next
+			&& lst->next->content)
+		{
+			tmp = ft_dollarsubst((char *)lst->next->content);
+			if (tmp)
+		}
+		else if (lst->content && !ft_strncmp((char *)lst->content, "\"\'", 2))
+			ft_dollarcurr(&lst, tkn);
+		else if (lst->content && !ft_strncmp((char *)lst->content, "\'\"", 2))
+		{
+			tmp = ft_strtrim((char *)lst->content, "\'");
+			free(lst->content);
+			lst->content = tmp;
+		}
+		lst = lst->next;
+	}
+}
+
 
 /* return t_list nodes containing tokne char * */
 void	ft_save(t_token *tkn)
@@ -96,6 +160,8 @@ t_token *ft_lex(char *str, t_env *env)
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_go(tkn);
+	tmp_prtlst(tkn);
+	ft_expdollar(tkn);
 	tmp_prtlst(tkn);
 	ft_helplexer(tkn);
 	if (!ft_redsyntax(tkn))
