@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/25 12:06:38 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/26 09:08:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	ft_isword(t_list **lst, int *count, t_scmd *scmd)
 	i = 0;
 	while (*lst)
 	{
-		if (((char *)(*lst)->content)[0])
+		if (!ft_strncmp(((char *)(*lst)->content), " ", 1))
+			;
+		else if (((char *)(*lst)->content)[0])
 		{
 			tmp->arr[i] = ft_strdup((*lst)->content);
 			i++;

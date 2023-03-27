@@ -6,12 +6,22 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 08:23:01 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/26 17:04:14 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+# define SINGLE_Q '\''
+# define DOUBLE_Q '"'
+# define SPCE ' '
+# define RIN '<'
+# define ROUT 0b000010000
+# define PIPE 0b000100000
+# define DOLLAR 0b001000000
+# define TILDE 0b010000000
+# define CHAR 0b100000000
 
 typedef struct s_token
 {

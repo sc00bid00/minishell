@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/25 10:30:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/26 17:21:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_token	*ft_init_tkn(char *str, t_env *env)
 		return (NULL);
 	tkn->str = str;
 	tkn->lst = NULL;
-	tkn->c_sta = 0b0000000;
-	tkn->p_sta = 0b0000000;
-	tkn->curr = 0;
+	tkn->p_sta = 0b000000000;
+	tkn->c_sta = 0b000000000;
+	tkn->curr = 1;
 	tkn->prev = 0;
 	tkn->count = 0;
 	tkn->env = env;

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/25 10:12:58 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/26 13:15:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	tmp_prtlst(t_token *tkn)
 	tmp = tkn->lst;
 	while (tmp)
 	{
-		ft_putendl_fd(tmp->content, 2);
+		ft_putstr_fd(tmp->content, 2);
+		ft_putendl_fd("$", 2);
 		tmp = tmp->next;
 	}
 	ft_putstr_fd("--- output end ---\n--- chain with", 2);
@@ -106,10 +107,12 @@ void	tmp_prtlst2(t_list *lst)
 	while (tmp)
 	{
 		if (!tmp->content)
-			ft_putstr_fd("(null)", 2);
+			ft_putendl_fd("(null)", 2);
 		else
+		{
 			ft_putstr_fd(tmp->content, 2);
-		ft_putchar_fd('\n', 2);
+			ft_putendl_fd("$", 2);
+		}
 		tmp = tmp->next;
 	}
 	ft_putendl_fd("=== checkout debug  - tmp_prtlst2 ===", 2);
