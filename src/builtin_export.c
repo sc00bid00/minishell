@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 11:09:18 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:33:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ bool	is_valid_arg(char *str)
 	}
 	while (str[i] != 0 && str[i] != '=')
 	{
-		if ((str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_' )
-			return (true);
+		if (!((str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_' ))
+			return (false);
 		i++;
 	}
-	return (false);
+	return (true);
 }
 
 /*	check if variable is already in env list*/
