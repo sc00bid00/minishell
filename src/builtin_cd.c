@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 14:44:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:06:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	update_pwd(t_env **env)
 	cwd = getcwd(NULL, 0);
 	temp = ret_var(env, "PWD");
 	if (!temp)
-		new_var("PWD", false);
+		new_var("PWD");
 	str = temp->var_content;
 	if (str)
 	{

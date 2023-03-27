@@ -6,56 +6,32 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 17:18:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:09:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool	is_valid_arg(char c, bool first)
+/*	check if entered argument is valid, print error if not letter */
+bool	is_valid_arg(char *str)
 {
-	if (first)
-	{
-		if ((c >= 'A' && c <= 'Z') || c == '_' )
-			return (true);
-		else
-			return (false);
-	}
-	else
-	{
-		if (!ft_isdigit(c) || !ft_isalpha(c) || c == '_')
-			return (true);
-	}
-	return (false);
-}
-
-/*	extract and return variable name from envp */
-char	*get_var_name_export(char *var)
-{
-	int		i;
-	char	*var_name;
+	size_t	i;
 
 	i = 0;
-	if (is_valid_arg(var[0], true))
+	if (!str)
+		return (false);
+	if (!ft_isalpha(str[0]))
+	{
+		ft_error("minishell: export: ", str, ERROR_4);
+		return (false);
+	}
+	while (str[i] != 0 && str[i] != '=')
+	{
+		if ((str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_' )
+			return (true);
 		i++;
-	else
-	{
-		ft_error("minishell: export: ", var, ERROR_4);
-		return (NULL);
 	}
-	while (var[i] && var[i] != '=')
-	{
-		if (is_valid_arg(var[0], false))
-			i++;
-		else
-		{
-			ft_error("minishell: export: ", var, ERROR_4);
-			return (NULL);
-		}
-	}
-	var_name = ft_substr(var, 0, i);
-	printf("var_name is: %s\n", var_name);
-	return (var_name);
+	return (false);
 }
 
 /*	check if variable is already in env list*/
@@ -63,13 +39,12 @@ bool	existing_var(t_env **env, char *var)
 {
 	char	*name;
 
-	name = get_var_name_export(var);
+	name = get_var_name(var);
 	if (name)
 	{
 		if (ret_var(env, name))
 		{
 			free (name);
-			printf("true\n");
 			return (true);
 		}
 		else
@@ -79,42 +54,41 @@ bool	existing_var(t_env **env, char *var)
 }
 
 /*	either update existing or add new variable */
-int	update_env(t_cmd *cmd, t_env **env)
+void	update_env(char *str, t_env **env)
 {
-	int		i;
 	t_env	*temp;
 	char	*value;
 	char	*name;
 
-	i = 1;
-	while (cmd->arr && cmd->arr[i])
+	if (existing_var(env, str) == true)
 	{
-		if (existing_var(env, cmd->arr[i]) == true)
-		{
-			name = get_var_name_export(cmd->arr[i]);
-			value = get_var_content(cmd->arr[i]);
-			upd_var(env, name, value);
-		}
-		else
-		{
-			temp = new_var(cmd->arr[i], true);
-			(*env) = ms_lstadd_back(*env, temp);
-		}
-		i++;
+		name = get_var_name(str);
+		value = get_var_content(str);
+		upd_var(env, name, value);
 	}
-	return (0);
+	else
+	{
+		temp = new_var(str);
+		(*env) = ms_lstadd_back(*env, temp);
+	}
 }
 
-/*	imitate behavior of export bash builtin */
+/*	imitate behavior of export bash builtin: if no arguments, printf env */
 int	builtin_export(t_cmd *cmd, t_env **env)
 {
+	size_t	i;
+
+	i = 1;
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
 		print_env(env, true);
-		return (0);
+		exitstatus = 0;
 	}
-	else
-		update_env(cmd, env);
-	// print_env(env, false);
+	while (cmd->arr && cmd->arr[i])
+	{
+		if (is_valid_arg(cmd->arr[i]))
+			update_env(cmd->arr[i], env);
+		i++;
+	}
 	return (0);
 }
