@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 17:31:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:29:46 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,39 +33,37 @@ char	*ft_dollarsubst(char *str, t_token *tkn)
 	return (tmp);
 }
 
-void	ft_dollarcurr(t_list **lst, t_token *tkn)
-{
-	char	*tmp;
-	char	*tmp2;
-	t_env	*env_var;
-
-	tmp = ft_strtrim(((char *)(*lst)->content), "\'\"$");
-	tmp2 = ft_dollarsubst(tmp, tkn);
-	free(tmp);
-	free((*lst)->content);
-	tmp = ft_strjoin("\'", env_var->var_content);
-	(*lst)->content = ft_strjoin(tmp, "\'");
-	free(tmp);
-}
 
 
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
 	char	*tmp;
+	char	*tmp2;
 
 	lst = tkn->lst;
 	while (lst)
 	{
-		if (lst->content && ((char *)lst->content)[0] == '$' && lst->next
-			&& lst->next->content)
+		if (lst->content && ((char *)lst->content)[0] == '$'
+			&& ft_strlen((char *)lst->content) > 1)
 		{
-			tmp = ft_dollarsubst((char *)lst->next->content);
-			if (tmp)
+			tmp = &((char *)(lst->content))[1];
+			free(lst->content);
+			lst->content = ft_dollarsubst(tmp, tkn);
 		}
-		else if (lst->content && !ft_strncmp((char *)lst->content, "\"\'", 2))
-			ft_dollarcurr(&lst, tkn);
-		else if (lst->content && !ft_strncmp((char *)lst->content, "\'\"", 2))
+		else if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& !ft_strncmp((char *)lst->content, "\"\'", 2))
+		{
+			tmp = ft_strtrim((char *)lst->content, "\'\"$");
+			free(lst->content);
+			tmp2 = ft_dollarsubst(tmp, tkn);
+			free(tmp);
+			tmp = ft_strjoin("\'", tmp2);
+			lst->content = ft_strjoin(tmp, "\'");
+			free(tmp);
+		}
+		else if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& !ft_strncmp((char *)lst->content, "\'\"", 2))
 		{
 			tmp = ft_strtrim((char *)lst->content, "\'");
 			free(lst->content);
@@ -116,10 +114,6 @@ int	ft_flag(char c)
 		flag |= ROUT;
 	else if (c == '|')
 		flag |= PIPE;
-	else if (c == '$')
-		flag |= DOLLAR;
-	// else if (c == '~')
-	// 	flag |= TILDE;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);
