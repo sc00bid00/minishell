@@ -6,12 +6,47 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 18:29:46 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 20:49:02 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+
+void	ft_exptilde(t_token *tkn)
+{
+	t_list	*lst;
+	t_env	*env_var;
+	char	*tmp;
+
+	tmp = NULL;
+	lst = tkn->lst;
+	while (lst)
+	{
+		if (lst->content && ft_strchr((char *)lst->content, '~')
+			&& ft_strlen((char *)lst->content) > 1)
+		{
+			if (((char *)lst->content)[1] == '/')
+			{
+				env_var = ret_var(tkn->env, "HOME");
+				if (env_var && env_var->var_content)
+					tmp = ft_strjoin(env_var->var_content, &((char *)lst->content)[1]);
+				free(lst->content);
+				lst->content = tmp;
+			}
+		}
+		else if (lst->content && !ft_strncmp((char *)lst->content, "~", 2))
+		{
+			env_var = ret_var(tkn->env, "HOME");
+			if (env_var && env_var->var_content)
+			{
+				free(lst->content);
+				lst->content = ft_strdup(env_var->var_content);
+			}
+		}
+		lst = lst->next;
+	}
+}
 
 char	*ft_dollarsubst(char *str, t_token *tkn)
 {
@@ -22,59 +57,59 @@ char	*ft_dollarsubst(char *str, t_token *tkn)
 	if (str && str[0] == '0')
 	{
 		env_var = ret_var(tkn->env, "SHELL");
-		if (env_var && env_var->var_content)
+		if (env_var)
 			tmp = ft_strjoin(env_var->var_content, &str[1]);
 	}
 	else if (str)
 	{
 		env_var = ret_var(tkn->env, str);
-		tmp = ft_strdup(env_var->var_content);
+		if (env_var)
+			tmp = ft_strdup(env_var->var_content);
 	}
 	return (tmp);
 }
 
+char	*ft_putback(char *str, char *set1, char *set2, t_token *tkn)
+{
+	char	*tmp;
 
+	tmp = ft_strtrim(str, set1);
+	str = ft_dollarsubst(tmp, tkn);
+	free(tmp);
+	tmp = ft_strjoin(set1, str);
+	free(str);
+	str = ft_strjoin(tmp, set2);
+	free(tmp);
+	return (str);
+}
 
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
 	char	*tmp;
-	char	*tmp2;
 
 	lst = tkn->lst;
 	while (lst)
 	{
-		if (lst->content && ((char *)lst->content)[0] == '$'
-			&& ft_strlen((char *)lst->content) > 1)
+		if (lst->content && ft_strlen((char *)lst->content) > 1)
 		{
-			tmp = &((char *)(lst->content))[1];
-			free(lst->content);
-			lst->content = ft_dollarsubst(tmp, tkn);
+			if (((char *)lst->content)[0] == '$')
+				tmp = ft_dollarsubst(&((char *)lst->content)[1], tkn);
+			else if (!ft_strncmp((char *)lst->content, "\"$", 2))
+				tmp = ft_putback(&((char *)lst->content)[2], "\"", "\"", tkn);
+			else if (ft_strlen((char *)lst->content) > 2
+				&& !ft_strncmp((char *)lst->content, "\"\'$", 3))
+				tmp = ft_putback(&((char *)lst->content)[3], "\"\'", "\'\"", tkn);
+			else
+				tmp = ft_strdup((char *)lst->content);
 		}
-		else if (lst->content && ft_strchr((char *)lst->content, '$')
-			&& !ft_strncmp((char *)lst->content, "\"\'", 2))
-		{
-			tmp = ft_strtrim((char *)lst->content, "\'\"$");
-			free(lst->content);
-			tmp2 = ft_dollarsubst(tmp, tkn);
-			free(tmp);
-			tmp = ft_strjoin("\'", tmp2);
-			lst->content = ft_strjoin(tmp, "\'");
-			free(tmp);
-		}
-		else if (lst->content && ft_strchr((char *)lst->content, '$')
-			&& !ft_strncmp((char *)lst->content, "\'\"", 2))
-		{
-			tmp = ft_strtrim((char *)lst->content, "\'");
-			free(lst->content);
-			lst->content = tmp;
-		}
+		free(lst->content);
+		lst->content = tmp;
 		lst = lst->next;
 	}
 }
 
-
-/* return t_list nodes containing tokne char * */
+/* retur	n t_list nodes containing tokne char * */
 void	ft_save(t_token *tkn)
 {
 	ft_lstadd_back(&(tkn->lst), \
@@ -156,8 +191,9 @@ t_token *ft_lex(char *str, t_env *env)
 		ft_go(tkn);
 	tmp_prtlst(tkn);
 	ft_expdollar(tkn);
+	ft_exptilde(tkn);
 	tmp_prtlst(tkn);
-	ft_helplexer(tkn);
+	// ft_helplexer(tkn);
 	if (!ft_redsyntax(tkn))
 		return (NULL);
 	return (tkn);

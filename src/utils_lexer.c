@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 13:52:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:33:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ void	ft_expand(t_token *tkn)
 
 void	ft_helplexer(t_token *tkn)
 {
-	if (!tkn->str[tkn->curr] && tkn->str[tkn->curr] != tkn->str[tkn->prev])
-		ft_save(tkn);
-	ft_checkdollarnodes(tkn);
+	// if (!tkn->str[tkn->curr] && tkn->str[tkn->curr] != tkn->str[tkn->prev])
+	// 	ft_save(tkn);
+	// ft_checkdollarnodes(tkn);
 	ft_expand(tkn);
-	ft_remquotes(tkn);
+	// ft_remquotes(tkn);
 }
