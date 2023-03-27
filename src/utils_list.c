@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:05:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 15:24:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:18:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ void	ft_ms_lstclear(t_env *lst)
 	lst = NULL;
 }
 
-// void	ft_ms_lstdelone(t_env *env)
-// {
-// 	if (env)
-// 		free(env);
-// }
-
 int	ms_lstsize(t_env *lst)
 {
 	int		i;
@@ -73,21 +67,21 @@ int	ms_lstsize(t_env *lst)
 	return (i);
 }
 
-/* joins two strings and a char */
-char	*ms_multijoin(char const *s1, char c, char const *s2)
+/*	clean up environment */
+void	ft_cleanenv(t_env **env)
 {
-	char	*str;
-	size_t	len;
+	t_env	*tmp;
 
-	if (!s1 || ! s2)
-		return (NULL);
-	len = ft_strlen(s1) + 1 + ft_strlen(s2) + 1;
-	str = (char *)malloc(len * sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	ft_memcpy(str + ft_strlen(s1), &c, 1);
-	ft_memcpy(str + ft_strlen(s1) + 1, s2, ft_strlen(s2));
-	*(str + ft_strlen(s1) + 1 + ft_strlen(s2)) = '\0';
-	return (str);
+	if (!env)
+		return ;
+	while ((*env) && (*env)->next)
+	{
+		if ((*env)->var_name)
+			free((*env)->var_name);
+		if ((*env)->var_content)
+			free ((*env)->var_content);
+		tmp =(*env);
+		(*env) = (*env)->next;
+		free(tmp);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:50:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 16:20:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,19 @@
 /* cmd to be used in execution */
 typedef struct s_cmd
 {
-	char	*in_name;
-	char	*out_name;
-	int		fd_in;
-	int		fd_out;
-	char	*path;
-	char	**arr;
-	int		argc;
-	int		err_flag;
-	int		hd_flag;
-	int		rule;
-	int		stat;
-	int		builtin;
+	char			*in_name;
+	char			*out_name;
+	int				fd_in;
+	int				fd_out;
+	char			*path;
+	char			**arr;
+	int				argc;
+	int				err_flag;
+	int				hd_flag;
+	int				rule;
+	int				stat;
+	int				builtin;
+	struct s_scmd	*scmd;
 }			t_cmd;
 
 /* simple cmd used in parser and prexec */

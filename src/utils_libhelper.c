@@ -12,6 +12,7 @@
 
 #include <minishell.h>
 
+/* compares two strings */
 int	ft_my_strcmp(const char *s1, const char *s2)
 {
 	size_t i;
@@ -36,4 +37,23 @@ int	ft_my_strcmp(const char *s1, const char *s2)
 		}
 	}
 	return (0);
+}
+
+/* joins two strings and a char */
+char	*ms_multijoin(char const *s1, char c, char const *s2)
+{
+	char	*str;
+	size_t	len;
+
+	if (!s1 || ! s2)
+		return (NULL);
+	len = ft_strlen(s1) + 1 + ft_strlen(s2) + 1;
+	str = (char *)malloc(len * sizeof(char));
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1, ft_strlen(s1));
+	ft_memcpy(str + ft_strlen(s1), &c, 1);
+	ft_memcpy(str + ft_strlen(s1) + 1, s2, ft_strlen(s2));
+	*(str + ft_strlen(s1) + 1 + ft_strlen(s2)) = '\0';
+	return (str);
 }

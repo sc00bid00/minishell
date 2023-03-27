@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 11:19:35 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:53:47 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_ms_lstclear(t_env *lst);
 void	ft_ms_lstdelone(t_env *env);
 void	ft_error(char *s1, char *s2, char *mes);
 void	ft_clean_env(t_env **env);
-int     ft_my_strcmp(const char *s1, const char *s2);
+int		ft_my_strcmp(const char *s1, const char *s2);
+void	ms_mycleanup(t_cmd *cmd, t_env **env);
+void	ft_cleanenv(t_env **env);
 
 #endif
-

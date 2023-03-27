@@ -6,12 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 11:08:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:46:12 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/* create char array from linked list for execve */
 char	**ft_arrenv(t_env *env)
 {
 	t_env	*tmp;
@@ -34,7 +35,7 @@ char	**ft_arrenv(t_env *env)
 	return (arr);
 }
 
-/*	extract and return variable name from envp */
+/*	extract and return variable name from env */
 char	*get_var_name(char *var)
 {
 	int		i;
@@ -47,7 +48,7 @@ char	*get_var_name(char *var)
 	return (var_name);
 }
 
-/*	extract and return variable content from envp*/
+/*	extract and return variable content from env*/
 char	*get_var_content(char *var)
 {
 	size_t		i;
@@ -85,6 +86,7 @@ t_env	*new_var(char *var)
 	return (temp);
 }
 
+/* create local copy of environment in a linked list, head set to dummy var*/
 t_env	*copy_envp_to_env(char **envp)
 {
 	t_env	*env;
@@ -93,7 +95,8 @@ t_env	*copy_envp_to_env(char **envp)
 
 	i = 0;
 	env = NULL;
-	print_env_array(envp);
+	temp = new_var("dummy=dummy");
+	env = ms_lstadd_back(env, temp);
 	while (envp && envp[i])
 	{
 		temp = new_var(envp[i]);

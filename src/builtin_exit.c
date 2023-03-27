@@ -6,13 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:31:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* modified atoi to take 19 digits input for exitstatus like bash*/
+/* modified atoi to take 19 digits input for g_exitstatus like bash*/
 bool	is_numeric(char *str)
 {
 	int	i;
@@ -41,23 +41,22 @@ int	builtin_exit(t_cmd *cmd, t_env **env)
 		if(!is_numeric(cmd->arr[1]))
 		{
 			ft_error("minishell: exit: ", cmd->arr[1], ERROR_2);
-			exitstatus = 255;
+			g_exitstatus = 255;
 		}
 		else if (cmd->arr[2] == NULL)
-			exitstatus = ft_atoi_long_long(cmd->arr[1]) % 256;
+			g_exitstatus = ft_atoi_long_long(cmd->arr[1]) % 256;
 		else if (cmd->arr[2] != NULL)
 		{
 			ft_error("minishell: ", cmd->arr[0], ERROR_3);
-			exitstatus = 1;
+			g_exitstatus = 1;
 			return (EXIT_FAILURE);
 		}
 	}
-	printf("Exitstatus is:%d\n", exitstatus);
-	ft_clean_env(env);
-	exit (exitstatus);
+	ms_mycleanup(cmd, env);
+	exit (g_exitstatus);
 }
 
-/* modified atoi to take 19 digits input for exitstatus like bash*/
+/* modified atoi to take 19 digits input for g_exitstatus like bash*/
 unsigned long long	ft_atoi_long_long(char *str)
 {
 	unsigned long long	num;

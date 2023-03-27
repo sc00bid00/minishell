@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 17:05:21 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:17:14 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,5 @@ t_env	*del_var(t_env **env, char *var)
 		temp->var_name = NULL;
 		free (temp);
 	}
-	return (*(env));
-}
-
-/* deletes first var from list and sets new head */
-t_env	*del_first_var(t_env **env)
-{
-	t_env	*temp;
-	t_env	*second;
-
-	second = (*env)->next;
-	printf("second is: %s\n", second->var_name);
-	temp = (*env);
-	printf("var_content = %s\n", temp->var_content);
-	free (temp->var_content);
-	printf("var_name = %s\n", temp->var_name);
-	free (temp->var_name);
-	free (temp);
-	printf("second is: %s\n", second->var_name);
-	(*env) = second;
-	print_env(env, false);
 	return (*(env));
 }

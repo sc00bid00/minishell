@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 11:24:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*ft_syntaxerror(t_token *tkn, char *str)
 {
 	ft_eerr(ERROR_9, str, "\'");
-	exitstatus = 258;
+	g_exitstatus = 258;
 	ft_cleantkn(tkn);
 	return (NULL);
 }

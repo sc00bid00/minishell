@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 11:06:22 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ int	builtin_cd(t_cmd *cmd, t_env **env)
 	if (cmd && cmd->arr && chdir(dir) == ERROR)
 	{
 		ft_error("minishell: cd: ", cmd->arr[1], NULL);
-		exitstatus = 1;
+		g_exitstatus = 1;
 		return (EXIT_FAILURE);
 	}
 	else
 		update_pwd(env);
 	if (cmd->arr && !ft_strncmp(cmd->arr[1], "-", 2))
 		printf("%s\n", getcwd(NULL, 0));
-	exitstatus = 0;
+	g_exitstatus = 0;
 	return (EXIT_SUCCESS);
 }

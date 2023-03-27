@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 11:22:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:30:24 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ft_wait(t_scmd *scmd)
 	{
 		ret = waitpid(-1, &scmd->wstatus, 0);
 		if (ret == scmd->id)
-			exitstatus = WEXITSTATUS(scmd->wstatus);
+			g_exitstatus = WEXITSTATUS(scmd->wstatus);
 		if (WIFSIGNALED(scmd->wstatus) && scmd->wstatus != 13)
-			exitstatus = 128 + WTERMSIG(scmd->wstatus);
+			g_exitstatus = 128 + WTERMSIG(scmd->wstatus);
 		scmd->count++;
 	}
 	tmp = scmd->hdocs;

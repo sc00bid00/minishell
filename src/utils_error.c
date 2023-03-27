@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:57:28 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/20 14:23:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_error(char *s1, char *s2, char *mes)
 	else
 		str = mes;
 	ft_putendl_fd(str, 2);
-	exitstatus = 127;
+	g_exitstatus = 127;
 }
 
 void	ft_eerr(void *fst_msg, void *snd_msg, void *trd_msg)

@@ -6,11 +6,42 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 11:33:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:17:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/*	print environment list, with declare -x, sorted alphabetically */
+int	print_export(t_env **env)
+{
+	if (env && !(*env)->next)
+	{
+		ft_error("minishell: env: ", NULL, ERROR_5);
+		return (EXIT_FAILURE);
+	}
+	if ((*env)->next)
+		(*env) = (*env)->next;
+	while (env && (*env))
+	{
+		if ((*env)->var_name)
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd((*env)->var_name, STDOUT_FILENO);
+			if ((*env)->var_content)
+				ft_putstr_fd("=", STDOUT_FILENO);
+			else
+				ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+		if ((*env)->var_content)
+			ft_putendl_fd((*env)->var_content,STDOUT_FILENO);
+		if ((*env)->next)
+			(*env) = (*env)->next;
+		else
+			break ;
+	}
+	return (EXIT_SUCCESS);
+}
 
 /*	check if entered argument is valid, print error if not letter */
 bool	is_valid_arg(char *str)
@@ -81,8 +112,8 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 	i = 1;
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
-		print_env(env, true);
-		exitstatus = 0;
+		print_export(env);
+		g_exitstatus = 0;
 	}
 	while (cmd->arr && cmd->arr[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 16:02:42 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 13:58:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token	*ft_init_tkn(char *str, t_env *env)
 {
 	t_token	*tkn;
 
-	tkn = malloc(sizeof(t_token));
+	tkn = ft_calloc(1, sizeof(t_token));
 	if (!tkn)
 		return (NULL);
 	tkn->str = str;
@@ -55,7 +55,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 	t_scmd	*scmd;
 
 	(void)arr;
-	scmd = malloc(sizeof(t_scmd));
+	scmd = ft_calloc(1, sizeof(t_scmd));
 	if (!scmd)
 		return (NULL);
 	scmd->n_scmd = ft_ctscmd(tkn);
@@ -74,6 +74,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 	scmd->wstatus = 0;
 	scmd->flag = 0;
 	scmd->env = env;
+	scmd->id = 0;
 	return (scmd);
 }
 
@@ -82,7 +83,7 @@ int	ft_init_cmd(t_scmd *scmd)
 {
 	t_cmd	*tmp;
 
-	scmd->cmd[scmd->count] = malloc(sizeof(t_cmd));
+	scmd->cmd[scmd->count] = ft_calloc(1, sizeof(t_cmd));
 	if (!scmd->cmd[scmd->count])
 		return (0);
 	tmp = scmd->cmd[scmd->count];

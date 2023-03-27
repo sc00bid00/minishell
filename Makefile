@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/22 15:32:11 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/27 16:48:06 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ SRC =		builtin.c \
 			builtin_pwd.c \
 			builtin_unset.c \
 			env_build.c \
-			env_transform.c \
 			env_update.c \
 			executor.c\
 			lexer.c \

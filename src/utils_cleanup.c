@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:08:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 14:51:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:27:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_cleanscmd(t_scmd *cmd)
 	int		i;
 
 	i = 0;
-	while (cmd->arr[i])
+	while (cmd && cmd->arr[i])
 	{
 		ft_cleanlst(cmd->arr[i]);
 		i++;
@@ -80,23 +80,11 @@ void	ft_cleancmd(t_scmd *scmd)
 	free(scmd->cmd);
 }
 
-/*	clean up environment */
-void	ft_clean_env(t_env **env)
+/* clean up lists before exit */
+void	ms_mycleanup(t_cmd *cmd, t_env **env)
 {
-	t_env	*tmp;
-
-	if (!env)
-		return ;
-	while ((*env) && (*env)->next)
-	{
-		if ((*env)->var_name)
-			free((*env)->var_name);
-		if ((*env)->var_content)
-			free ((*env)->var_content);
-		tmp =(*env);
-		(*env) = (*env)->next;
-		free(tmp);
-	}
+	if (cmd->scmd)
+		ft_cleancmd(cmd->scmd);
+	if (env)
+		ft_cleanenv(env);
 }
-
-// void	ft_clean_up()

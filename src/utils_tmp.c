@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/16 18:41:19 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 16:47:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,18 @@ void	tmp_prtlst2(t_list *lst)
 	{
 		ft_printf("%s\n", tmp->content);
 		tmp = tmp->next;
+	}
+}
+
+/*	print array for control purposes */
+void	print_env_array(char **env_array)
+{
+	int	i;
+
+	i = 0;
+	while (env_array[i])
+	{
+		printf("%s\n", env_array[i]);
+		i++;
 	}
 }

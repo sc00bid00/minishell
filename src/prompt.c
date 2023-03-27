@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/22 14:39:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_start(char **envp, t_env **env, char *input)
 	if (!scmd)
 		return (EXIT_FAILURE);
 	ft_exec(scmd);
-	ret = exitstatus;
+	ret = g_exitstatus;
 	ft_cleancmd(scmd);
 	ft_cleanscmd(scmd);
 	ft_cleantkn(tkn);
@@ -54,12 +54,12 @@ int	get_input(char **envp, t_env **env)
 		ft_start(envp, env, input);
 		free(input);
 	}
-	return (exitstatus);
+	return (g_exitstatus);
 }
 
 int	test_get_input(char **envp, t_env **env, char *input)
 {
 	if (input)
-		exitstatus = ft_start(envp, env, input);
-	return (exitstatus);
+		g_exitstatus = ft_start(envp, env, input);
+	return (g_exitstatus);
 }
