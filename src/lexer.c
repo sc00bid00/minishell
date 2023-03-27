@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 20:49:02 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/27 21:20:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	ft_exptilde(t_token *tkn)
 	t_list	*lst;
 	t_env	*env_var;
 	char	*tmp;
+	int		i;
 
 	tmp = NULL;
 	lst = tkn->lst;
+	i = 0;
 	while (lst)
 	{
-		if (lst->content && ft_strchr((char *)lst->content, '~')
+		if (lst->content && !ft_strncmp((char *)lst->content, "|", 1))
+			i = -1;
+		if (i < 2 && lst->content && ft_strchr((char *)lst->content, '~')
 			&& ft_strlen((char *)lst->content) > 1)
 		{
 			if (((char *)lst->content)[1] == '/')
@@ -35,7 +39,7 @@ void	ft_exptilde(t_token *tkn)
 				lst->content = tmp;
 			}
 		}
-		else if (lst->content && !ft_strncmp((char *)lst->content, "~", 2))
+		else if (i < 2 && lst->content && !ft_strncmp((char *)lst->content, "~", 1))
 		{
 			env_var = ret_var(tkn->env, "HOME");
 			if (env_var && env_var->var_content)
@@ -44,6 +48,7 @@ void	ft_exptilde(t_token *tkn)
 				lst->content = ft_strdup(env_var->var_content);
 			}
 		}
+		i++;
 		lst = lst->next;
 	}
 }
@@ -91,7 +96,8 @@ void	ft_expdollar(t_token *tkn)
 	lst = tkn->lst;
 	while (lst)
 	{
-		if (lst->content && ft_strlen((char *)lst->content) > 1)
+		if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& ft_strlen((char *)lst->content) > 1)
 		{
 			if (((char *)lst->content)[0] == '$')
 				tmp = ft_dollarsubst(&((char *)lst->content)[1], tkn);
@@ -102,9 +108,9 @@ void	ft_expdollar(t_token *tkn)
 				tmp = ft_putback(&((char *)lst->content)[3], "\"\'", "\'\"", tkn);
 			else
 				tmp = ft_strdup((char *)lst->content);
+			free(lst->content);
+			lst->content = tmp;
 		}
-		free(lst->content);
-		lst->content = tmp;
 		lst = lst->next;
 	}
 }
