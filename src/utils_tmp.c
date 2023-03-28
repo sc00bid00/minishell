@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:07:47 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/26 13:15:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 16:53:02 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	tmp_prtlst(t_token *tkn)
 {
 	t_list	*tmp;
 
-	ft_putendl_fd("=== checkin  debug tmp_prtlst ===", 2);
-	ft_putstr_fd("--- input string ---", 2);
+	ft_putendl_fd("===	checkin  debug tmp_prtlst	===", 2);
 	ft_putstr_fd(tkn->str, 2);
-	ft_putendl_fd("--- output start ---", 2);
+	ft_putendl_fd("\n===	output start 				===", 2);
 	tmp = tkn->lst;
 	while (tmp)
 	{
@@ -28,10 +27,7 @@ void	tmp_prtlst(t_token *tkn)
 		ft_putendl_fd("$", 2);
 		tmp = tmp->next;
 	}
-	ft_putstr_fd("--- output end ---\n--- chain with", 2);
-	ft_putnbr_fd(tkn->count, 2);
-	ft_putendl_fd(" nodes ---\n", 2);
-	ft_putendl_fd("=== checkout debug tmp_prtlst ===", 2);
+	ft_putendl_fd("===	checkout debug tmp_prtlst	===", 2);
 }
 
 /* print *lst->content to stdout*/

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 08:58:51 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 17:20:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_token
 	t_list	*lst;
 	int		prev;
 	int		curr;
-	int		p_sta;
+	int		nosub;
 	int		c_sta;
 	int		count;
 	t_env	*env;
@@ -47,7 +47,7 @@ void	ft_expdollar(t_token *tkn);
 char	*ft_dollarsubst(char *str, t_token *tkn);
 void	ft_exptilde(t_token *tkn);
 char	*ft_otherprefix(char *str, t_token *tkn);
-char	*ft_putback(char *str, char *set1, char *set2, t_token *tkn);
+char	*ft_putback(char *str, char *set1, char *set2);
 void	tmp_prtlst(t_token *tkn);
 void	tmp_prtlst2(t_list *lst);
 

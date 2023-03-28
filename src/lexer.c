@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 08:57:59 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 16:50:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_spoillist(t_token *tkn)
 			tmps = ft_strtrim((char *)tmp->content, "\"");
 		else if (tmp->content && ((char *)tmp->content)[0] == '\'')
 			tmps = ft_strtrim((char *)tmp->content, "\'");
-		else
+		else if (tkn->lst->content)
 			tmps = ft_strdup((char *)tkn->lst->content);
 		tmp = tkn->lst->next;
 		free(tkn->lst->content);
@@ -114,9 +114,9 @@ t_token *ft_lex(char *str, t_env *env)
 		ft_go(tkn);
 	tmp_prtlst(tkn);
 	ft_expdollar(tkn);
+	tmp_prtlst(tkn);
 	ft_exptilde(tkn);
 	ft_spoillist(tkn);
-	tmp_prtlst(tkn);
 	if (!ft_redsyntax(tkn))
 		return (NULL);
 	return (tkn);
