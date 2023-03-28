@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:01:21 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	builtin_cd(t_cmd *cmd, t_env **env)
 	dir = get_dir(cmd, env);
 	if (cmd && cmd->arr && chdir(dir) == ERROR)
 	{
-		ft_error("minishell: cd: ", cmd->arr[1], NULL);
+		ft_error(SHELL, "cd: ", cmd->arr[1], NULL);
 		g_exitstatus = 1;
 		return (EXIT_FAILURE);
 	}

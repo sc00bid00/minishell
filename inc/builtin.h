@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:16:01 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 11:24:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:57:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int					builtin_unset(t_cmd *cmd, t_env **env);
 int					builtin_export(t_cmd *cmd, t_env **env);
 int					builtin_exit(t_cmd *cmd, t_env **env);
 unsigned long long	ft_atoi_long_long(char *str);
-int					print_env(t_env **env, bool ex);
+int					print_env(t_env **env);
 
 #endif

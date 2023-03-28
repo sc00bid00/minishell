@@ -6,18 +6,18 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 17:19:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:58:08 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*	print environment list, if called from export builtin, with declare -x */
-int	print_env(t_env **env, bool ex)
+int	print_env(t_env **env)
 {
 	if (env && !(*env)->next)
 	{
-		ft_error("minishell: env: ", NULL, ERROR_5);
+		ft_error(SHELL, "env: ", NULL, ERROR_5);
 		return (EXIT_FAILURE);
 	}
 	if ((*env)->next)
@@ -26,8 +26,6 @@ int	print_env(t_env **env, bool ex)
 	{
 		if ((*env)->var_name)
 		{
-			if (ex)
-				ft_putstr_fd("declare -x ", STDOUT_FILENO);
 			ft_putstr_fd((*env)->var_name, STDOUT_FILENO);
 			if ((*env)->var_content)
 				ft_putstr_fd("=", STDOUT_FILENO);
@@ -49,11 +47,11 @@ int	builtin_env(t_cmd *cmd, t_env **env)
 {
 	if (cmd->arr[1] != NULL)
 	{
-		ft_error("env: ", cmd->arr[1], ERROR_1);
+		ft_error(NULL, "env: ", cmd->arr[1], ERROR_1);
 		g_exitstatus = 127;
 		return (EXIT_FAILURE);
 	}
-	if (!print_env(env, false))
+	if (!print_env(env))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

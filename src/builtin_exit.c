@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 11:23:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:56:43 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	builtin_exit(t_cmd *cmd, t_env **env)
 	{
 		if (!is_numeric(cmd->arr[1]))
 		{
-			ft_error("minishell: exit: ", cmd->arr[1], ERROR_2);
+			ft_error(SHELL, "line 0: exit: ", cmd->arr[1], ERROR_2);
 			g_exitstatus = 255;
 		}
 		else if (cmd->arr[2] == NULL)
 			g_exitstatus = ft_atoi_long_long(cmd->arr[1]) % 256;
 		else if (cmd->arr[2] != NULL)
 		{
-			ft_error("minishell: ", cmd->arr[0], ERROR_3);
+			ft_error(SHELL, NULL, cmd->arr[0], ERROR_3);
 			g_exitstatus = 1;
 			return (EXIT_FAILURE);
 		}
@@ -78,7 +78,7 @@ unsigned long long	ft_atoi_long_long(char *str)
 		num = 10 * num + *str - '0';
 		if ((num > INT64_MAX && sign == -1)
 			|| (num > INT64_MAX - 1 && sign == 1))
-			return (ft_error("minishell: exit: ", copy, ERROR_2), 255);
+			return (ft_error(SHELL, "line 0: exit: ", copy, ERROR_2), 255);
 		str++;
 	}
 	return (sign * num);

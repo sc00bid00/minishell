@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:04:15 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	builtin_pwd(t_cmd *cmd, t_env **env)
 	}
 	else
 	{
-		ft_error("minishell :", "pwd: ", NULL);
+		ft_error(SHELL, NULL, "pwd: ", NULL);
 		free(pwd);
 		g_exitstatus = errno;
 		return (EXIT_FAILURE);

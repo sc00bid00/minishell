@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:43:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:27:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 
 /* define error */
 # define ERROR 		-1
+# define SHELL		"minishell"
 
 /* define colors */
 # define BOLD		"\x01\033[1m\x02"

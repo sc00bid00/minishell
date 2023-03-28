@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:19:17 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:04:34 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtin_unset(t_cmd *cmd, t_env **env)
 	{
 		if (!ft_isalpha(cmd->arr[i][0]))
 		{
-			ft_error("minishell: unset: ", cmd->arr[i], ERROR_4);
+			ft_error(SHELL, "unset: ", cmd->arr[i], ERROR_4);
 			g_exitstatus = 1;
 		}
 		else

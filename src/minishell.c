@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 10:56:35 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 16:39:14 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:00:15 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		while (1)
 		{
 			setup_sigint();
- 			g_exitstatus = get_input(envp, &env);
+			g_exitstatus = get_input(envp, &env);
 		}
 	}
 	return (g_exitstatus);

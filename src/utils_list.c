@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:05:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:18:35 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:12:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ void	ft_ms_lstclear(t_env *lst)
 		{
 			node = lst;
 			lst = node->next;
-			// ft_ms_lstdelone(node);
 			free(node);
-			// lst = node;
 		}
 	}
 	lst = NULL;
@@ -80,7 +78,7 @@ void	ft_cleanenv(t_env **env)
 			free((*env)->var_name);
 		if ((*env)->var_content)
 			free ((*env)->var_content);
-		tmp =(*env);
+		tmp = (*env);
 		(*env) = (*env)->next;
 		free(tmp);
 	}

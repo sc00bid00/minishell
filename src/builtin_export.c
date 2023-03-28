@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 17:17:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:55:52 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 int	print_export(t_env **env)
 {
 	if (env && !(*env)->next)
-	{
-		ft_error("minishell: env: ", NULL, ERROR_5);
 		return (EXIT_FAILURE);
-	}
 	if ((*env)->next)
 		(*env) = (*env)->next;
 	while (env && (*env))
@@ -34,7 +31,7 @@ int	print_export(t_env **env)
 				ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		if ((*env)->var_content)
-			ft_putendl_fd((*env)->var_content,STDOUT_FILENO);
+			ft_putendl_fd((*env)->var_content, STDOUT_FILENO);
 		if ((*env)->next)
 			(*env) = (*env)->next;
 		else
@@ -49,17 +46,20 @@ bool	is_valid_arg(char *str)
 	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (false);
-	if (!ft_isalpha(str[0]))
+	if (!str || str[0] == '=' || str[0] == '\0')
 	{
-		ft_error("minishell: export: ", str, ERROR_4);
+		ft_error (SHELL, "line 0: export: ", str, ERROR_4);
+		g_exitstatus = 1;
 		return (false);
 	}
-	while (str[i] != 0 && str[i] != '=')
+	while (str[i] != '\0' && str[i] != '=')
 	{
-		if (!((str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_' ))
+		if (!(ft_isalpha(str[i]) || str[i] == '_' ))
+		{
+			ft_error (SHELL, "line 0: export: ", str, ERROR_4);
+			g_exitstatus = 1;
 			return (false);
+		}
 		i++;
 	}
 	return (true);
@@ -108,6 +108,7 @@ void	update_env(char *str, t_env **env)
 int	builtin_export(t_cmd *cmd, t_env **env)
 {
 	size_t	i;
+	char	*copy;
 
 	i = 1;
 	if (cmd->arr && cmd->arr[1] == NULL)
@@ -117,9 +118,17 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 	}
 	while (cmd->arr && cmd->arr[i])
 	{
-		if (is_valid_arg(cmd->arr[i]))
+		if (!ft_strncmp(&cmd->arr[i][0], "-", 1))
+		{
+			copy = ft_substr(cmd->arr[i], 0, 2);
+			ft_error(SHELL, "line 0: export: ", copy, ERROR_10);
+			ft_putendl_fd(ERROR_11, 2);
+			g_exitstatus = 2;
+			free (copy);
+			return (2);
+		}
+		if (is_valid_arg(cmd->arr[i]) == true)
 			update_env(cmd->arr[i], env);
-		i++;
 	}
-	return (0);
+	return (g_exitstatus);
 }

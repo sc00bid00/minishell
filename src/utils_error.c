@@ -6,16 +6,18 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:57:28 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:26:19 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_error(char *s1, char *s2, char *mes)
+void	ft_error(char *s0, char *s1, char *s2, char *mes)
 {
 	char	*str;
 
+	ft_putstr_fd(s0, 2);
+	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(s1, 2);
 	ft_putstr_fd(s2, 2);
 	ft_putstr_fd(": ", 2);
