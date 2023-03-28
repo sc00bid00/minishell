@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 14:12:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:34:13 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define ERROR_9 "minishell: syntax error near unexpected token `"
 # define ERROR_10 "invalid option"
 # define ERROR_11 "export: usage: export [-nf] [name[=value] ...] or export -p"
+# define ERROR_12 "unset: usage: unset [-f] [-v] [name ...]"
 
 t_env	*ms_lstlast(t_env *lst);
 t_env	*ms_lstadd_back(t_env *env, t_env *temp);
