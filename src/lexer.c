@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 16:50:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 17:33:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,7 @@ t_token *ft_lex(char *str, t_env *env)
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_go(tkn);
-	tmp_prtlst(tkn);
 	ft_expdollar(tkn);
-	tmp_prtlst(tkn);
 	ft_exptilde(tkn);
 	ft_spoillist(tkn);
 	if (!ft_redsyntax(tkn))
