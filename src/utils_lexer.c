@@ -5,140 +5,137 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 18:33:31 by lsordo           ###   ########.fr       */
+/*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
+/*   Updated: 2023/03/28 08:57:38 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_checkdollarnodes(t_token *tkn)
+void	ft_expdollar(t_token *tkn)
 {
-	t_list	*tmp;
-	char	*tmp2;
-	int		i;
+	t_list	*lst;
+	char	*tmp;
 
-	i = 0;
-	tmp = tkn->lst;
-	while (tmp)
+	lst = tkn->lst;
+	while (lst)
 	{
-		if (tmp->content && ((char *)tmp->content)[0] == '$'
-			&& ft_isdigit(((char *)(tmp->content))[1]))
+		if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& ft_strlen((char *)lst->content) > 1)
 		{
-			tmp2 = ft_strdup(&((char *)tmp->content)[2]);
-			free(tmp->content);
-			tmp->content = tmp2;
+			if (((char *)lst->content)[0] == '$')
+				tmp = ft_dollarsubst(&((char *)lst->content)[1], tkn);
+			else if (!ft_strncmp((char *)lst->content, "\"$", 2))
+				tmp = ft_putback(&((char *)lst->content)[2], "\"", "\"", tkn);
+			else if (ft_strlen((char *)lst->content) > 2
+				&& !ft_strncmp((char *)lst->content, "\"\'$", 3))
+				tmp = ft_putback(&((char *)lst->content)[3], "\"\'", "\'\"", tkn);
+			else if (ft_strchr((char *)lst->content, '$'))
+				tmp = ft_otherprefix((char *)lst->content, tkn);
+			else
+				tmp = ft_strdup((char *)lst->content);
+			free(lst->content);
+			lst->content = tmp;
 		}
-		if (tmp->content && i == 1 && ((char *)tmp->content)[0] == ' ')
-		{
-			tmp2 = ft_strtrim((char *)tmp->content, " ");
-			free(tmp->content);
-			tmp->content = tmp2;
-		}
-		i++;
-		tmp = tmp->next;
+		lst = lst->next;
 	}
-
 }
 
-int	ft_isquote(char c1, char c2)
+char	*ft_dollarsubst(char *str, t_token *tkn)
 {
-	if ((c1 == '\'' && c2 == '\'') || (c1 == '"' && c2 == '"'))
-		return (1);
-	return (0);
-}
-
-void	*ft_quotepairs(char *str)
-{
-	char	*newstr;
-	int		i;
-	int		j;
-
-	newstr = ft_calloc(ft_strlen(str) + 1, 1);
-	if (!newstr)
-		exit(EXIT_FAILURE);
-	j = 0;
-	i = 0;
-	while (str && str[i] && str[i + 1])
-	{
-		if (ft_isquote(str[i], str[i + 1]))
-			i += 2;
-		else
-		{
-			newstr[j] = str[i];
-			j++;
-			i++;
-		}
-	}
-	newstr[j] = str[i];
-	free(str);
-	return (newstr);
-}
-
-int	ft_iscapital(int c)
-{
-	if ((c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
-
-void	ft_expandtilde(t_token *tkn)
-{
-	t_list	*tmp;
 	t_env	*env_var;
+	char	*tmp;
 
-	tmp = tkn->lst;
-	while (tmp)
+	tmp = NULL;
+	if (str && str[0] == '0')
 	{
-		if (tmp->content && !ft_strncmp((char *)tmp->content, "~", 1))
+		env_var = ret_var(tkn->env, "SHELL");
+		if (env_var)
+			tmp = ft_strjoin(env_var->var_content, &str[1]);
+	}
+	else if (str)
+	{
+		env_var = ret_var(tkn->env, str);
+		if (env_var)
+			tmp = ft_strdup(env_var->var_content);
+	}
+	return (tmp);
+}
+
+void	ft_exptilde(t_token *tkn)
+{
+	t_list	*lst;
+	t_env	*env_var;
+	char	*tmp;
+	int		i;
+
+	tmp = NULL;
+	lst = tkn->lst;
+	i = 0;
+	while (lst)
+	{
+		if (lst->content && !ft_strncmp((char *)lst->content, "|", 1))
+			i = -1;
+		if (i < 2 && lst->content && ft_strchr((char *)lst->content, '~')
+			&& ft_strlen((char *)lst->content) > 1)
+		{
+			if (((char *)lst->content)[1] == '/')
+			{
+				env_var = ret_var(tkn->env, "HOME");
+				if (env_var && env_var->var_content)
+					tmp = ft_strjoin(env_var->var_content, &((char *)lst->content)[1]);
+				free(lst->content);
+				lst->content = tmp;
+			}
+		}
+		else if (i < 2 && lst->content && !ft_strncmp((char *)lst->content, "~", 1))
 		{
 			env_var = ret_var(tkn->env, "HOME");
-			free(tmp->content);
-			if (env_var)
-				tmp->content = ft_strdup(env_var->var_content);
-			else
-				tmp->content = ft_strdup(getenv("HOME"));
+			if (env_var && env_var->var_content)
+			{
+				free(lst->content);
+				lst->content = ft_strdup(env_var->var_content);
+			}
 		}
-		tmp = tmp->next;
+		i++;
+		lst = lst->next;
 	}
 }
 
-/* return t_list expanding system variables as appropriate */
-void	ft_expand(t_token *tkn)
+char	*ft_otherprefix(char *str, t_token *tkn)
 {
-	t_list	*tmp;
-	t_list	*new;
-	int		flag;
+	char	*prefix;
+	char	*tmp;
+	int		i;
 
-	flag = 0;
-	tmp = tkn->lst;
-	while (tmp)
+	prefix = ft_calloc(ft_strlen(str) + 1, 1);
+	if (!prefix)
+		exit (EXIT_FAILURE);
+	i = 0;
+	while (str && str[i] != '$')
 	{
-		if (tmp->content)
-			tmp->content = ft_quotepairs((char *)(tmp->content));
-		if (!flag && tmp->content && ((char *)tmp->content)[0] != '\'' \
-			&& (ft_strchr(((char *)tmp->content), '$') \
-				|| ft_strchr(((char *)tmp->content), '~')))
-		{
-			new = NULL;
-			ft_explode(&new, (char *)tmp->content);
-			ft_substitute(&new, tkn->env);
-			ft_reassemble(new, &tmp);
-			ft_cleanlst(new);
-		}
-		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
-			flag = 1;
-		else
-			flag = 0;
-		tmp = tmp->next;
+		prefix[i] = str[i];
+		i++;
 	}
+	tmp = ft_strdup(ft_strchr(str, '$') + 1);
+	str = ft_dollarsubst(tmp, tkn);
+	free(tmp);
+	tmp = ft_strjoin(prefix, str);
+	free(str);
+	free(prefix);
+	return (tmp);
 }
 
-void	ft_helplexer(t_token *tkn)
+char	*ft_putback(char *str, char *set1, char *set2, t_token *tkn)
 {
-	// if (!tkn->str[tkn->curr] && tkn->str[tkn->curr] != tkn->str[tkn->prev])
-	// 	ft_save(tkn);
-	// ft_checkdollarnodes(tkn);
-	ft_expand(tkn);
-	// ft_remquotes(tkn);
+	char	*tmp;
+
+	tmp = ft_strtrim(str, set1);
+	str = ft_dollarsubst(tmp, tkn);
+	free(tmp);
+	tmp = ft_strjoin(set1, str);
+	free(str);
+	str = ft_strjoin(tmp, set2);
+	free(tmp);
+	return (str);
 }

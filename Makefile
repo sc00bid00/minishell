@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/23 12:13:40 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/28 09:00:16 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,6 @@ SRC =		builtin.c \
 			utils_cleanup.c \
 			utils_error.c \
 			utils_executor.c \
-			utils_expand.c \
 			utils_init.c \
 			utils_lexer.c \
 			utils_list.c \
@@ -66,8 +65,6 @@ SRC =		builtin.c \
 			utils_prexec.c \
 			utils_prexechelp.c \
 			utils_redsyntax.c \
-			utils_remquotes.c \
-			utils_substitute.c \
 			utils_tmp_2.c \
 			utils_tmp.c
 
