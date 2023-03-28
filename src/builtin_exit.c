@@ -6,13 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:31:26 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:23:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* modified atoi to take 19 digits input for g_exitstatus like bash*/
+/* check if input is numeric to decide if error message is needed */
 bool	is_numeric(char *str)
 {
 	int	i;
@@ -34,11 +34,10 @@ bool	is_numeric(char *str)
 int	builtin_exit(t_cmd *cmd, t_env **env)
 {
 	(void)env;
-
 	ft_putendl_fd("exit", 2);
 	if (cmd->arr && cmd->arr[1] != NULL)
 	{
-		if(!is_numeric(cmd->arr[1]))
+		if (!is_numeric(cmd->arr[1]))
 		{
 			ft_error("minishell: exit: ", cmd->arr[1], ERROR_2);
 			g_exitstatus = 255;
@@ -60,10 +59,10 @@ int	builtin_exit(t_cmd *cmd, t_env **env)
 unsigned long long	ft_atoi_long_long(char *str)
 {
 	unsigned long long	num;
-	int					sign;
+	long				sign;
+	char				*copy;					
 
-	if (str == NULL)
-		return (0);
+	copy = str;
 	num = 0;
 	sign = 1;
 	while (*str == 32 || (*str >= 9 && *str <= 13))
@@ -76,11 +75,10 @@ unsigned long long	ft_atoi_long_long(char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-		if (sign < 0)
-			return (0);
-		if (sign > 0)
-			return (-1);
 		num = 10 * num + *str - '0';
+		if ((num > INT64_MAX && sign == -1)
+			|| (num > INT64_MAX - 1 && sign == 1))
+			return (ft_error("minishell: exit: ", copy, ERROR_2), 255);
 		str++;
 	}
 	return (sign * num);

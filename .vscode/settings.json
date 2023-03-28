@@ -4,6 +4,7 @@
         "complex": "c",
         "signals.h": "c",
         "readline.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "ratio": "c"
     }
 }
