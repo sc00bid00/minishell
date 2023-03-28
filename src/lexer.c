@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 21:20:49 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 07:58:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,31 @@ char	*ft_putback(char *str, char *set1, char *set2, t_token *tkn)
 	return (str);
 }
 
+char	*ft_otherprefix(char *str, t_token *tkn)
+{
+	char	*prefix;
+	char	*tmp;
+	int		i;
+
+	prefix = ft_calloc(ft_strlen(str) + 1, 1);
+	if (!prefix)
+		exit (EXIT_FAILURE);
+	i = 0;
+	while (str && str[i] != '$')
+	{
+		prefix[i] = str[i];
+		i++;
+	}
+	tmp = ft_strdup(ft_strchr(str, '$') + 1);
+	str = ft_dollarsubst(tmp, tkn);
+	free(tmp);
+	tmp = ft_strjoin(prefix, str);
+	free(str);
+	free(prefix);
+	return (tmp);
+}
+
+
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
@@ -106,6 +131,8 @@ void	ft_expdollar(t_token *tkn)
 			else if (ft_strlen((char *)lst->content) > 2
 				&& !ft_strncmp((char *)lst->content, "\"\'$", 3))
 				tmp = ft_putback(&((char *)lst->content)[3], "\"\'", "\'\"", tkn);
+			else if (ft_strchr((char *)lst->content, '$'))
+				tmp = ft_otherprefix((char *)lst->content, tkn);
 			else
 				tmp = ft_strdup((char *)lst->content);
 			free(lst->content);
