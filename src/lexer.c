@@ -6,12 +6,40 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 07:58:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 08:37:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	ft_spoillist(t_token *tkn)
+{
+	t_list	*tmp;
+	t_list	*copy;
+	char	*tmps;
+
+	copy = NULL;
+	tmp = tkn->lst;
+	while (tkn->lst)
+	{
+		if (tmp->content && (!ft_strncmp(tmp->content, "\'\'", 3)
+			|| !ft_strncmp(tmp->content, "\"\"", 3)))
+			tmps = NULL;
+		else if (tmp->content && ((char *)tmp->content)[0] == '\"')
+			tmps = ft_strtrim((char *)tmp->content, "\"");
+		else if (tmp->content && ((char *)tmp->content)[0] == '\'')
+			tmps = ft_strtrim((char *)tmp->content, "\'");
+		else
+			tmps = ft_strdup((char *)tkn->lst->content);
+		tmp = tkn->lst->next;
+		free(tkn->lst->content);
+		free(tkn->lst);
+		if (tmps)
+			ft_lstadd_back(&copy, ft_lstnew(tmps));
+		tkn->lst = tmp;
+	}
+	tkn->lst = copy;
+}
 
 void	ft_exptilde(t_token *tkn)
 {
@@ -112,7 +140,6 @@ char	*ft_otherprefix(char *str, t_token *tkn)
 	return (tmp);
 }
 
-
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
@@ -142,7 +169,7 @@ void	ft_expdollar(t_token *tkn)
 	}
 }
 
-/* retur	n t_list nodes containing tokne char * */
+/* return t_list nodes containing tokne char * */
 void	ft_save(t_token *tkn)
 {
 	ft_lstadd_back(&(tkn->lst), \
@@ -225,6 +252,7 @@ t_token *ft_lex(char *str, t_env *env)
 	tmp_prtlst(tkn);
 	ft_expdollar(tkn);
 	ft_exptilde(tkn);
+	ft_spoillist(tkn);
 	tmp_prtlst(tkn);
 	// ft_helplexer(tkn);
 	if (!ft_redsyntax(tkn))
