@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 10:40:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 10:45:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,6 @@ t_list	*ft_strtolst(char *str)
 		i++;
 	}
 	return (lst);
-}
-
-void	ft_expdollar(t_token *tkn)
-{
-	t_list	*lst;
-	// char	*tmp;
-
-	lst = tkn->lst;
-	while (lst)
-	{
-		if (lst->content && ft_strchr((char *)lst->content, '$')
-			&& ft_strlen((char *)lst->content) > 1)
-		{
-
-		}
-		lst = lst->next;
-	}
 }
 
 char	*ft_dollarsubst(char *str, t_token *tkn)
@@ -121,10 +104,6 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 	return (tmplst);
 }
 
-// t_list	*ft_strtolst(char *str)
-// {
-// 	/* wip Kathrin */
-// }
 
 void	ft_expdollar(t_token *tkn)
 {
@@ -139,7 +118,7 @@ void	ft_expdollar(t_token *tkn)
 			&& ft_strlen((char *)lst->content) > 1
 			&& ((char *)lst->content)[0] != '\'')
 		{
-			// tmplst = ft_strtolst((char *)lst->content);
+			tmplst = ft_strtolst((char *)lst->content);
 			tmplst = ft_moddollar(tmplst, tkn);
 			tmp = ft_lsttostr(tmplst);
 			free(lst->content);
