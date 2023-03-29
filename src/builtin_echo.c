@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:14:00 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/26 09:25:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 18:26:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_isvoption(char *str)
 {
 	int	i;
 
-	if (ft_strncmp(str, "-n", 2))
+	if (str && ft_strncmp(str, "-n", 2))
 		return (0);
 	i = 1;
 	while (str && str[i])
@@ -28,50 +28,37 @@ int	ft_isvoption(char *str)
 	return (1);
 }
 
-/*	imitate echo with -n option */
-int	builtin_echo(t_cmd	*cmd, t_env *env)
+int	builtin_echo(t_cmd *cmd, t_env *env)
 {
-	int		i;
-	int		option[2];
-	char	*tmp;
+	int	i;
+	int	optn;
 
 	(void)env;
-	option[0] = 0;
-	option[1] = 0;
+	optn = 0;
 	i = 1;
 	if (cmd->arr && !cmd->arr[i])
 		ft_putchar_fd('\n', 1);
-	else if(cmd->arr && !ft_strncmp(cmd->arr[i], "$?", 3))
+	else if (cmd->arr && !ft_strncmp(cmd->arr[i], "$?", 3))
 	{
 		ft_putnbr_fd(exitstatus, 1);
 		ft_putchar_fd('\n', 1);
 		exitstatus = 0;
-		return (EXIT_SUCCESS);
+		return(EXIT_SUCCESS);
 	}
-	else if (cmd->arr && ft_isvoption(cmd->arr[i]))
+	while (cmd->arr && cmd->arr[i] && ft_isvoption(cmd->arr[i]))
 	{
-		option[0] = 1;
-		option[1] = 1;
-		i = 2;
+		optn = 1;
+		i++;
 	}
 	while (cmd->arr && cmd->arr[i])
 	{
-		if (ft_isvoption(cmd->arr[i]) && i < 2)
-			option[1] = 1;
-		else if (option[1] && ft_strncmp(cmd->arr[i], " ", 1) && !ft_isvoption(cmd->arr[i]))
-			option[1] = 0;
-		if (!option[1])
-		{
-			tmp = ft_strtrim(cmd->arr[i], " ");
-			free(cmd->arr[i]);
-			cmd->arr[i] = tmp;
-			if (i > 1 && !(option[0] && ft_isvoption(cmd->arr[i - 1])))
-				ft_putchar_fd(' ', 1);
-			ft_putstr_fd(cmd->arr[i], 1);
-		}
+		ft_putstr_fd(cmd->arr[i], 1);
+		if (cmd->arr[i + 1])
+			ft_putchar_fd(' ', 1);
 		i++;
 	}
-	if (!option[0])
+	if (!optn)
 		ft_putchar_fd('\n', 1);
+	exitstatus = 0;
 	return (EXIT_SUCCESS);
 }

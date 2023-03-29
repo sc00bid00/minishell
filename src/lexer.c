@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 17:33:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/28 19:01:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	ft_flag(char c)
 		flag |= ROUT;
 	else if (c == '|')
 		flag |= PIPE;
+	else if (c == '$')
+		flag |= DOLLAR;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);
@@ -106,7 +108,16 @@ t_token *ft_lex(char *str, t_env *env)
 	{
 		tkn->curr++;
 		if (!(tkn->c_sta & SOME_Q) && ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
+		{
+			if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
+				&& ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
+			{
+				tkn->curr++;
+				while (ft_flag(tkn->str[tkn->curr]) & CHAR)
+					tkn->curr++;
+			}
 			ft_go(tkn);
+		}
 		else if ((tkn->c_sta & SOME_Q) && ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr]) & SOME_Q)))
 			tkn->c_sta ^= (ft_flag(tkn->str[tkn->curr]) & SOME_Q);
 	}
