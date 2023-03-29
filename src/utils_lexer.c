@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 10:45:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:55:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 		}
 		tmplst = tmplst->next;
 	}
-	return (tmplst);
+	return (lst);
 }
 
 
