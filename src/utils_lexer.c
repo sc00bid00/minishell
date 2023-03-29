@@ -3,76 +3,130 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 14:58:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:23:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_iscapital(int c)
+/* splits the string according to $ to send to expansion */
+t_list	*ft_strtolst(char *str)
 {
-	if ((c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
+	t_list	*lst;
+	int		i;
+	int		j;
+
+	lst = NULL;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if ((str[i] == '$' || str[i] == '\0' || str[i] == ' '
+			|| str[i] == '"') && i != 0)
+		{
+			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+			j = i;
+		}
+		i++;
+	}
+	if (i != j)
+		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+	return (lst);
 }
 
-void	ft_expandtilde(t_token *tkn)
+char	*ft_dollarsubst(char *str, t_token *tkn)
 {
-	t_list	*tmp;
 	t_env	*env_var;
+	char	*tmp;
 
-	tmp = tkn->lst;
-	while (tmp)
+	tmp = NULL;
+	if (str && str[0] == '0')
 	{
-		if (tmp->content && !ft_strncmp((char *)tmp->content, "~", 1))
-		{
-			env_var = ret_var(&tkn->env, "HOME");
-			free(tmp->content);
-			if (env_var)
-				tmp->content = ft_strdup(env_var->var_content);
-			else
-				tmp->content = ft_strdup(getenv("HOME"));
-		}
-		tmp = tmp->next;
+		env_var = ret_var(&tkn->env, "SHELL");
+		if (env_var)
+			tmp = ft_strjoin(env_var->var_content, &str[1]);
 	}
+	else if (str)
+	{
+		env_var = ret_var(&tkn->env, str);
+		if (env_var)
+			tmp = ft_strdup(env_var->var_content);
+	}
+	return (tmp);
 }
 
-/* return t_list expanding system variables as appropriate */
-void	ft_expand(t_token *tkn)
+char	*ft_lsttostr(t_list *lst)
 {
-	t_list	*tmp;
-	t_list	*new;
-	int		flag;
+	t_list	*tmplst;
+	char	*tmp;
+	int		i;
+	int		j;
 
-	flag = 0;
-	tmp = tkn->lst;
-	while (tmp)
+	tmplst = lst;
+	i = 0;
+	while (tmplst)
 	{
-		if (!flag && tmp->content && ((char *)tmp->content)[0] != '\'' \
-			&& (ft_strchr(((char *)tmp->content), '$') \
-				|| ft_strchr(((char *)tmp->content), '~')))
-		{
-			new = NULL;
-			ft_explode(&new, (char *)tmp->content);
-			ft_substitute(&new, tkn->env);
-			ft_reassemble(new, &tmp);
-			ft_cleanlst(new);
-		}
-		if (tmp->content && !ft_strncmp((char *)tmp->content, "<<", 2) && !flag)
-			flag = 1;
-		else
-			flag = 0;
-		tmp = tmp->next;
+		if (tmplst->content)
+			i += ft_strlen((char *)tmplst->content);
+		tmplst = tmplst->next;
 	}
+	tmp = ft_calloc(i + 1, 1);
+	if (!tmp)
+		exit(EXIT_FAILURE);
+	i = 0;
+	tmplst = lst;
+	while (tmplst)
+	{
+		j = 0;
+		while (tmplst->content && ((char *)tmplst->content)[j])
+			tmp[i++] = ((char*)tmplst->content)[j++];
+		tmplst = tmplst->next;
+	}
+	return (tmp);
 }
 
-void	ft_helplexer(t_token *tkn)
+t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 {
-	if (!tkn->str[tkn->curr] && tkn->str[tkn->curr] != tkn->str[tkn->prev])
-		ft_save(tkn);
-	ft_expand(tkn);
-	ft_remquotes(tkn);
+	t_list	*tmplst;
+	char	*tmp;
+
+	tmplst = lst;
+	while (tmplst)
+	{
+		if (tmplst->content && ((char *)tmplst->content)[0] == '$')
+		{
+			tmp = ft_dollarsubst(&((char *)tmplst->content)[1], tkn);
+			free(tmplst->content);
+			tmplst->content = tmp;
+		}
+		tmplst = tmplst->next;
+	}
+	return (lst);
+}
+
+
+void	ft_expdollar(t_token *tkn)
+{
+	t_list	*lst;
+	t_list	*tmplst;
+	char	*tmp;
+
+	lst = tkn->lst;
+	while (lst)
+	{
+		if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& ft_strlen((char *)lst->content) > 1
+			&& ((char *)lst->content)[0] != '\'')
+		{
+			tmplst = ft_strtolst((char *)lst->content);
+			tmplst = ft_moddollar(tmplst, tkn);
+			tmp = ft_lsttostr(tmplst);
+			free(lst->content);
+			lst->content = tmp;
+		}
+		lst = lst->next;
+	}
 }

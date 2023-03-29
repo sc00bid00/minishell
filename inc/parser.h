@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 16:20:18 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:13:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	ft_cleancmd(t_scmd *scmd);
 void	ft_cleanscmd(t_scmd *cmd);
 void	tmp_prtarrlst(t_scmd *cmd);
 void	tmp_prtcmd(t_scmd *scmd);
+void	tmp_prtarray(char **arr);
 
 #endif

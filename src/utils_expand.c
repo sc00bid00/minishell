@@ -5,107 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 09:05:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/20 10:42:10 by lsordo           ###   ########.fr       */
+/*   Created: 2023/03/29 10:14:18 by lsordo            #+#    #+#             */
+/*   Updated: 2023/03/29 11:22:51 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_helpexplode(char *str, int p[2], t_list ***lst, int *flag)
+void	ft_exptilde(t_token *tkn)
 {
+	t_list	*lst;
+	t_env	*env_var;
 	char	*tmp;
-
-	while (str && str[p[1]])
-	{
-		if (p[1] && (str[p[1]] == '$' || str[p[1]] == '"' || \
-			str[p[1]] == '\'' || str[p[1]] == '~'
-				|| (*flag && !ft_iscapital(str[p[1]]))))
-		{
-			if (str[p[1]] == '$' || (*flag && !ft_iscapital(str[p[1]])))
-				*flag ^= 1;
-			tmp = ft_substr(str, p[0], p[1] - p[0]);
-			ft_lstadd_back(*lst, ft_lstnew(tmp));
-			p[0] = p[1];
-		}
-		else if (!p[1] && str[p[1]] == '~')
-		{
-			tmp = ft_strdup("~");
-			ft_lstadd_back(*lst, ft_lstnew(tmp));
-			p[0] = 1;
-		}
-		p[1]++;
-	}
-}
-
-void	ft_explode(t_list **lst, char *str)
-{
-	int		p[2];
-	char	*tmp;
-	int		flag;
-
-	p[0] = 0;
-	p[1] = 0;
-	flag = 0;
-	if (!p[1] && str[p[1]] == '$')
-		flag ^= 1;
-	ft_helpexplode(str, p, &lst, &flag);
-	if (p[1] - p[0] >= 1)
-	{
-		tmp = ft_substr(str, p[0], p[1] - p[0]);
-		ft_lstadd_back(lst, ft_lstnew(tmp));
-	}
-}
-
-static int	ft_len(t_list *lst)
-{
-	t_list	*tmp;
-	int		len;
-
-	len = 0;
-	tmp = lst;
-	while (tmp)
-	{
-		if (tmp->content)
-			len += ft_strlen((char *)tmp->content);
-		tmp = tmp->next;
-	}
-	return (len);
-}
-
-void	ft_helpreassemble(t_list **tmp, void **content)
-{
-	int	i;
-
-	i = 0;
-	while (*tmp)
-	{
-		if ((*tmp)->content)
-		{
-			ft_memcpy(&((char *)*content)[i], (char *)(*tmp)->content, \
-				ft_strlen((char *)(*tmp)->content));
-			i += ft_strlen((char *)(*tmp)->content);
-		}
-		*tmp = (*tmp)->next;
-	}
-}
-
-void	ft_reassemble(t_list *lst, t_list **node)
-{
-	t_list	*tmp;
 	int		i;
 
+	tmp = NULL;
+	lst = tkn->lst;
 	i = 0;
-	i = ft_len(lst);
-	free((*node)->content);
-	if (!i)
+	while (lst)
 	{
-		(*node)->content = NULL;
-		return ;
+		if (lst->content && !ft_strncmp((char *)lst->content, "|", 1))
+			i = -1;
+		if (i < 2 && lst->content && ft_strchr((char *)lst->content, '~')
+			&& ft_strlen((char *)lst->content) > 1)
+		{
+			if (((char *)lst->content)[1] == '/')
+			{
+				env_var = ret_var(&tkn->env, "HOME");
+				if (env_var && env_var->var_content)
+					tmp = ft_strjoin(env_var->var_content, &((char *)lst->content)[1]);
+				free(lst->content);
+				lst->content = tmp;
+			}
+		}
+		else if (i < 2 && lst->content && !ft_strncmp((char *)lst->content, "~", 1))
+		{
+			env_var = ret_var(&tkn->env, "HOME");
+			if (env_var && env_var->var_content)
+			{
+				free(lst->content);
+				lst->content = ft_strdup(env_var->var_content);
+			}
+		}
+		i++;
+		lst = lst->next;
 	}
-	(*node)->content = ft_calloc(i + 1, 1);
-	if (!(*node)->content)
-		exit(1);
-	tmp = lst;
-	ft_helpreassemble(&tmp, &(*node)->content);
 }

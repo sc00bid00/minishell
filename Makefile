@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/27 16:48:06 by kczichow         ###   ########.fr        #
+#    Updated: 2023/03/29 11:20:13 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,7 @@ SRC =		builtin.c \
 			utils_prexec.c \
 			utils_prexechelp.c \
 			utils_redsyntax.c \
-			utils_remquotes.c \
-			utils_substitute.c \
+			utils_tmp_2.c \
 			utils_tmp.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)

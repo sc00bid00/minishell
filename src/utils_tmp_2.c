@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils_tmp_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 12:09:53 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/24 16:54:47 by lsordo           ###   ########.fr       */
+/*   Created: 2023/03/23 12:13:07 by lsordo            #+#    #+#             */
+/*   Updated: 2023/03/25 11:12:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"libft.h"
+#include <minishell.h>
 
-size_t	ft_strlen(const char *s)
+void	tmp_prtarray(char **arr)
 {
-	size_t	i;
+	int	i;
 
+	ft_putendl_fd("=== checkin  debug - tmp_prtarray ===", 2);
 	i = 0;
-	if (!s || (s && !*s))
-		return (0);
-	while (s && s[i] != '\0')
+	while (arr && arr[i])
+	{
+		ft_putendl_fd(arr[i], 2);
 		i++;
-	return (i);
+	}
+	ft_putendl_fd("=== checkout debug - tmp_prtarray ===", 2);
 }
+

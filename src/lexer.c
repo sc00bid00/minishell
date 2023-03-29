@@ -6,72 +6,126 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 17:00:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:09:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* return t_list nodes containing tokne char * */
-void	ft_save(t_token *tkn)
+void	ft_spoillist(t_token *tkn)
 {
-	if (tkn->p_sta & 0b0000011)
-		tkn->curr++;
-	ft_lstadd_back(&(tkn->lst), \
-		ft_lstnew(ft_substr(tkn->str, tkn->prev, tkn->curr - tkn->prev)));
-	tkn->prev = tkn->curr;
-	tkn->count++;
-}
+	t_list	*tmp;
+	t_list	*copy;
+	char	*tmps;
 
-/* return bitwise flags to split tokens */
-void	ft_getstatus(t_token *tkn)
-{
-	if (tkn->str[tkn->curr] == '\'')
-		tkn->c_sta = tkn->c_sta ^ 0b0000001;
-	else if (tkn->str[tkn->curr] == '\"')
-		tkn->c_sta = tkn->c_sta ^ 0b0000010;
-	else
+	copy = NULL;
+	tmp = tkn->lst;
+	while (tkn->lst)
 	{
-		tkn->c_sta = tkn->c_sta & 0b0000011;
-		if (tkn->str[tkn->curr] == '|')
-			tkn->c_sta = tkn->c_sta | 0b0000100;
-		else if (tkn->str[tkn->curr] == '>')
-			tkn->c_sta = tkn->c_sta | 0b0001000;
-		else if (tkn->str[tkn->curr] == '<')
-			tkn->c_sta = tkn->c_sta | 0b0010000;
-		else if (tkn->str[tkn->curr] == '&')
-			tkn->c_sta = tkn->c_sta | 0b0100000;
-		else if (tkn->str[tkn->curr] > 32)
-			tkn->c_sta = tkn->c_sta | 0b1000000;
+		if (tmp->content && (!ft_strncmp(tmp->content, "\'\'", 3)
+			|| !ft_strncmp(tmp->content, "\"\"", 3)))
+			tmps = NULL;
+		else if (tmp->content && ((char *)tmp->content)[0] == '\"')
+			tmps = ft_strtrim((char *)tmp->content, "\"");
+		else if (tmp->content && ((char *)tmp->content)[0] == '\'')
+			tmps = ft_strtrim((char *)tmp->content, "\'");
+		else if (tkn->lst->content)
+			tmps = ft_strdup((char *)tkn->lst->content);
+		tmp = tkn->lst->next;
+		free(tkn->lst->content);
+		free(tkn->lst);
+		if (tmps)
+			ft_lstadd_back(&copy, ft_lstnew(tmps));
+		tkn->lst = tmp;
 	}
+	tkn->lst = copy;
 }
 
-/* return t_token with t_list of tokens
-token is either a word or a metacharacter
-text in quotes is word */
-t_token	*ft_lex(char *str, t_env *env)
+int	ft_allspaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_flag(char c)
+{
+	int		flag;
+
+	flag = 0;
+	if (c == '\'')
+		flag ^= SINGLE_Q;
+	else if (c == '"')
+		flag ^= DOUBLE_Q;
+	else if (c == ' ')
+		flag |= SPCE;
+	else if (c == '<')
+		flag |= RIN;
+	else if (c == '>')
+		flag |= ROUT;
+	else if (c == '|')
+		flag |= PIPE;
+	// else if (c == '$')
+	// 	flag |= DOLLAR;
+	else if (c > 32)
+		flag |= CHAR;
+	return (flag);
+}
+
+void	ft_go(t_token *tkn)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	tmp = ft_substr(&tkn->str[tkn->prev], 0, tkn->curr - tkn->prev);
+	tkn->prev = tkn->curr;
+	if (!ft_allspaces(tmp))
+	{
+		tmp2 = ft_strtrim(tmp, " ");
+		free(tmp);
+		ft_lstadd_back(&tkn->lst, ft_lstnew(tmp2));
+	}
+	else
+		free(tmp);
+	tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
+
+}
+
+t_token *ft_lex(char *str, t_env *env)
 {
 	t_token	*tkn;
 
 	tkn = ft_init_tkn(str, env);
-	while (tkn->str && tkn->str[tkn->curr])
+	tkn->c_sta = ft_flag(tkn->str[0]);
+	while(tkn->str && tkn->str[tkn->curr])
 	{
-		ft_getstatus(tkn);
-		if (tkn->curr == 0)
-			tkn->p_sta = tkn->c_sta;
-		if (tkn->c_sta & 0b0000011)
-			;
-		else if (!(tkn->c_sta & 0b0000011) && !(tkn->p_sta & 0b0000001))
-		{
-			if ((tkn->c_sta >> 2) != (tkn->p_sta >> 2) && tkn->p_sta != 0)
-				ft_save(tkn);
-			if (tkn->c_sta == 0)
-				tkn->prev = tkn->curr + 1;
-		}
-		tkn->p_sta = tkn->c_sta;
 		tkn->curr++;
+		if (!(tkn->c_sta & SOME_Q) && ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
+		{
+			if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
+				&& ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
+			{
+				tkn->curr++;
+				while (ft_flag(tkn->str[tkn->curr]) & CHAR)
+					tkn->curr++;
+			}
+			ft_go(tkn);
+		}
+		else if ((tkn->c_sta & SOME_Q) && ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr]) & SOME_Q)))
+			tkn->c_sta ^= (ft_flag(tkn->str[tkn->curr]) & SOME_Q);
 	}
-	ft_helplexer(tkn);
+	if (tkn->curr > tkn->prev + 1)
+		ft_go(tkn);
+	ft_expdollar(tkn);
+	ft_exptilde(tkn);
+	ft_spoillist(tkn);
 	if (!ft_redsyntax(tkn))
 		return (NULL);
 	return (tkn);

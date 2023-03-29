@@ -1,7 +1,9 @@
-pipex
+tests/
 out*
 testfile
-minishell
+minishell*
+minishell_tester/
 *.o
 *.a
 .vscode
+*.json

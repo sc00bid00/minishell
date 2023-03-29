@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 13:58:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:16:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ t_token	*ft_init_tkn(char *str, t_env *env)
 		return (NULL);
 	tkn->str = str;
 	tkn->lst = NULL;
-	tkn->c_sta = 0b0000000;
-	tkn->p_sta = 0b0000000;
+	tkn->nosub = 0;
+	tkn->c_sta = 0b000000000;
 	tkn->curr = 0;
 	tkn->prev = 0;
 	tkn->count = 0;
@@ -69,7 +69,6 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 		return (NULL);
 	}
 	scmd->count = 0;
-	scmd->arr[scmd->n_scmd] = NULL;
 	scmd->envp = ft_arrenv(env);
 	scmd->wstatus = 0;
 	scmd->flag = 0;
