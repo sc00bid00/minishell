@@ -3,14 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 10:14:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:40:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/* splits the string according to $ to send to expansion */
+t_list	*ft_strtolst(char *str)
+{
+	t_list	*lst;
+	int		i;
+	int		j;
+
+	lst = NULL;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if ((str[i] == '$' || str[i + 1] == '\0' || str[i] == ' ') && i != 0)
+		{
+			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+			j = i;
+		}
+		i++;
+	}
+	return (lst);
+}
+
+void	ft_expdollar(t_token *tkn)
+{
+	t_list	*lst;
+	// char	*tmp;
+
+	lst = tkn->lst;
+	while (lst)
+	{
+		if (lst->content && ft_strchr((char *)lst->content, '$')
+			&& ft_strlen((char *)lst->content) > 1)
+		{
+
+		}
+		lst = lst->next;
+	}
+}
 
 char	*ft_dollarsubst(char *str, t_token *tkn)
 {

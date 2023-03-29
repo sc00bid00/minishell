@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 18:36:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:41:05 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ char	*ft_otherprefix(char *str, t_token *tkn);
 char	*ft_putback(char *str, char *set1, char *set2);
 void	tmp_prtlst(t_token *tkn);
 void	tmp_prtlst2(t_list *lst);
+t_list *ft_strtolst(char *str);
 
 #endif
