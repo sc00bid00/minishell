@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 10:45:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:57:57 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ t_list	*ft_strtolst(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if ((str[i] == '$' || str[i + 1] == '\0' || str[i] == ' ') && i != 0)
+		if ((str[i] == '$' || str[i] == '\0' || str[i] == ' ') && i != 0)
 		{
 			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
 			j = i;
 		}
 		i++;
 	}
+	if (i != j)
+		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
 	return (lst);
 }
 
