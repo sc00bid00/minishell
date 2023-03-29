@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 10:57:57 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 10:58:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 		}
 		tmplst = tmplst->next;
 	}
-	return (tmplst);
+	return (lst);
 }
 
 
