@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/29 17:03:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:05:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	ft_clean_env(t_env **env);
 int		ft_my_strcmp(const char *s1, const char *s2);
 void	ms_mycleanup(t_cmd *cmd, t_env **env);
 void	ft_cleanenv(t_env **env);
+t_token	*ft_splitlst(t_token *tkn, t_env **env);
 
 #endif
