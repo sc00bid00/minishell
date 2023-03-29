@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 11:23:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 13:35:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_list	*ft_strtolst(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if ((str[i] == '$' || str[i] == '\0' || str[i] == ' '
-			|| str[i] == '"') && i != 0)
+		if (!ft_isalnum(str[i]) && i != 0)
 		{
 			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
 			j = i;
@@ -98,9 +97,12 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 	{
 		if (tmplst->content && ((char *)tmplst->content)[0] == '$')
 		{
-			tmp = ft_dollarsubst(&((char *)tmplst->content)[1], tkn);
-			free(tmplst->content);
-			tmplst->content = tmp;
+			if (((char *)tmplst->content)[1])
+			{	
+				tmp = ft_dollarsubst(&((char *)tmplst->content)[1], tkn);
+				free(tmplst->content);
+				tmplst->content = tmp;
+			}
 		}
 		tmplst = tmplst->next;
 	}
