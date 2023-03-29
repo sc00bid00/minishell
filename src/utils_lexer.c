@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 13:35:22 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:43:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*ft_dollarsubst(char *str, t_token *tkn)
 		if (env_var)
 			tmp = ft_strjoin(env_var->var_content, &str[1]);
 	}
+	else if (str && ft_isdigit(str[0]))
+		tmp = ft_strdup(&str[1]);
 	else if (str)
 	{
 		env_var = ret_var(&tkn->env, str);

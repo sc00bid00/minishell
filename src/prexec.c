@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/22 14:58:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:46:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	ft_prexec(t_scmd *scmd)
 	t_list	*tmp;
 	t_cmd	*cmd;
 	int		count;
-
+	DIR		*dir;
+	
 	scmd->count = 0;
 	while (scmd->arr && scmd->arr[scmd->count])
 	{
@@ -109,8 +110,16 @@ int	ft_prexec(t_scmd *scmd)
 				tmp = tmp->next;
 		}
 		ft_paths(scmd);
-		if (!(cmd->path) && cmd->arr && cmd->arr[0])
+		if (cmd->arr[0][0] == '/')
 			cmd->stat |= 0b010000;
+		if (!cmd->path && cmd->arr && cmd->arr[0])
+			cmd->stat |= 0b010000;
+		dir = opendir(cmd->arr[0]);
+		if ((!(cmd->path) && cmd->arr && cmd->arr[0] && dir) || cmd->arr[0][0] == '/')
+		{
+			cmd->stat |= 0b1000000;
+			closedir(dir);
+		}
 		scmd->count++;
 	}
 	return (1);

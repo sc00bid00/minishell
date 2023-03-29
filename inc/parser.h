@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 11:13:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 14:29:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define OUT_OK 0b001000
 # define CMD_KO 0b010000
 # define EX_OK 0b100000
+# define IS_DIR 0b1000000
 
 /* cmd to be used in execution */
 typedef struct s_cmd
