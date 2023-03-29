@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:55:41 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 17:25:01 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:11:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,6 @@ void	ft_exptilde(t_token *tkn)
 	}
 }
 
-char	*ft_putback(char *str, char *set1, char *set2)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(set1, str);
-	str = ft_strjoin(tmp, set2);
-	free(tmp);
-	return (str);
-}
 
 char	*ft_dollarsubst(char *str, t_token *tkn)
 {
@@ -83,53 +74,76 @@ char	*ft_dollarsubst(char *str, t_token *tkn)
 	return (tmp);
 }
 
-char	*ft_presuffix(char *str, t_token *tkn)
+char	*ft_lsttostr(t_list *lst)
 {
-	char	*s[3];
-	int		i[2];
+	t_list	*tmplst;
+	char	*tmp;
+	int		i;
+	int		j;
+
+	tmplst = lst;
+	i = 0;
+	while (tmplst)
+	{
+		if (tmplst->content)
+			i += ft_strlen((char *)tmplst->content);
+		tmplst = tmplst->next;
+	}
+	tmp = ft_calloc(i + 1, 1);
+	if (!tmp)
+		exit(EXIT_FAILURE);
+	i = 0;
+	tmplst = lst;
+	while (tmplst)
+	{
+		j = 0;
+		while (tmplst->content && ((char *)tmplst->content)[j])
+			tmp[i++] = ((char*)tmplst->content)[j++];
+		tmplst = tmplst->next;
+	}
+	return (tmp);
+}
+
+t_list	*ft_moddollar(t_list *lst, t_token *tkn)
+{
+	t_list	*tmplst;
 	char	*tmp;
 
-	s[0] = ft_calloc(ft_strlen(str) + 1, 1);
-	s[1] = ft_calloc(ft_strlen(str) + 1, 1);
-	s[2] = ft_calloc(ft_strlen(str) + 1, 1);
-	i[0] = 0;
-	i[1] = 0;
-	while(str && str[i[0]] != '$')
-		s[0][i[1]++] = str[i[0]++];
-	i[1] = 0;
-	while(str && str[i[0]] != ' ' && str[i[0]] != '\"')
-		s[1][i[1]++] = str[i[0]++];
-	i[1] = 0;
-	while(str && str[i[0]])
-		s[2][i[1]++] = str[i[0]++];
-	tmp = ft_dollarsubst(&s[1][1], tkn);
-	str = ft_putback(tmp, s[0], s[2]);
-	free(tmp);
-	free(s[0]);
-	free(s[1]);
-	free(s[2]);
-	return (str);
+	tmplst = lst;
+	while (tmplst)
+	{
+		if (tmplst->content && ((char *)tmplst->content)[0] == '$')
+		{
+			tmp = ft_dollarsubst(&((char *)tmplst->content)[1], tkn);
+			free(tmplst->content);
+			tmplst->content = tmp;
+		}
+		tmplst = tmplst->next;
+	}
+	return (tmplst);
 }
+
+// t_list	*ft_strtolst(char *str)
+// {
+// 	/* wip Kathrin */
+// }
+
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
+	t_list	*tmplst;
 	char	*tmp;
 
 	lst = tkn->lst;
 	while (lst)
 	{
 		if (lst->content && ft_strchr((char *)lst->content, '$')
-			&& ft_strlen((char *)lst->content) > 1)
+			&& ft_strlen((char *)lst->content) > 1
+			&& ((char *)lst->content)[0] != '\'')
 		{
-			if (((char *)lst->content)[0] == '$')
-				tmp = ft_dollarsubst(&((char *)lst->content)[1], tkn);
-			else
-			{
-				if (((char *)lst->content)[0] == '\'')
-					tmp = ft_strdup((char *)lst->content);
-				else
-					tmp = ft_presuffix((char *)lst->content, tkn);
-			}
+			// tmplst = ft_strtolst((char *)lst->content);
+			tmplst = ft_moddollar(tmplst, tkn);
+			tmp = ft_lsttostr(tmplst);
 			free(lst->content);
 			lst->content = tmp;
 		}

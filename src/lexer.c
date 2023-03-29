@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/28 19:01:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:09:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	ft_flag(char c)
 		flag |= ROUT;
 	else if (c == '|')
 		flag |= PIPE;
-	else if (c == '$')
-		flag |= DOLLAR;
+	// else if (c == '$')
+	// 	flag |= DOLLAR;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);
