@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 11:16:21 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/29 21:59:02 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_scmd	*ft_init_scmd(t_token *tkn, char **arr, t_env *env)
 	scmd->flag = 0;
 	scmd->env = env;
 	scmd->id = 0;
+	scmd->str = tkn->str;
 	return (scmd);
 }
 
@@ -97,5 +98,6 @@ int	ft_init_cmd(t_scmd *scmd)
 	tmp->rule = 0;
 	tmp->stat = 0b000000;
 	tmp->builtin = 0;
+	tmp->str = scmd->str;
 	return (1);
 }
