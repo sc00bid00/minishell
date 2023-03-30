@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 16:57:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:54:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_spoilecho(t_list **lst)
 	tmp = *lst;
 	while(tmp && tmp->next)
 	{
-		while (ft_isdquote(tmp->next->content))
+		while (tmp && tmp->next && ft_isdquote(tmp->next->content))
 		{
 			tmp2 = tmp->next->next;;
 			free(tmp->next->content);
