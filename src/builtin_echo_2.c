@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 11:05:34 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 11:26:02 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	ft_isvoption(char *str)
 {
 	int	i;
 
-	if (str && ft_strncmp(str, "-n", 2))
+	i = 2;
+	if (str && (ft_strncmp(str, "-n", 2) || str[i] != ' '))
 		return (0);
-	i = 1;
 	while (str && str[i])
 	{
-		if (str[i] != 'n')
+		if (str[i] != 'n' || str[i] != ' ')
 			return (0);
 		i++;
 	}
@@ -112,7 +112,6 @@ t_token *ft_lexecho(char *str, t_env *env)
 		ft_goecho(tkn);
 	ft_expdollarecho(tkn);
 	ft_exptilde(tkn);
-	// ft_spoillist(tkn);
 	return (tkn);
 }
 
@@ -148,9 +147,20 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_list	*lst;
+	t_list	*tmplst;
+	int		optn;
+	int		i;
 
+	optn = 0;
 	lst = ft_splitlist(cmd, env);
-	tmp_prtlst2(lst);
+	i = 2;
+	tmplst = lst;
+	while (tmplst && ft_isvoption((char *)tmplst->content))
+	{
+		optn = 1;
+		tmplst = tmplst->next;
+	}
+	tmp_prtlst2(tmplst);
 	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
 }
