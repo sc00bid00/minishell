@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 11:26:02 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 13:23:44 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 		if (i == cmd->count && !ft_strchr((char *)lst->content, '|'))
 		{
 			if (!ft_strncmp((char *)lst->content, " ", 2)
-			&& !ft_strncmp((char *)lst->next->content, "echo", 5))
+			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
 				;
 			else
 				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(lst->content)));
@@ -148,18 +148,13 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_list	*lst;
 	t_list	*tmplst;
-	int		optn;
-	int		i;
+	// int		optn;
+	// int		i;
 
-	optn = 0;
+	// optn = 0;
 	lst = ft_splitlist(cmd, env);
-	i = 2;
+	// i = 2;
 	tmplst = lst;
-	while (tmplst && ft_isvoption((char *)tmplst->content))
-	{
-		optn = 1;
-		tmplst = tmplst->next;
-	}
 	tmp_prtlst2(tmplst);
 	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
