@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 17:54:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 18:07:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,18 +176,20 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 	t_list	*lst;
 	t_list	*copylst;
 	int		i;
+	int		j;
 
 	copylst = NULL;
 	tkn = ft_lexecho(cmd->str, *env);
 	lst = tkn->lst;
 	i = 0;
+	j = 0;
 	while (lst)
 	{
 		if (lst->content && ft_strchr((char *)lst->content, '|'))
 			i++;
 		if (i == cmd->count && !ft_strchr((char *)lst->content, '|'))
 		{
-			if (!ft_strncmp((char *)lst->content, " ", 2)
+			if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
 			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
 				;
 			else if (ft_allspaces((char *)lst->content))
@@ -195,6 +197,7 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 			else
 				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(lst->content)));
 		}
+		j++;
 		lst = lst->next;
 	}
 	ft_spoilecho(&copylst);
