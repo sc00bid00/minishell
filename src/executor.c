@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 17:06:14 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:46:24 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_exec(t_scmd *scmd)
 	scmd->count = 0;
 	fun = ft_builtin(scmd);
 	// if (scmd->n_scmd == 1 && ft_builtin(scmd))
-	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count]->builtin)
+	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count] && scmd->cmd[scmd->count]->builtin)
 	{
 		fun(*scmd->cmd, &scmd->env);
 		close(scmd->store[0]);

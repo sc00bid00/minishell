@@ -6,11 +6,40 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 13:42:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:11:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	ft_isdquote(char *str)
+{
+	if (!ft_strncmp(str, "\"\"", 3) || !ft_strncmp(str, "\'\'", 3))
+		return (1);
+	return (0);
+}
+
+void	ft_spoilecho(t_list **lst)
+{
+	t_list	*tmp;
+	t_list	*head;
+
+	tmp_prtlst2(*lst);
+	while (*lst && ft_isdquote((*lst)->content))
+		*lst = (*lst)->next;
+	head = *lst;
+	tmp = *lst;
+	while(tmp && tmp->next)
+	{
+		if (ft_isdquote(tmp->next->content))
+			tmp->next = tmp->next->next;
+		else
+		{
+			(*lst)->next = tmp->next;
+		}
+			tmp = tmp->next;
+	}
+}
 
 int	ft_isvoption(char *str)
 {
@@ -142,6 +171,7 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 		}
 		lst = lst->next;
 	}
+	ft_spoilecho(&copylst);
 	ft_cleantkn(tkn);
 	return (copylst);
 }
@@ -149,15 +179,14 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_list	*lst;
-	t_list	*tmplst;
 	// int		optn;
 	// int		i;
 
 	// optn = 0;
 	lst = ft_splitlist(cmd, env);
 	// i = 2;
-	tmplst = lst;
-	tmp_prtlst2(tmplst);
+	tmp_prtlst2(lst);
 	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
 }
+
