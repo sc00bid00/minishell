@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 09:06:48 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 09:12:15 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	}
 	if (!optn)
 		ft_putchar_fd('\n', 1);
-	return (0);
+	ft_cleantkn(tkn);
+	return (EXIT_SUCCESS);
 }
