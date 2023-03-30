@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 18:07:11 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 18:19:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,13 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	}
 	while (lst)
 	{
+		if (!ft_strncmp((char *)lst->content, "$?", 3))
+		{
+			ft_putnbr_fd(g_exitstatus, 1);
+			ft_putchar_fd('\n', 1);
+			g_exitstatus = 0;
+			return (EXIT_SUCCESS);
+		}
 		ft_putstr_fd((char *)lst->content, 1);
 		lst = lst->next;
 	}
