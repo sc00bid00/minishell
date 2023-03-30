@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 22:00:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:31:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd
 	int				builtin;
 	struct s_scmd	*scmd;
 	char			*str;
+	int				count;
 }			t_cmd;
 
 /* simple cmd used in parser and prexec */

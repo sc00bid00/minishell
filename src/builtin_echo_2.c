@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 09:12:15 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 11:05:34 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,56 +112,45 @@ t_token *ft_lexecho(char *str, t_env *env)
 		ft_goecho(tkn);
 	ft_expdollarecho(tkn);
 	ft_exptilde(tkn);
-	ft_spoillist(tkn);
+	// ft_spoillist(tkn);
 	return (tkn);
+}
+
+t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
+{
+	t_token	*tkn;
+	t_list	*lst;
+	t_list	*copylst;
+	int		i;
+
+	copylst = NULL;
+	tkn = ft_lexecho(cmd->str, *env);
+	lst = tkn->lst;
+	i = 0;
+	while (lst)
+	{
+		if (lst->content && ft_strchr((char *)lst->content, '|'))
+			i++;
+		if (i == cmd->count && !ft_strchr((char *)lst->content, '|'))
+		{
+			if (!ft_strncmp((char *)lst->content, " ", 2)
+			&& !ft_strncmp((char *)lst->next->content, "echo", 5))
+				;
+			else
+				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(lst->content)));
+		}
+		lst = lst->next;
+	}
+	ft_cleantkn(tkn);
+	return (copylst);
 }
 
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
-	t_token	*tkn;
 	t_list	*lst;
-	int		optn;
-	int		i;
-	int		j;
 
-	tkn = ft_lexecho(cmd->str, *env);
-	optn = 0;
-	i = 1;
-	if (cmd->arr && !cmd->arr[i])
-		ft_putchar_fd('\n', 1);
-	else if (cmd->arr && !ft_strncmp(cmd->arr[i], "$?", 3))
-	{
-		ft_putnbr_fd(g_exitstatus, 1);
-		ft_putchar_fd('\n', 1);
-		g_exitstatus = 0;
-		return (EXIT_SUCCESS);
-	}
-	while (cmd->arr && cmd->arr[i] && ft_isvoption(cmd->arr[i]))
-	{
-		optn = 1;
-		i++;
-	}
-	j = 0;
-	lst = tkn->lst;
-	while (lst)
-	{
-		if (j > i)
-		{
-			if (j == i + 1 && !ft_strncmp((char *)lst->content, " ", 2))
-				;
-			else
-			{
-				if (ft_allspaces((char *)lst->content))
-					ft_putchar_fd(' ', 1);
-				else
-					ft_putstr_fd((char *)lst->content, 1);
-			}
-		}
-		lst = lst->next;
-		j++;
-	}
-	if (!optn)
-		ft_putchar_fd('\n', 1);
-	ft_cleantkn(tkn);
+	lst = ft_splitlist(cmd, env);
+	tmp_prtlst2(lst);
+	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
 }
