@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 14:29:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:31:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_cmd
 	int				stat;
 	int				builtin;
 	struct s_scmd	*scmd;
+	char			*str;
+	int				count;
 }			t_cmd;
 
 /* simple cmd used in parser and prexec */
@@ -55,6 +57,7 @@ typedef struct s_scmd
 	t_list	**arr;
 	t_cmd	**cmd;
 	t_env	*env;
+	char	*str;
 }			t_scmd;
 
 t_scmd	*ft_parse(t_token *tkn, char **arr, t_env *env);

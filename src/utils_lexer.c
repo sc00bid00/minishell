@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 13:43:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:18:13 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-/* splits the string according to $ to send to expansion */
-t_list	*ft_strtolst(char *str)
-{
-	t_list	*lst;
-	int		i;
-	int		j;
-
-	lst = NULL;
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && i != 0)
-		{
-			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
-			j = i;
-		}
-		i++;
-	}
-	if (i != j)
-		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
-	return (lst);
-}
 
 char	*ft_dollarsubst(char *str, t_token *tkn)
 {
@@ -100,7 +76,7 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 		if (tmplst->content && ((char *)tmplst->content)[0] == '$')
 		{
 			if (((char *)tmplst->content)[1])
-			{	
+			{
 				tmp = ft_dollarsubst(&((char *)tmplst->content)[1], tkn);
 				free(tmplst->content);
 				tmplst->content = tmp;
@@ -111,6 +87,29 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn)
 	return (lst);
 }
 
+/* splits the string according to $ to send to expansion */
+t_list	*ft_strtolst(char *str)
+{
+	t_list	*lst;
+	int		i;
+	int		j;
+
+	lst = NULL;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && i != 0)
+		{
+			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+			j = i;
+		}
+		i++;
+	}
+	if (i != j)
+		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+	return (lst);
+}
 
 void	ft_expdollar(t_token *tkn)
 {
