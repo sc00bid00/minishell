@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/29 11:20:13 by lsordo           ###   ########.fr        #
+#    Updated: 2023/03/30 08:27:03 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ LIBGNL= ./lib/get_next_line/libgnl.a
 
 SRC =		builtin.c \
 			builtin_cd.c \
-			builtin_echo.c \
+			builtin_echo_2.c \
 			builtin_env.c \
 			builtin_exit.c \
 			builtin_export.c \
