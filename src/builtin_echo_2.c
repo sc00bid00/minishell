@@ -6,24 +6,79 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 13:23:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:57:29 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+int	ft_isdquote(char *str)
+{
+	if (!ft_strncmp(str, "\"\"", 3) || !ft_strncmp(str, "\'\'", 3))
+		return (1);
+	return (0);
+}
+
+void	ft_spoilecho(t_list **lst)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+	char	*str;
+
+	while (*lst && ft_isdquote((*lst)->content))
+	{
+		tmp = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+	tmp = *lst;
+	while(tmp && tmp->next)
+	{
+		while (ft_isdquote(tmp->next->content))
+		{
+			tmp2 = tmp->next->next;;
+			free(tmp->next->content);
+			free(tmp->next);
+			tmp->next = tmp2;
+		}
+		tmp = tmp->next;
+	}
+	tmp = *lst;
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '\'')
+			str = ft_strtrim((char *)tmp->content, "\'");
+		else if (((char *)tmp->content)[0] == '\"')
+			str = ft_strtrim((char *)tmp->content, "\"");
+		else
+			str = ft_strdup((char *)tmp->content);
+		free((tmp)->content);
+		(tmp)->content = str;
+		tmp = tmp->next;
+	}
+}
+
 int	ft_isvoption(char *str)
 {
 	int	i;
 
-	i = 2;
-	if (str && (ft_strncmp(str, "-n", 2) || str[i] != ' '))
+	i = 0;
+	if (str && (ft_strncmp(str, "-n", 2) && str[i] != ' '))
 		return (0);
-	while (str && str[i])
+	if (!ft_strncmp(str, " ", 2))
+		return (1);
+	if (!ft_strncmp(str, "-n", 2))
 	{
-		if (str[i] != 'n' || str[i] != ' ')
-			return (0);
 		i++;
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				return (0);
+			if (str[i] == ' ')
+				break;
+			i++;
+		}
 	}
 	return (1);
 }
@@ -135,11 +190,14 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 			if (!ft_strncmp((char *)lst->content, " ", 2)
 			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
 				;
+			else if (ft_allspaces((char *)lst->content))
+				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(" ")));
 			else
 				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(lst->content)));
 		}
 		lst = lst->next;
 	}
+	ft_spoilecho(&copylst);
 	ft_cleantkn(tkn);
 	return (copylst);
 }
@@ -147,15 +205,32 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_list	*lst;
-	t_list	*tmplst;
-	// int		optn;
-	// int		i;
+	int		optn;
+	int		i;
+	int		j;
 
-	// optn = 0;
+	optn = 0;
 	lst = ft_splitlist(cmd, env);
-	// i = 2;
-	tmplst = lst;
-	tmp_prtlst2(tmplst);
+	i = 2;
+	j = 0;
+	while (lst && j < i)
+	{
+		lst = lst->next;
+		j++;
+	}
+	while (lst && ft_isvoption((char *)lst->content))
+	{
+		optn = 1;
+		lst = lst->next;
+	}
+	while (lst)
+	{
+		ft_putstr_fd((char *)lst->content, 1);
+		lst = lst->next;
+	}
+	if (!optn)
+		ft_putchar_fd('\n', 1);
 	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
 }
+
