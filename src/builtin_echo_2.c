@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 08:42:12 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 09:06:48 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,23 +120,47 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_token	*tkn;
 	t_list	*lst;
+	int		optn;
 	int		i;
+	int		j;
 
 	tkn = ft_lexecho(cmd->str, *env);
-	i = 0;
+	optn = 0;
+	i = 1;
+	if (cmd->arr && !cmd->arr[i])
+		ft_putchar_fd('\n', 1);
+	else if (cmd->arr && !ft_strncmp(cmd->arr[i], "$?", 3))
+	{
+		ft_putnbr_fd(g_exitstatus, 1);
+		ft_putchar_fd('\n', 1);
+		g_exitstatus = 0;
+		return (EXIT_SUCCESS);
+	}
+	while (cmd->arr && cmd->arr[i] && ft_isvoption(cmd->arr[i]))
+	{
+		optn = 1;
+		i++;
+	}
+	j = 0;
 	lst = tkn->lst;
 	while (lst)
 	{
-		if (i > 0)
+		if (j > i)
 		{
-			if (i == 1 && !ft_strncmp((char *)lst->content, " ", 2))
+			if (j == i + 1 && !ft_strncmp((char *)lst->content, " ", 2))
 				;
 			else
-				ft_putstr_fd((char *)lst->content, 1);
+			{
+				if (ft_allspaces((char *)lst->content))
+					ft_putchar_fd(' ', 1);
+				else
+					ft_putstr_fd((char *)lst->content, 1);
+			}
 		}
 		lst = lst->next;
-		i++;
+		j++;
 	}
-
+	if (!optn)
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
