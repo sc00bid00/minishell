@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 18:35:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ int	ft_isvoption(char *str)
 	i = 0;
 	if (str && (ft_strncmp(str, "-n", 2) && str[i] != ' '))
 		return (0);
-	if (!ft_strncmp(str, " ", 2))
-		return (1);
 	if (!ft_strncmp(str, "-n", 2))
 	{
 		i++;
@@ -80,6 +78,8 @@ int	ft_isvoption(char *str)
 			i++;
 		}
 	}
+	else if (!ft_allspaces(str))
+		return (0);
 	return (1);
 }
 
