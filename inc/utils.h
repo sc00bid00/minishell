@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/29 18:05:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:41:28 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ERROR_12 "unset: usage: unset [-f] [-v] [name ...]"
 # define ERROR_13 ": is a directory"
 # define ERROR_14 ": filename argument required\n.: usage: . filename [arguments]"
+# define ERROR_15 "OLDPWD not set"
 
 
 t_env	*ms_lstlast(t_env *lst);

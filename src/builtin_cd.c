@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 14:01:21 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:10:19 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ char	*get_dir(t_cmd *cmd, t_env **env)
 		if (temp)
 			dir = temp->var_content;
 		else
+		{
+			ft_error(SHELL, cmd->arr[0], NULL, ERROR_15);
+			g_exitstatus = 1;
 			dir = getcwd(NULL, 0);
+		}
 	}
 	else
 		dir = cmd->arr[1];
@@ -57,7 +61,10 @@ int	update_pwd(t_env **env)
 	else
 		return (EXIT_FAILURE);
 	if (!upd_var(env, "PWD", cwd))
+	{
+		free (cwd);
 		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -65,18 +72,22 @@ int	update_pwd(t_env **env)
 int	builtin_cd(t_cmd *cmd, t_env **env)
 {
 	char	*dir;
-
+	char	*pwd;
+	
 	dir = get_dir(cmd, env);
 	if (cmd && cmd->arr && chdir(dir) == ERROR)
 	{
-		ft_error(SHELL, "cd: ", cmd->arr[1], NULL);
+		ft_error(SHELL, "line 0: cd: ", cmd->arr[1], NULL);
 		g_exitstatus = 1;
 		return (EXIT_FAILURE);
 	}
 	else
 		update_pwd(env);
-	if (cmd->arr && !ft_strncmp(cmd->arr[1], "-", 2))
-		printf("%s\n", getcwd(NULL, 0));
+	pwd = getcwd(NULL, 0);
+	if (cmd->arr && cmd->arr[1] && !ft_strncmp(cmd->arr[1], "-", 2)
+		&& ft_my_strcmp(pwd, dir))
+		printf("%s\n", pwd);
 	g_exitstatus = 0;
+	free (pwd);
 	return (EXIT_SUCCESS);
 }
