@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 10:31:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:36:30 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_scmd
 	char	**envp;
 	int		wstatus;
 	int		flag;
+	int		dir;
 	t_list	*hdocs;
 	t_list	**arr;
 	t_cmd	**cmd;

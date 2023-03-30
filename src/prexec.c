@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 16:46:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:39:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ int	ft_prexec(t_scmd *scmd)
 		if (!cmd->path && cmd->arr && cmd->arr[0])
 			cmd->stat |= 0b010000;
 		dir = opendir(cmd->arr[0]);
+		if (!dir)
+		{
+			scmd->dir = 1;
+			ft_error(SHELL, cmd->arr[0], NULL, ERROR_1);
+			return (1);
+		}
 		if ((!(cmd->path) && cmd->arr && cmd->arr[0] && dir) || cmd->arr[0][0] == '/')
 		{
 			cmd->stat |= 0b1000000;

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 17:10:14 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:38:44 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_cmdissues(t_scmd *scmd)
 		ft_eerr("minishell: ", cmd->arr[0], ERROR_13);
 		cmd->err_flag = 126;
 	}
-	else if (cmd->stat & CMD_KO)
+	else if ((cmd->stat & CMD_KO) && scmd->dir != 1)
 	{
 		ft_eerr("minishell: ", cmd->arr[0], ERROR_6);
 		cmd->err_flag = 127;
