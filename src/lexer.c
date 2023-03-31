@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 16:29:06 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:59:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ int	ft_flag(char c)
 		flag |= ROUT;
 	else if (c == '|')
 		flag |= PIPE;
-	// else if (c == '$')
-	// 	flag |= DOLLAR;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);

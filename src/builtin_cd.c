@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/30 11:10:19 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:38:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,22 @@ int	update_pwd(t_env **env)
 	if (str)
 	{
 		if (!upd_var(env, "OLDPWD", str))
+		{
+			free(cwd);
 			return (EXIT_FAILURE);
+		}
 	}
 	else
+	{
+		free(cwd);
 		return (EXIT_FAILURE);
+	}
 	if (!upd_var(env, "PWD", cwd))
 	{
 		free (cwd);
 		return (EXIT_FAILURE);
 	}
+	free(cwd);
 	return (EXIT_SUCCESS);
 }
 
@@ -73,7 +80,7 @@ int	builtin_cd(t_cmd *cmd, t_env **env)
 {
 	char	*dir;
 	char	*pwd;
-	
+
 	dir = get_dir(cmd, env);
 	if (cmd && cmd->arr && chdir(dir) == ERROR)
 	{

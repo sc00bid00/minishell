@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 14:49:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:57:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_spoilecho(t_list **lst)
 		tmp->content = str;
 		tmp = tmp->next;
 	}
+	tmp_prtlst2(*lst);
 }
 
 int	ft_isvoption(char *str)
@@ -167,7 +168,9 @@ t_token *ft_lexecho(char *str, t_env *env)
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_goecho(tkn);
+	tmp_prtlst(tkn);
 	ft_expdollarecho(tkn);
+	tmp_prtlst(tkn);
 	ft_exptilde(tkn);
 	return (tkn);
 }
