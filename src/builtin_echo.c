@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 10:37:56 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 14:49:06 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_spoilecho(t_list **lst)
 	{
 		while (tmp && tmp->next && ft_isdquote(tmp->next->content))
 		{
-			tmp2 = tmp->next->next;;
+			tmp2 = tmp->next->next;
 			free(tmp->next->content);
 			free(tmp->next);
 			tmp->next = tmp2;
@@ -54,7 +54,7 @@ void	ft_spoilecho(t_list **lst)
 		else
 			str = ft_strdup((char *)tmp->content);
 		free((tmp)->content);
-		(tmp)->content = str;
+		tmp->content = str;
 		tmp = tmp->next;
 	}
 }
@@ -111,6 +111,7 @@ void	ft_expdollarecho(t_token *tkn)
 {
 	t_list	*lst;
 	t_list	*tmplst;
+	t_list	*tmplst2;
 	char	*tmp;
 
 	lst = tkn->lst;
@@ -121,8 +122,9 @@ void	ft_expdollarecho(t_token *tkn)
 			&& ((char *)lst->content)[0] != '\'')
 		{
 			tmplst = ft_strtolstecho((char *)lst->content);
-			tmplst = ft_moddollar(tmplst, tkn);
-			tmp = ft_lsttostr(tmplst);
+			tmplst2 = ft_moddollar(tmplst, tkn);
+			tmp = ft_lsttostr(tmplst2);
+			ft_cleanlst(tmplst);
 			free(lst->content);
 			lst->content = tmp;
 		}
@@ -214,12 +216,14 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
 	t_list	*lst;
+	t_list	*tmp;
 	int		optn;
 	int		i;
 	int		j;
 
 	optn = 0;
 	lst = ft_splitlist(cmd, env);
+	tmp = lst;
 	i = 2;
 	j = 0;
 	while (lst && j < i)
@@ -248,6 +252,7 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 			ft_putnbr_fd(g_exitstatus, 1);
 			ft_putchar_fd('\n', 1);
 			g_exitstatus = 0;
+			ft_cleanlst(tmp);
 			return (EXIT_SUCCESS);
 		}
 		ft_putstr_fd((char *)lst->content, 1);
@@ -255,6 +260,6 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	}
 	if (!optn)
 		ft_putchar_fd('\n', 1);
-	ft_cleanlst(lst);
+	ft_cleanlst(tmp);
 	return (EXIT_SUCCESS);
 }
