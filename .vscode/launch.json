@@ -7,11 +7,8 @@
         {
             "name": "Attach",
             "type": "cppdbg",
-            "program": "/Users/kczichow/Documents/projects/minishell/42_minishell/minishell",
-            "args": [],
-            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/minishell",
             "request": "attach",
-            "externalConsole": true,
             "MIMode": "lldb"
         }
     ]
