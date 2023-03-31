@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 10:19:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 10:37:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,12 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 			if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
 			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
 				;
+			else if (((char *)lst->content)[0] == '\0')
+			{
+				if (lst->next && !ft_strncmp(lst->next->content, " ", 2))
+					lst = lst->next;
+				;
+			}
 			else if (ft_allspaces((char *)lst->content))
 				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(" ")));
 			else
@@ -252,4 +258,3 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	ft_cleanlst(lst);
 	return (EXIT_SUCCESS);
 }
-
