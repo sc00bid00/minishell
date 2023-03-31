@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 14:43:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 17:02:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ char	*ft_lsttostr(t_list *lst)
 		while (tmplst->content && ((char *)tmplst->content)[j])
 			tmp[i++] = ((char*)tmplst->content)[j++];
 		tmplst = tmplst->next;
+	}
+	if (tmp[0] == '\0')
+	{
+		free(tmp);
+		tmp = NULL;
 	}
 	return (tmp);
 }

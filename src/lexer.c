@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 16:59:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 17:40:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	ft_spoillist(t_token *tkn)
 		free(tkn->lst->content);
 		free(tkn->lst);
 		if (tmps)
-			ft_lstadd_back(&copy, ft_lstnew(tmps));
+		{
+			ft_lstadd_back(&copy, ft_lstnew(ft_strdup(tmps)));
+			free(tmps);
+			tmps = NULL;
+		}
 		tkn->lst = tmp;
 	}
 	tkn->lst = copy;

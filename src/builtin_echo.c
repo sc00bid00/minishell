@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 16:57:28 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/31 17:06:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_spoilecho(t_list **lst)
 		tmp->content = str;
 		tmp = tmp->next;
 	}
-	tmp_prtlst2(*lst);
 }
 
 int	ft_isvoption(char *str)
@@ -168,9 +167,7 @@ t_token *ft_lexecho(char *str, t_env *env)
 	}
 	if (tkn->curr > tkn->prev + 1)
 		ft_goecho(tkn);
-	tmp_prtlst(tkn);
 	ft_expdollarecho(tkn);
-	tmp_prtlst(tkn);
 	ft_exptilde(tkn);
 	return (tkn);
 }
@@ -197,7 +194,7 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 			if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
 			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
 				;
-			else if (((char *)lst->content)[0] == '\0')
+			else if (lst->content && ((char *)lst->content)[0] == '\0')
 			{
 				if (lst->next && !ft_strncmp(lst->next->content, " ", 2))
 					lst = lst->next;
