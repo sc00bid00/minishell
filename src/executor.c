@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 14:46:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 09:43:20 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	ft_exec(t_scmd *scmd)
 	scmd->store[1] = dup(STDOUT_FILENO);
 	scmd->count = 0;
 	fun = ft_builtin(scmd);
-	// if (scmd->n_scmd == 1 && ft_builtin(scmd))
 	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count] && scmd->cmd[scmd->count]->builtin)
 	{
 		fun(*scmd->cmd, &scmd->env);

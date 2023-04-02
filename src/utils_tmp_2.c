@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:13:07 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/25 11:12:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 12:12:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	tmp_prtarray(char **arr)
 	i = 0;
 	while (arr && arr[i])
 	{
-		ft_putendl_fd(arr[i], 2);
+		ft_putstr_fd(arr[i], 2);
+		ft_putendl_fd("$", 2);
 		i++;
 	}
 	ft_putendl_fd("=== checkout debug - tmp_prtarray ===", 2);
 }
-

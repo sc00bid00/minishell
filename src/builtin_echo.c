@@ -6,17 +6,80 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/31 17:06:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 12:28:57 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	**ft_lsttoarr(t_list *lst)
+{
+	int		size;
+	int		i;
+	char	**arr;
+	t_list	*tmp;
+
+	size = ft_lstsize(lst);
+	tmp = lst;
+	arr = ft_calloc(size + 1, sizeof(char *));
+	if (!arr)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (tmp)
+	{
+		arr[i] = ft_strdup(tmp->content);
+		i++;
+		tmp = tmp->next;
+	}
+	return (arr);
+}
+
+void	ft_echoadjarr(t_list *lst, char ***arr)
+{
+	ft_freesplit(*arr);
+	*arr = ft_lsttoarr(lst);
+}
 
 int	ft_isdquote(char *str)
 {
 	if (!ft_strncmp(str, "\"\"", 3) || !ft_strncmp(str, "\'\'", 3))
 		return (1);
 	return (0);
+}
+
+int		ft_isredtoken(char *str)
+{
+	if (!ft_strncmp(str, "<", 1) || !ft_strncmp(str, ">", 1)
+		|| !ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2))
+		return (1);
+	else
+		return (0);
+}
+
+void	ft_rmred(t_list **lst)
+{
+	t_list	*tmp;
+	t_list	*new;
+	int		flag;
+
+	tmp = *lst;
+	new = NULL;
+	flag = 0;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->content, "echo", 5))
+		{
+			flag = 1;
+			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+		}
+		else if (!ft_isredtoken(tmp->content) && flag)
+				ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+		else if (ft_isredtoken(tmp->content))
+			flag = 0;
+		tmp = tmp->next;
+	}
+	ft_cleanlst(*lst);
+	*lst = new;
 }
 
 void	ft_spoilecho(t_list **lst)
@@ -172,7 +235,7 @@ t_token *ft_lexecho(char *str, t_env *env)
 	return (tkn);
 }
 
-t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
+void	ft_splitlist(t_cmd *cmd, t_env **env)
 {
 	t_token	*tkn;
 	t_list	*lst;
@@ -209,57 +272,49 @@ t_list	*ft_splitlist(t_cmd *cmd, t_env **env)
 		lst = lst->next;
 	}
 	ft_spoilecho(&copylst);
+	ft_rmred(&copylst);
+	ft_echoadjarr(copylst, &cmd->arr);
+	ft_cleanlst(copylst);
 	ft_cleantkn(tkn);
-	return (copylst);
 }
 
 int	builtin_echo(t_cmd *cmd, t_env **env)
 {
-	t_list	*lst;
-	t_list	*tmp;
 	int		optn;
 	int		i;
-	int		j;
+	char	**arr;
 
 	optn = 0;
-	lst = ft_splitlist(cmd, env);
-	tmp = lst;
+	ft_splitlist(cmd, env);
+	arr = cmd->arr;
 	i = 2;
-	j = 0;
-	while (lst && j < i)
+	while (arr[i] && ft_isvoption(arr[i]))
 	{
-		lst = lst->next;
-		j++;
-	}
-	while (lst && ft_isvoption((char *)lst->content))
-	{
-		if (lst->next && !ft_strncmp(lst->content, " ", 2) && ft_isvoption(lst->next->content))
+		if (arr[i + 1] && !ft_strncmp(arr[i], " ", 2) && ft_isvoption(arr[i + 1]))
 			optn = 1;
-		else if (lst->next && ft_strncmp(lst->content, " ", 2) && !ft_strncmp(lst->next->content, " ", 2))
+		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2) && !ft_strncmp(arr[i + 1], " ", 2))
 			optn = 1;
 		else
 		{
-			if (!ft_strncmp(lst->content, " ", 2) || !lst->next)
-				lst = lst->next;
+			if (!ft_strncmp(arr[i], " ", 2) || !arr[i + 1])
+				i++;
 			break;
 		}
-		lst = lst->next;
+		i++;
 	}
-	while (lst)
+	while (arr[i])
 	{
-		if (!ft_strncmp((char *)lst->content, "$?", 3))
+		if (!ft_strncmp(arr[i], "$?", 3))
 		{
 			ft_putnbr_fd(g_exitstatus, 1);
 			ft_putchar_fd('\n', 1);
 			g_exitstatus = 0;
-			ft_cleanlst(tmp);
 			return (EXIT_SUCCESS);
 		}
-		ft_putstr_fd((char *)lst->content, 1);
-		lst = lst->next;
+		ft_putstr_fd(arr[i], 1);
+		i++;
 	}
 	if (!optn)
 		ft_putchar_fd('\n', 1);
-	ft_cleanlst(tmp);
 	return (EXIT_SUCCESS);
 }
