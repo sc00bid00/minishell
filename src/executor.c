@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 09:43:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 15:36:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ void	ft_exec(t_scmd *scmd)
 	fun = ft_builtin(scmd);
 	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count] && scmd->cmd[scmd->count]->builtin)
 	{
+		scmd->id = 1;
 		fun(*scmd->cmd, &scmd->env);
-		close(scmd->store[0]);
-		close(scmd->store[1]);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 14:27:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 15:28:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,13 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	int		i;
 	char	**arr;
 
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(cmd->scmd);
+	if (!cmd->builtin && cmd->stat & CMD_KO)
+		ft_cmdissues(cmd->scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(cmd->scmd);
+	ft_noredirect(cmd->scmd);
 	optn = 0;
 	ft_splitlist(cmd, env);
 	arr = cmd->arr;
