@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 13:55:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 14:27:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,6 +318,11 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2) && ft_strncmp(arr[i + 1], " ", 2))
 			break ;
 		i++;
+	}
+	if (optn)
+	{
+		while (i > 2 && !ft_strncmp(arr[i], " ", 2))
+			i--;
 	}
 	while (arr && arr[1] && arr[i])
 	{
