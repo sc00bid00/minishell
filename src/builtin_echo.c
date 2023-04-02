@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 12:28:57 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 13:52:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,26 @@ t_list	*ft_strtolstecho(char *str)
 	return (lst);
 }
 
+void	ft_remspcnul(t_list **lst)
+{
+	t_list	*tmp;
+	t_list	*new;
+
+	new = NULL;
+	tmp = *lst;
+	while (tmp)
+	{
+		if (tmp->next && !ft_strncmp(tmp->content, " ", 2)
+			&& ((char *)tmp->next->content)[0] == '\0')
+			tmp = tmp->next;
+		else
+			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+		tmp = tmp->next;
+	}
+	ft_cleanlst(*lst);
+	*lst = new;
+}
+
 void	ft_expdollarecho(t_token *tkn)
 {
 	t_list	*lst;
@@ -193,6 +213,7 @@ void	ft_expdollarecho(t_token *tkn)
 		}
 		lst = lst->next;
 	}
+	ft_remspcnul(&tkn->lst);
 }
 
 void	ft_goecho(t_token *tkn)
@@ -288,7 +309,7 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 	ft_splitlist(cmd, env);
 	arr = cmd->arr;
 	i = 2;
-	while (arr[i] && ft_isvoption(arr[i]))
+	while (arr && arr[1] && arr[i] && ft_isvoption(arr[i]))
 	{
 		if (arr[i + 1] && !ft_strncmp(arr[i], " ", 2) && ft_isvoption(arr[i + 1]))
 			optn = 1;
@@ -302,7 +323,7 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 		}
 		i++;
 	}
-	while (arr[i])
+	while (arr && arr[1] && arr[i])
 	{
 		if (!ft_strncmp(arr[i], "$?", 3))
 		{
