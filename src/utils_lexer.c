@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 08:18:13 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/02 09:12:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_lsttostr(t_list *lst)
 	while (tmplst)
 	{
 		j = 0;
-		while (tmplst->content && ((char *)tmplst->content)[j])
+		while (tmplst->content && ((char *)tmplst->content)[j] != '\0')
 			tmp[i++] = ((char*)tmplst->content)[j++];
 		tmplst = tmplst->next;
 	}
@@ -106,7 +106,7 @@ t_list	*ft_strtolst(char *str)
 		}
 		i++;
 	}
-	if (i != j)
+	if (i != j && str[j] != '\0')
 		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
 	return (lst);
 }
@@ -115,6 +115,7 @@ void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
 	t_list	*tmplst;
+	t_list	*tmplst2;
 	char	*tmp;
 
 	lst = tkn->lst;
@@ -125,8 +126,9 @@ void	ft_expdollar(t_token *tkn)
 			&& ((char *)lst->content)[0] != '\'')
 		{
 			tmplst = ft_strtolst((char *)lst->content);
-			tmplst = ft_moddollar(tmplst, tkn);
-			tmp = ft_lsttostr(tmplst);
+			tmplst2 = ft_moddollar(tmplst, tkn);
+			tmp = ft_lsttostr(tmplst2);
+			ft_cleanlst(tmplst);
 			free(lst->content);
 			lst->content = tmp;
 		}

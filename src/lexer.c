@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 16:29:06 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/02 10:05:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	ft_spoillist(t_token *tkn)
 		free(tkn->lst->content);
 		free(tkn->lst);
 		if (tmps)
-			ft_lstadd_back(&copy, ft_lstnew(tmps));
+		{
+			ft_lstadd_back(&copy, ft_lstnew(ft_strdup(tmps)));
+			free(tmps);
+			tmps = NULL;
+		}
 		tkn->lst = tmp;
 	}
 	tkn->lst = copy;
@@ -72,8 +76,6 @@ int	ft_flag(char c)
 		flag |= ROUT;
 	else if (c == '|')
 		flag |= PIPE;
-	// else if (c == '$')
-	// 	flag |= DOLLAR;
 	else if (c > 32)
 		flag |= CHAR;
 	return (flag);

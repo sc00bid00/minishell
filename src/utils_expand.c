@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 10:14:18 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/29 11:22:51 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:53:42 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	ft_exptilde(t_token *tkn)
 	i = 0;
 	while (lst)
 	{
-		if (lst->content && !ft_strncmp((char *)lst->content, "|", 1))
-			i = -1;
-		if (i < 2 && lst->content && ft_strchr((char *)lst->content, '~')
+		if (i < 3 && lst->content && ft_strchr((char *)lst->content, '~')
 			&& ft_strlen((char *)lst->content) > 1)
 		{
 			if (((char *)lst->content)[1] == '/')
@@ -38,7 +36,7 @@ void	ft_exptilde(t_token *tkn)
 				lst->content = tmp;
 			}
 		}
-		else if (i < 2 && lst->content && !ft_strncmp((char *)lst->content, "~", 1))
+		else if (i < 3 && lst->content && !ft_strncmp((char *)lst->content, "~", 1))
 		{
 			env_var = ret_var(&tkn->env, "HOME");
 			if (env_var && env_var->var_content)
