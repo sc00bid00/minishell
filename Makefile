@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/04/03 14:16:25 by kczichow         ###   ########.fr        #
+#    Updated: 2023/04/03 14:41:41 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC =		builtin.c \
 			executor.c\
 			executor_2.c \
 			lexer.c \
+			lexer_2.c \
 			minishell.c \
 			parser.c \
 			prexec.c \

@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 10:05:19 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:43:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ft_spoillist(t_token *tkn)
-{
-	t_list	*tmp;
-	t_list	*copy;
-	char	*tmps;
-
-	copy = NULL;
-	tmp = tkn->lst;
-	while (tkn->lst)
-	{
-		if (tmp->content && (!ft_strncmp(tmp->content, "\'\'", 3)
-			|| !ft_strncmp(tmp->content, "\"\"", 3)))
-			tmps = NULL;
-		else if (tmp->content && ((char *)tmp->content)[0] == '\"')
-			tmps = ft_strtrim((char *)tmp->content, "\"");
-		else if (tmp->content && ((char *)tmp->content)[0] == '\'')
-			tmps = ft_strtrim((char *)tmp->content, "\'");
-		else if (tkn->lst->content)
-			tmps = ft_strdup((char *)tkn->lst->content);
-		tmp = tkn->lst->next;
-		free(tkn->lst->content);
-		free(tkn->lst);
-		if (tmps)
-		{
-			ft_lstadd_back(&copy, ft_lstnew(ft_strdup(tmps)));
-			free(tmps);
-			tmps = NULL;
-		}
-		tkn->lst = tmp;
-	}
-	tkn->lst = copy;
-}
 
 int	ft_allspaces(char *str)
 {
@@ -97,30 +64,35 @@ void	ft_go(t_token *tkn)
 	else
 		free(tmp);
 	tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
-
 }
 
-t_token *ft_lex(char *str, t_env *env)
+void	ft_lex_uti(t_token *tkn)
+{
+	if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
+		&& ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
+	{
+		tkn->curr++;
+		while (ft_flag(tkn->str[tkn->curr]) & CHAR)
+			tkn->curr++;
+	}
+	ft_go(tkn);
+}
+
+t_token	*ft_lex(char *str, t_env *env)
 {
 	t_token	*tkn;
 
 	tkn = ft_init_tkn(str, env);
 	tkn->c_sta = ft_flag(tkn->str[0]);
-	while(tkn->str && tkn->str[tkn->curr])
+	while (tkn->str && tkn->str[tkn->curr])
 	{
 		tkn->curr++;
-		if (!(tkn->c_sta & SOME_Q) && ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
-		{
-			if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
-				&& ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
-			{
-				tkn->curr++;
-				while (ft_flag(tkn->str[tkn->curr]) & CHAR)
-					tkn->curr++;
-			}
-			ft_go(tkn);
-		}
-		else if ((tkn->c_sta & SOME_Q) && ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr]) & SOME_Q)))
+		if (!(tkn->c_sta & SOME_Q)
+			&& ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
+			ft_lex_uti(tkn);
+		else if ((tkn->c_sta & SOME_Q)
+			&& ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr])
+					& SOME_Q)))
 			tkn->c_sta ^= (ft_flag(tkn->str[tkn->curr]) & SOME_Q);
 	}
 	if (tkn->curr > tkn->prev + 1)
