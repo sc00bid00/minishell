@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 10:30:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:27:20 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	ft_prexec(t_scmd *scmd)
 			if (cmd->arr)
 				dir = opendir(cmd->arr[0]);
 			ft_builtin(scmd);
-			if (!dir && !cmd->builtin)
+			if (!dir && !cmd->builtin && !(cmd->stat & CMD_KO))
 			{
 				scmd->dir = 1;
 				ft_error(SHELL, cmd->arr[0], NULL, ERROR_1);
