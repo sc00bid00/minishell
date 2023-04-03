@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 15:27:26 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 10:36:50 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,13 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 	size_t	i;
 	char	*copy;
 
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(cmd->scmd);
+	if (!cmd->builtin && cmd->stat & CMD_KO)
+		ft_cmdissues(cmd->scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(cmd->scmd);
+	ft_noredirect(cmd->scmd);
 	i = 1;
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
