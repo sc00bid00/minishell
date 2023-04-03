@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/31 16:38:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 09:43:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,12 @@ int	update_pwd(t_env **env)
 	if (str)
 	{
 		if (!upd_var(env, "OLDPWD", str))
-		{
-			free(cwd);
-			return (EXIT_FAILURE);
-		}
+			return (free(cwd), EXIT_FAILURE);
 	}
 	else
-	{
-		free(cwd);
-		return (EXIT_FAILURE);
-	}
+		return (free(cwd), EXIT_FAILURE);
 	if (!upd_var(env, "PWD", cwd))
-	{
-		free (cwd);
-		return (EXIT_FAILURE);
-	}
+		return (free(cwd), EXIT_FAILURE);
 	free(cwd);
 	return (EXIT_SUCCESS);
 }
