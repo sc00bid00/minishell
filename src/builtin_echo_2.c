@@ -50,7 +50,8 @@ int	ft_isdquote(char *str)
 int	ft_isredtoken(char *str)
 {
 	if (!ft_strncmp(str, "<", 1) || !ft_strncmp(str, ">", 1)
-		|| !ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2))
+		|| !ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2)
+		|| !ft_strncmp(str, "|", 1))
 		return (1);
 	else
 		return (0);
