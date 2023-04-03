@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/03 10:36:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 10:51:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	print_export(t_env **env)
 	{
 		if ((*env)->var_name)
 		{
-			ft_putstr_fd("declare -x ", STDOUT_FILENO);
-			ft_putstr_fd((*env)->var_name, STDOUT_FILENO);
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd((*env)->var_name, 1);
 			if ((*env)->var_content)
-				ft_putstr_fd("=", STDOUT_FILENO);
+				ft_putstr_fd("=", 1);
 			else
-				ft_putstr_fd("\n", STDOUT_FILENO);
+				ft_putstr_fd("\n", 1);
 		}
 		if ((*env)->var_content)
-			ft_putendl_fd((*env)->var_content, STDOUT_FILENO);
+			ft_putendl_fd((*env)->var_content, 1);
 		if ((*env)->next)
 			(*env) = (*env)->next;
 		else
@@ -112,8 +112,6 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(cmd->scmd);
-	if (!cmd->builtin && cmd->stat & CMD_KO)
-		ft_cmdissues(cmd->scmd);
 	if (cmd->stat & RED_OK)
 		ft_redirect(cmd->scmd);
 	ft_noredirect(cmd->scmd);
