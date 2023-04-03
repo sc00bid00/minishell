@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 13:50:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:05:18 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int		ft_allspaces(char *str);
 char	*ft_otherprefix(char *str, t_token *tkn);
 char	*ft_putback(char *str, char *set1, char *set2);
 void	ft_initredsyntax(int *flag, t_token *tkn, t_list **tmp, int (*i)[2]);
+void	ft_helplsttostr(t_list *tmplst, int *i);
 void	tmp_prtlst(t_token *tkn);
 void	tmp_prtlst2(t_list *lst);
 t_list *ft_strtolst(char *str);

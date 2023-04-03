@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/04/03 13:51:25 by kczichow         ###   ########.fr        #
+#    Updated: 2023/04/03 14:05:57 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC =		builtin.c \
 			utils_expand.c \
 			utils_init.c \
 			utils_lexer.c \
+			utils_lexer_2.c \
 			utils_libhelper.c \
 			utils_list.c \
 			utils_parser.c \
