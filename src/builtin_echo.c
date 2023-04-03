@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 15:28:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:24:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,29 @@ void	ft_rmred(t_list **lst)
 	*lst = new;
 }
 
+/* extract from ft_spoilecho to comly with norminette max 25 lines */
+void	ft_spoilecho_util(t_list *tmp)
+{
+	char *str;
+	
+	while (tmp)
+	{
+		if (((char *)tmp->content)[0] == '\'')
+			str = ft_strtrim((char *)tmp->content, "\'");
+		else if (((char *)tmp->content)[0] == '\"')
+			str = ft_strtrim((char *)tmp->content, "\"");
+		else
+			str = ft_strdup((char *)tmp->content);
+		free((tmp)->content);
+		tmp->content = str;
+		tmp = tmp->next;
+	}
+}
+
 void	ft_spoilecho(t_list **lst)
 {
 	t_list	*tmp;
 	t_list	*tmp2;
-	char	*str;
 
 	while (*lst && ft_isdquote((*lst)->content))
 	{
@@ -108,18 +126,7 @@ void	ft_spoilecho(t_list **lst)
 		tmp = tmp->next;
 	}
 	tmp = *lst;
-	while (tmp)
-	{
-		if (((char *)tmp->content)[0] == '\'')
-			str = ft_strtrim((char *)tmp->content, "\'");
-		else if (((char *)tmp->content)[0] == '\"')
-			str = ft_strtrim((char *)tmp->content, "\"");
-		else
-			str = ft_strdup((char *)tmp->content);
-		free((tmp)->content);
-		tmp->content = str;
-		tmp = tmp->next;
-	}
+	ft_spoilecho_util(tmp);
 }
 
 int	ft_isvoption(char *str)
@@ -226,6 +233,18 @@ void	ft_goecho(t_token *tkn)
 	tkn->c_sta = ft_flag(tkn->str[tkn->curr]);
 }
 
+void ft_lex_util(t_token *tkn)
+{
+	if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
+		 && ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
+	{
+		tkn->curr++;
+		while (ft_flag(tkn->str[tkn->curr]) & CHAR)
+					tkn->curr++;
+	}
+	ft_goecho(tkn);
+}
+
 t_token *ft_lexecho(char *str, t_env *env)
 {
 	t_token	*tkn;
@@ -235,18 +254,12 @@ t_token *ft_lexecho(char *str, t_env *env)
 	while(tkn->str && tkn->str[tkn->curr])
 	{
 		tkn->curr++;
-		if (!(tkn->c_sta & SOME_Q) && ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
-		{
-			if (ft_flag(tkn->str[tkn->curr]) & DOLLAR
-				&& ft_flag(tkn->str[tkn->curr + 1]) & CHAR)
-			{
-				tkn->curr++;
-				while (ft_flag(tkn->str[tkn->curr]) & CHAR)
-					tkn->curr++;
-			}
-			ft_goecho(tkn);
-		}
-		else if ((tkn->c_sta & SOME_Q) && ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr]) & SOME_Q)))
+		if (!(tkn->c_sta & SOME_Q)
+			&& ft_flag(tkn->str[tkn->curr]) != tkn->c_sta)
+			ft_lex_util(tkn);
+		else if ((tkn->c_sta & SOME_Q)
+			&& ((tkn->c_sta & SOME_Q) == (ft_flag(tkn->str[tkn->curr])
+			& SOME_Q)))
 			tkn->c_sta ^= (ft_flag(tkn->str[tkn->curr]) & SOME_Q);
 	}
 	if (tkn->curr > tkn->prev + 1)
@@ -254,6 +267,23 @@ t_token *ft_lexecho(char *str, t_env *env)
 	ft_expdollarecho(tkn);
 	ft_exptilde(tkn);
 	return (tkn);
+}
+
+void ft_splitlist_util(t_list **copylst, t_list *lst, int j)
+{
+	if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
+			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
+				;
+			else if (lst->content && ((char *)lst->content)[0] == '\0')
+			{
+				if (lst->next && !ft_strncmp(lst->next->content, " ", 2))
+					lst = lst->next;
+				;
+			}
+			else if (ft_allspaces((char *)lst->content))
+				ft_lstadd_back(copylst, ft_lstnew(ft_strdup(" ")));
+			else
+				ft_lstadd_back(copylst, ft_lstnew(ft_strdup(lst->content)));
 }
 
 void	ft_splitlist(t_cmd *cmd, t_env **env)
@@ -273,22 +303,7 @@ void	ft_splitlist(t_cmd *cmd, t_env **env)
 	{
 		if (lst->content && ft_strchr((char *)lst->content, '|'))
 			i++;
-		if (i == cmd->count && !ft_strchr((char *)lst->content, '|'))
-		{
-			if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
-			&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
-				;
-			else if (lst->content && ((char *)lst->content)[0] == '\0')
-			{
-				if (lst->next && !ft_strncmp(lst->next->content, " ", 2))
-					lst = lst->next;
-				;
-			}
-			else if (ft_allspaces((char *)lst->content))
-				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(" ")));
-			else
-				ft_lstadd_back(&copylst, ft_lstnew(ft_strdup(lst->content)));
-		}
+		ft_splitlist_util(&copylst, lst, j);
 		j++;
 		lst = lst->next;
 	}
@@ -299,38 +314,52 @@ void	ft_splitlist(t_cmd *cmd, t_env **env)
 	ft_cleantkn(tkn);
 }
 
-int	builtin_echo(t_cmd *cmd, t_env **env)
+/* checks for redirectins and sets flags accordingly */
+int		check_n(char **arr, t_cmd *cmd)
 {
-	int		optn;
-	int		i;
-	char	**arr;
-
-	if (cmd->stat & FILE_KO)
-		ft_fileissues(cmd->scmd);
-	if (!cmd->builtin && cmd->stat & CMD_KO)
-		ft_cmdissues(cmd->scmd);
-	if (cmd->stat & RED_OK)
-		ft_redirect(cmd->scmd);
-	ft_noredirect(cmd->scmd);
-	optn = 0;
-	ft_splitlist(cmd, env);
-	arr = cmd->arr;
+	int	i;
 	i = 2;
 	while (arr && arr[1] && arr[i] && ft_isvoption(arr[i]))
 	{
-		if (arr[i + 1] && !ft_strncmp(arr[i], " ", 2) && ft_isvoption(arr[i + 1]))
-			optn = 1;
-		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2) && !ft_strncmp(arr[i + 1], " ", 2))
-			optn = 1;
-		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2) && ft_strncmp(arr[i + 1], " ", 2))
+		if (arr[i + 1] && !ft_strncmp(arr[i], " ", 2)
+			&& ft_isvoption(arr[i + 1]))
+			cmd->optn = 1;
+		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2)
+			&& !ft_strncmp(arr[i + 1], " ", 2))
+			cmd->optn = 1;
+		else if (arr[i + 1] && ft_strncmp(arr[i], " ", 2)
+			&& ft_strncmp(arr[i + 1], " ", 2))
 			break ;
 		i++;
 	}
-	if (optn)
+	if (cmd->optn)
 	{
 		while (i > 2 && !ft_strncmp(arr[i], " ", 2))
 			i--;
 	}
+	return (i);
+}
+
+/* checks for redirectins and sets flags accordingly */
+void	check_redir(t_cmd *cmd)
+{
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(cmd->scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(cmd->scmd);
+	ft_noredirect(cmd->scmd);
+}
+
+/* imitates behaviour of bash echo, checking for option -n */
+int	builtin_echo(t_cmd *cmd, t_env **env)
+{
+	int		i;
+	char	**arr;
+
+	check_redir(cmd);
+	ft_splitlist(cmd, env);
+	arr = cmd->arr;
+	i = check_n(arr, cmd);
 	while (arr && arr[1] && arr[i])
 	{
 		if (!ft_strncmp(arr[i], "$?", 3))
@@ -343,7 +372,7 @@ int	builtin_echo(t_cmd *cmd, t_env **env)
 		ft_putstr_fd(arr[i], 1);
 		i++;
 	}
-	if (!optn)
+	if (!cmd->optn)
 		ft_putchar_fd('\n', 1);
 	return (EXIT_SUCCESS);
 }

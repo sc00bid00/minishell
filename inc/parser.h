@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 16:36:30 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 10:48:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 	int				rule;
 	int				stat;
 	int				builtin;
+	int				optn;
 	struct s_scmd	*scmd;
 	char			*str;
 	int				count;
