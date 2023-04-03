@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 15:36:22 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:19:46 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,14 @@ void	ft_exec(t_scmd *scmd)
 	scmd->store[1] = dup(STDOUT_FILENO);
 	scmd->count = 0;
 	fun = ft_builtin(scmd);
-	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count] && scmd->cmd[scmd->count]->builtin)
+	if (scmd->n_scmd == 1 && scmd->cmd[scmd->count]
+		&& scmd->cmd[scmd->count]->builtin)
 	{
 		scmd->id = 1;
 		fun(*scmd->cmd, &scmd->env);
 	}
 	else
-	{
-		while (scmd && scmd->cmd && scmd->cmd[scmd->count])
-		{
-			if (pipe(scmd->fd) == -1)
-				exit(EXIT_FAILURE);
-			scmd->id = fork();
-			if (scmd->id == -1)
-				exit(EXIT_FAILURE);
-			if (scmd->id == 0)
-				ft_child(scmd);
-			else
-				ft_parent(scmd);
-			scmd->count++;
-		}
-	}
+		ft_exec_fork(scmd);
 	if (scmd->id != 0)
 	{
 		ft_wait(scmd);
