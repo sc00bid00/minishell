@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 14:05:18 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:41:12 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 }			t_token;
 
 t_token	*ft_lex(char *str, t_env *env);
+void	ft_lex_uti(t_token *tkn);
 void	ft_cleantkn(t_token *tkn);
 void	ft_cleanlst(t_list *lst);
 t_token	*ft_init_tkn(char *str, t_env *env);
@@ -47,6 +48,7 @@ void	ft_expdollar(t_token *tkn);
 t_list	*ft_moddollar(t_list *lst, t_token *tkn);
 char	*ft_dollarsubst(char *str, t_token *tkn);
 void	ft_spoillist(t_token *tkn);
+void	ft_spoillist_util(char *tmps, t_list **copy);
 char	*ft_lsttostr(t_list *lst);
 void	ft_exptilde(t_token *tkn);
 int		ft_allspaces(char *str);
