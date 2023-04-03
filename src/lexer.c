@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:14:44 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 14:43:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:36:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_token	*ft_lex(char *str, t_env *env)
 	if (tkn->curr > tkn->prev + 1)
 		ft_go(tkn);
 	ft_expdollar(tkn);
-	ft_exptilde(tkn);
+	ft_exptilde(tkn, 0);
 	ft_spoillist(tkn);
 	if (!ft_redsyntax(tkn))
 		return (NULL);

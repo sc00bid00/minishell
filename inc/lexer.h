@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 14:41:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:37:17 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_dollarsubst(char *str, t_token *tkn);
 void	ft_spoillist(t_token *tkn);
 void	ft_spoillist_util(char *tmps, t_list **copy);
 char	*ft_lsttostr(t_list *lst);
-void	ft_exptilde(t_token *tkn);
+void	ft_exptilde(t_token *tkn, int z);
 int		ft_allspaces(char *str);
 char	*ft_otherprefix(char *str, t_token *tkn);
 char	*ft_putback(char *str, char *set1, char *set2);

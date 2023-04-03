@@ -80,6 +80,6 @@ t_token	*ft_lexecho(char *str, t_env *env)
 	if (tkn->curr > tkn->prev + 1)
 		ft_goecho(tkn);
 	ft_expdollarecho(tkn);
-	ft_exptilde(tkn);
+	ft_exptilde(tkn, 1);
 	return (tkn);
 }
