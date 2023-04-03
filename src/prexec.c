@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 05:53:02 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 07:51:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,22 +112,22 @@ int	ft_prexec(t_scmd *scmd)
 		}
 		ft_paths(scmd);
 		if (cmd->arr && cmd->arr[0] && cmd->arr[0][0] == '/')
-			cmd->stat |= 0b010000;
+			cmd->stat |= CMD_KO;
 		if (!cmd->path && cmd->arr && cmd->arr[0])
-			cmd->stat |= 0b010000;
-		if (cmd->arr)
-			dir = opendir(cmd->arr[0]);
-		if (!dir)
 		{
-			scmd->dir = 1;
-			ft_error(SHELL, cmd->arr[0], NULL, ERROR_1);
-			return (1);
+			cmd->stat |= CMD_KO;
+			if (cmd->arr)
+				dir = opendir(cmd->arr[0]);
+			if (!dir)
+			{
+				scmd->dir = 1;
+				ft_error(SHELL, cmd->arr[0], NULL, ERROR_1);
+				return (1);
+			}
 		}
 		if ((!(cmd->path) && cmd->arr && cmd->arr[0] && dir) ||
 			(cmd->arr && cmd->arr[0] && cmd->arr[0][0] == '/'))
-		{
-			cmd->stat |= 0b1000000;
-		}
+			cmd->stat |= IS_DIR;
 		if (dir)
 			closedir(dir);
 		scmd->count++;
