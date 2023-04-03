@@ -74,7 +74,13 @@ void	ft_rmred(t_list **lst)
 			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
 		}
 		else if (!ft_isredtoken(tmp->content) && flag)
-			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+		{
+			if (tmp->next && !ft_strncmp(tmp->content, " ", 2)
+				&& !ft_strncmp(tmp->next->content, "|", 2))
+				break ;
+			else
+				ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+		}
 		else if (ft_isredtoken(tmp->content))
 			flag = 0;
 		tmp = tmp->next;
