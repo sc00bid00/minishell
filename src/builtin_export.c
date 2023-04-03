@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/03 10:51:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:03:42 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,7 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 	size_t	i;
 	char	*copy;
 
-	if (cmd->stat & FILE_KO)
-		ft_fileissues(cmd->scmd);
-	if (cmd->stat & RED_OK)
-		ft_redirect(cmd->scmd);
-	ft_noredirect(cmd->scmd);
+	check_redir(cmd);
 	i = 1;
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
@@ -129,8 +125,7 @@ int	builtin_export(t_cmd *cmd, t_env **env)
 			ft_error(SHELL, "line 0: export: ", copy, ERROR_10);
 			ft_putendl_fd(ERROR_11, 2);
 			g_exitstatus = 2;
-			free (copy);
-			return (2);
+			return (free (copy), 2);
 		}
 		if (is_valid_arg(cmd->arr[i]) == true)
 			update_env(cmd->arr[i], env);
