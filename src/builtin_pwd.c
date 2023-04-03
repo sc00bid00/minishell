@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:55:31 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 14:04:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:11:12 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	builtin_pwd(t_cmd *cmd, t_env **env)
 
 	(void)cmd;
 	(void)env;
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(cmd->scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(cmd->scmd);
+	ft_noredirect(cmd->scmd);
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{

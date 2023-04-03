@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/30 16:38:44 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 10:59:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	ft_redirect(t_scmd *scmd)
 		if (cmd->stat & IN_OK)
 			exit(1);
 	}
-	if (cmd->stat & IN_OK && cmd->stat & EX_OK)
+	if (cmd->stat & IN_OK && (cmd->stat & EX_OK || cmd->builtin))
 	{
 		cmd->fd_in = open(cmd->in_name, O_RDONLY, 0644);
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(cmd->fd_in);
 		close(scmd->fd[0]);
 	}
-	if (cmd->stat & OUT_OK && cmd->stat & EX_OK)
+	if (cmd->stat & OUT_OK && (cmd->stat & EX_OK || cmd->builtin))
 	{
 		cmd->fd_out = open(cmd->out_name, cmd->rule, 0644);
 		dup2(cmd->fd_out, STDOUT_FILENO);
