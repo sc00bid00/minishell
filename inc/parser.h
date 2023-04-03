@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 10:48:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:42:06 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_gethdoc(t_token *tkn, t_scmd *cmd);
 void	ft_getred(t_token *tkn, t_scmd *cmd);
 void	ft_getwords(t_token *tkn, t_scmd *cmd);
 int		ft_prexec(t_scmd *scmd);
+void	ft_helpprexec(t_cmd *cmd, t_scmd *scmd);
 void	ft_helppaths(t_cmd *cmd, char **arr, int j);
 void	ft_isin(t_list *lst, t_scmd *scmd);
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:50:40 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/30 11:11:05 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:13:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 /* define error */
 # define ERROR 		-1
-# define SHELL		"bash"
+# define SHELL		"minishell"
 
 /* define colors */
 # define BOLD		"\x01\033[1m\x02"

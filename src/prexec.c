@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 15:27:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:40:25 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,10 @@ int	ft_prexec(t_scmd *scmd)
 	t_list	*tmp;
 	t_cmd	*cmd;
 	int		count;
-	DIR		*dir;
 
 	scmd->count = 0;
 	while (scmd->arr && scmd->arr[scmd->count])
 	{
-		dir = NULL;
 		tmp = scmd->arr[scmd->count];
 		count = ft_lstsize(tmp);
 		if (!ft_init_cmd(scmd))
@@ -111,26 +109,7 @@ int	ft_prexec(t_scmd *scmd)
 				tmp = tmp->next;
 		}
 		ft_paths(scmd);
-		if (cmd->arr && cmd->arr[0] && cmd->arr[0][0] == '/')
-			cmd->stat |= CMD_KO;
-		if (!cmd->path && cmd->arr && cmd->arr[0])
-		{
-			cmd->stat |= CMD_KO;
-			if (cmd->arr)
-				dir = opendir(cmd->arr[0]);
-			ft_builtin(scmd);
-			if (!dir && !cmd->builtin && !(cmd->stat & CMD_KO))
-			{
-				scmd->dir = 1;
-				ft_error(SHELL, cmd->arr[0], NULL, ERROR_1);
-				return (1);
-			}
-		}
-		if ((!(cmd->path) && cmd->arr && cmd->arr[0] && dir) ||
-			(cmd->arr && cmd->arr[0] && cmd->arr[0][0] == '/'))
-			cmd->stat |= IS_DIR;
-		if (dir)
-			closedir(dir);
+		ft_helpprexec(cmd, scmd);
 		scmd->count++;
 	}
 	return (1);
