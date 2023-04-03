@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 11:30:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:07:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_istoken(void *content)
 	while (t[i])
 	{
 		m = ft_strlen(t[i]);
-		if (content && !ft_strncmp((char *)content, t[i], m))
+		if (content && !ft_strncmp((char *)content, t[i], m + 1))
 		{
 			free(t);
 			return (1);
@@ -52,6 +52,20 @@ int	ft_istoken(void *content)
 	free(t);
 	return (0);
 }
+
+char	*ft_chkmltrd(char *str)
+{
+	if (!ft_strncmp(str, "<<<<", 4))
+		return ("<<");
+	if (!ft_strncmp(str, ">>>>", 4))
+		return (">>");
+	if (!ft_strncmp(str, "<<<", 3))
+		return ("<");
+	if (!ft_strncmp(str, ">>>", 3))
+		return (">");
+	return (NULL);
+}
+
 
 t_token	*ft_redsyntax(t_token *tkn)
 {
@@ -65,6 +79,8 @@ t_token	*ft_redsyntax(t_token *tkn)
 	i[1] = ft_lstsize(tmp) - 1;
 	while (tmp)
 	{
+		if (ft_chkmltrd(tmp->content))
+			return (ft_syntaxerror(tkn, ft_chkmltrd(tmp->content)));
 		if ((i[0] == 0 || i[0] == i[1]) && tmp->content
 			&& ((char *)tmp->content)[0] == '|')
 			return (ft_syntaxerror(tkn, "|"));
