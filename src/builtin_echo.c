@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 13:51:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:44:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,24 @@ void	ft_splitlist(t_cmd *cmd, t_env **env)
 	lst = tkn->lst;
 	i = 0;
 	j = 0;
-	while (lst)
+	while (lst && i < cmd->count)
 	{
 		if (lst->content && ft_strchr((char *)lst->content, '|'))
 			i++;
-		ft_splitlist_util(&copylst, lst, j);
-		j++;
 		lst = lst->next;
+	}
+	while (lst && ft_strncmp(lst->content, "|", 2))
+	{
+		if (j == 0 && !ft_strncmp(lst->content, " ", 2))
+			lst = lst->next;
+		else if (lst->next && !ft_strncmp(lst->next->content, "|", 2) && !ft_strncmp(lst->content, " ", 2))
+			lst = lst->next;
+		else
+		{
+			ft_splitlist_util(&copylst, lst, j);
+			j++;
+			lst = lst->next;
+		}
 	}
 	ft_spoilecho(&copylst);
 	ft_rmred(&copylst);
