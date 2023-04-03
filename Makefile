@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/03/31 09:55:48 by lsordo           ###   ########.fr        #
+#    Updated: 2023/04/03 13:51:25 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ LIBGNL= ./lib/get_next_line/libgnl.a
 SRC =		builtin.c \
 			builtin_cd.c \
 			builtin_echo.c \
+			builtin_echo_2.c \
+			builtin_echo_3.c \
+			builtin_echo_4.c \
 			builtin_env.c \
 			builtin_exit.c \
 			builtin_export.c \
