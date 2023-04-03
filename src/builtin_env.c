@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:50:57 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/29 16:19:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:07:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	print_env(t_env **env)
 /*	imitate behavior of env */
 int	builtin_env(t_cmd *cmd, t_env **env)
 {
+	if (cmd->stat & FILE_KO)
+		ft_fileissues(cmd->scmd);
+	if (cmd->stat & RED_OK)
+		ft_redirect(cmd->scmd);
+	ft_noredirect(cmd->scmd);
 	if (cmd->arr[1] != NULL)
 	{
 		ft_error(NULL, "env: ", cmd->arr[1], ERROR_1);
