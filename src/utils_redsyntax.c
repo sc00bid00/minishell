@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redsyntax.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/03/27 16:29:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:30:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	ft_istoken(void *content)
 	while (t[i])
 	{
 		m = ft_strlen(t[i]);
-		if (ft_strlen(content) > (size_t)m)
-			m = ft_strlen(content);
 		if (content && !ft_strncmp((char *)content, t[i], m))
 		{
 			free(t);
