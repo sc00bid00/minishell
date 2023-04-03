@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:39:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/02 15:10:45 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:50:32 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,12 @@ int	ft_init_cmd(t_scmd *scmd)
 	tmp->count = scmd->count;
 	tmp->scmd = scmd;
 	return (1);
+}
+
+void	ft_initredsyntax(int *flag, t_token *tkn, t_list **tmp, int (*i)[2])
+{
+	*flag = 0;
+	*tmp = tkn->lst;
+	(*i)[0] = 0;
+	(*i)[1] = ft_lstsize(*tmp) - 1;
 }

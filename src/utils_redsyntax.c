@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:04:50 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 13:07:23 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:50:22 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,13 @@ char	*ft_chkmltrd(char *str)
 	return (NULL);
 }
 
-
 t_token	*ft_redsyntax(t_token *tkn)
 {
 	t_list	*tmp;
 	int		flag;
 	int		i[2];
 
-	flag = 0b0;
-	tmp = tkn->lst;
-	i[0] = 0;
-	i[1] = ft_lstsize(tmp) - 1;
+	ft_initredsyntax(&flag, tkn, &tmp, &i);
 	while (tmp)
 	{
 		if (ft_chkmltrd(tmp->content))
