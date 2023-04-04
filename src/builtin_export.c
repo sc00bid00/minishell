@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/03 14:03:42 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:43:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ int	print_export(t_env **env)
 			ft_putstr_fd("declare -x ", 1);
 			ft_putstr_fd((*env)->var_name, 1);
 			if ((*env)->var_content)
-				ft_putstr_fd("=", 1);
+				ft_putstr_fd("=\"", 1);
 			else
 				ft_putstr_fd("\n", 1);
 		}
 		if ((*env)->var_content)
-			ft_putendl_fd((*env)->var_content, 1);
+		{
+			ft_putstr_fd((*env)->var_content, 1);
+			ft_putendl_fd("\"", 1);
+		}
 		if ((*env)->next)
 			(*env) = (*env)->next;
 		else
