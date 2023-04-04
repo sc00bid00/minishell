@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 12:58:28 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 13:55:13 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 16:37:27 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,54 @@ void	ft_isout(t_list *lst, int *count, t_scmd *scmd)
 	*count -= 2;
 }
 
+char	*ft_dollarsubst2(char *str, t_scmd *scmd)
+{
+	t_env	*env_var;
+	char	*tmp;
+
+	tmp = NULL;
+	if (str && str[0] == '0')
+	{
+		env_var = ret_var(&scmd->env, "SHELL");
+		if (env_var)
+			tmp = ft_strjoin(env_var->var_content, &str[1]);
+	}
+	else if (str && ft_isdigit(str[0]))
+		tmp = ft_strdup(&str[1]);
+	else if (str)
+	{
+		env_var = ret_var(&scmd->env, str);
+		if (env_var)
+			tmp = ft_strdup(env_var->var_content);
+	}
+	return (tmp);
+}
+
+void	ft_hdocdollar(char **str, t_scmd *scmd)
+{
+	t_list	*lst;
+	t_list	*tmp;
+	char	*s;
+
+	lst = NULL;
+	lst = ft_strtolstecho(*str);
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->content && ((char *)tmp->content)[0] == '$' && ((char *)tmp->content)[1])
+		{
+			s = ft_strdup(&((char *)tmp->content)[1]);
+			free(tmp->content);
+			tmp->content = ft_dollarsubst2(s, scmd);
+			free(s);
+		}
+		tmp = tmp->next;
+	}
+	free(*str);
+	*str = ft_lsttostr(lst);
+	ft_cleanlst(lst);
+}
+
 void	ft_isheredoc(char *limiter, t_scmd *scmd)
 {
 	t_cmd	*tmp;
@@ -77,6 +125,11 @@ void	ft_isheredoc(char *limiter, t_scmd *scmd)
 		{
 			free(block);
 			break ;
+		}
+		else if (block && ft_strchr(block, '$'))
+		{
+			ft_hdocdollar(&block, scmd);
+			write(tmp->fd_in, block, ft_strlen(block));
 		}
 		else
 			write(tmp->fd_in, block, ft_strlen(block));
