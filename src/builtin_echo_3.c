@@ -89,6 +89,7 @@ t_list	*ft_strtolstecho(char *str)
 	t_list	*lst;
 	int		i;
 	int		j;
+	char	*tmp;
 
 	lst = NULL;
 	i = 0;
@@ -97,7 +98,9 @@ t_list	*ft_strtolstecho(char *str)
 	{
 		if (!ft_isalnum(str[i]))
 		{
-			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+			tmp = ft_substr(str, j, i - j);
+			if (tmp)
+				ft_lstadd_back(&lst, ft_lstnew(tmp));
 			j = i;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 14:05:02 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 17:52:06 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,15 @@ void	ft_expdollar(t_token *tkn)
 	t_list	*tmplst;
 	t_list	*tmplst2;
 	char	*tmp;
+	int		flag;
 
 	lst = tkn->lst;
+	flag = 0;
 	while (lst)
 	{
-		if (lst->content && ft_strchr((char *)lst->content, '$')
+		if (lst->content && !ft_strncmp(lst->content, "<<", 3))
+			flag = 1;
+		if (!flag && lst->content && ft_strchr((char *)lst->content, '$')
 			&& ft_strlen((char *)lst->content) > 1
 			&& ((char *)lst->content)[0] != '\'')
 		{
@@ -127,6 +131,8 @@ void	ft_expdollar(t_token *tkn)
 			free(lst->content);
 			lst->content = tmp;
 		}
+		if (flag && lst->content && ft_strncmp(lst->content, "<<", 3))
+			flag = 0;
 		lst = lst->next;
 	}
 }
