@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/03 09:43:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:29:42 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	update_pwd(t_env **env)
 	temp = ret_var(env, "PWD");
 	if (!temp)
 		new_var("PWD");
-	str = temp->var_content;
+	else
+		str = temp->var_content;
 	if (str)
 	{
 		if (!upd_var(env, "OLDPWD", str))
