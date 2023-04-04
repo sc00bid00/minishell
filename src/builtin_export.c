@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:11:13 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/03 14:03:42 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:38:41 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	update_env(char *str, t_env **env)
 		name = get_var_name(str);
 		value = get_var_content(str);
 		upd_var(env, name, value);
+		free(name);
+		free(value);
 	}
 	else
 	{
