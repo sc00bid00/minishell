@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prexec.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 15:40:25 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 10:22:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	ft_paths(t_scmd *scmd)
 		}
 		j++;
 	}
-	ft_freesplit(arr);
+	if (arr)
+		ft_freesplit(arr);
 }
 
 /* triage between in out or command, return NULL*/
