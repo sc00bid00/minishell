@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 14:14:48 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 18:50:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	ft_isin(t_list *lst, t_scmd *scmd);
 void	ft_isout(t_list *lst, int *count, t_scmd *scmd);
 int		ft_isword(t_list **lst, int *count, t_scmd *scmd);
 void	ft_helpisheredoc(t_scmd	*scmd, t_cmd **tmp);
+void	ft_helpisheredoc_2(t_cmd *tmp);
+void	ft_hdocdollar(char **str, t_scmd *scmd);
+char	*ft_dollarsubst2(char *str, t_scmd *scmd);
 void	ft_cleancmd(t_scmd *scmd);
 void	ft_cleanscmd(t_scmd *cmd);
 void	tmp_prtarrlst(t_scmd *cmd);
