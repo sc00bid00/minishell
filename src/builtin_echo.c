@@ -6,27 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:06:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 18:44:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 09:59:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ft_splitlist_util(t_list **copylst, t_list *lst, int j)
-{
-	if (!ft_strncmp((char *)lst->content, " ", 2) && j == 0
-		&& lst->next && !ft_strncmp((char *)lst->next->content, "echo", 5))
-				;
-	else if (lst->content && ((char *)lst->content)[0] == '\0')
-	{
-		if (lst->next && !ft_strncmp(lst->next->content, " ", 2))
-			lst = lst->next;
-	}
-	else if (ft_allspaces((char *)lst->content))
-		ft_lstadd_back(copylst, ft_lstnew(ft_strdup(" ")));
-	else
-		ft_lstadd_back(copylst, ft_lstnew(ft_strdup(lst->content)));
-}
 
 void	ft_splitlist(t_cmd *cmd, t_env **env)
 {
@@ -47,19 +31,7 @@ void	ft_splitlist(t_cmd *cmd, t_env **env)
 			i++;
 		lst = lst->next;
 	}
-	while (lst && ft_strncmp(lst->content, "|", 2))
-	{
-		if (j == 0 && !ft_strncmp(lst->content, " ", 2))
-			lst = lst->next;
-		else if (lst->next && !ft_strncmp(lst->next->content, "|", 2) && !ft_strncmp(lst->content, " ", 2))
-			lst = lst->next;
-		else
-		{
-			ft_splitlist_util(&copylst, lst, j);
-			j++;
-			lst = lst->next;
-		}
-	}
+	ft_helpsplitlist(lst, j, &copylst);
 	ft_spoilecho(&copylst);
 	ft_rmred(&copylst);
 	ft_echoadjarr(copylst, &cmd->arr);

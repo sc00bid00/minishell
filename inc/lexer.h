@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 08:28:34 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 09:59:37 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_list	*ft_moddollar(t_list *lst, t_token *tkn);
 char	*ft_dollarsubst(char *str, t_token *tkn);
 void	ft_spoillist(t_token *tkn);
 void	ft_spoillist_util(char *tmps, t_list **copy);
+void	ft_helpsplitlist(t_list *lst, int j, t_list **copylst);
 char	*ft_lsttostr(t_list *lst);
 void	ft_exptilde(t_token *tkn, int z);
 int		ft_allspaces(char *str);
@@ -56,6 +57,7 @@ char	*ft_otherprefix(char *str, t_token *tkn);
 char	*ft_putback(char *str, char *set1, char *set2);
 void	ft_initredsyntax(int *flag, t_token *tkn, t_list **tmp, int (*i)[2]);
 void	ft_helplsttostr(t_list *tmplst, int *i);
+void	ft_helprmed(t_list *tmp, t_list **new, int *flag);
 void	tmp_prtlst(t_token *tkn);
 void	tmp_prtlst2(t_list *lst);
 t_list	*ft_strtolst(char *str);
