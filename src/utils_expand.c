@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 10:14:18 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 19:58:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 08:44:13 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	ft_exptspaces(t_token *tkn, int z)
 	while (lst && z)
 	{
 		if (!ft_strncmp(lst->content, " ", 2))
-			flag ^=1;
-		else if (!ft_strncmp(lst->content, "~", 2) && flag && ((lst->next && !ft_strncmp(lst->next->content, " ", 2)) || !lst->next))
+			flag ^= 1;
+		else if (!ft_strncmp(lst->content, "~", 2) && flag
+			&& ((lst->next && !ft_strncmp(lst->next->content, " ", 2))
+				|| !lst->next))
 		{
 			env_var = ret_var(&tkn->env, "HOME");
 			if (env_var && env_var->var_content)
