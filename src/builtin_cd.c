@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:21:04 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/04 20:29:42 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 20:39:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ char	*get_dir(t_cmd *cmd, t_env **env)
 	char	*dir;
 	t_env	*temp;
 
+	dir = NULL;
 	if (cmd->arr && cmd->arr[1] == NULL)
 	{
 		temp = ret_var(env, "HOME");
-		dir = temp->var_content;
+		if (temp)
+			dir = temp->var_content;
 	}
 	else if (cmd->arr && !ft_strncmp(cmd->arr[1], "-", 2))
 	{
@@ -50,6 +52,7 @@ int	update_pwd(t_env **env)
 
 	cwd = getcwd(NULL, 0);
 	temp = ret_var(env, "PWD");
+	str = NULL;
 	if (!temp)
 		new_var("PWD");
 	else
