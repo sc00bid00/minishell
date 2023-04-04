@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/04 18:28:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:35:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,11 @@ void	increment_shlvl(t_env **env)
 	int		i;
 
 	tmp = ret_var(env, "SHLVL");
-	i = ft_atoi(tmp->var_content);
-	i++;
-	free (tmp->var_content);
-	tmp->var_content = ft_itoa(i);
+	if (tmp)
+	{
+		i = ft_atoi(tmp->var_content);
+		i++;
+		free (tmp->var_content);
+		tmp->var_content = ft_itoa(i);
+	}
 }
