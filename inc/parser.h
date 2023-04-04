@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:41:37 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 15:42:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 11:34:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define CMD_KO 0b010000
 # define EX_OK 0b100000
 # define IS_DIR 0b1000000
+# define SLASH 0b10000000
 
 /* cmd to be used in execution */
 typedef struct s_cmd
