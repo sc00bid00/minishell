@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:01:37 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 14:59:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:34:19 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,16 @@ t_env	*del_var(t_env **env, char *var)
 		free (temp);
 	}
 	return (*(env));
+}
+
+void	increment_shlvl(t_env **env)
+{
+	t_env	*tmp;
+	int		i;
+	
+	tmp = ret_var(env, "SHLVL");
+	i = ft_atoi(tmp->var_content);
+	i++;
+	free (tmp->var_content);
+	tmp->var_content = ft_itoa(i);
 }

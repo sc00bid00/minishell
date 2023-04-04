@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:21 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/27 16:46:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:54:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_env	*copy_envp_to_env(char **envp)
 
 	i = 0;
 	env = NULL;
-	temp = new_var("dummy=dummy");
+	temp = new_var("AB=13:FORV_E");
 	env = ms_lstadd_back(env, temp);
 	while (envp && envp[i])
 	{
@@ -105,5 +105,6 @@ t_env	*copy_envp_to_env(char **envp)
 		env = ms_lstadd_back(env, temp);
 		i++;
 	}
+	increment_shlvl(&env);
 	return (env);
 }
