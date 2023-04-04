@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:53:45 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 09:59:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:06:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_token	*ft_redsyntax(t_token *tkn);
 int		ft_istoken(void *content);
 int		ft_flag(char c);
 void	ft_expdollar(t_token *tkn);
+void	ft_helpexpdollar(char **tmp, t_list *lst, t_token *tkn);
 t_list	*ft_moddollar(t_list *lst, t_token *tkn);
 char	*ft_dollarsubst(char *str, t_token *tkn);
 void	ft_spoillist(t_token *tkn);

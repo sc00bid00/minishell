@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 17:52:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:05:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ t_list	*ft_strtolst(char *str)
 void	ft_expdollar(t_token *tkn)
 {
 	t_list	*lst;
-	t_list	*tmplst;
-	t_list	*tmplst2;
 	char	*tmp;
 	int		flag;
 
@@ -124,10 +122,7 @@ void	ft_expdollar(t_token *tkn)
 			&& ft_strlen((char *)lst->content) > 1
 			&& ((char *)lst->content)[0] != '\'')
 		{
-			tmplst = ft_strtolst((char *)lst->content);
-			tmplst2 = ft_moddollar(tmplst, tkn);
-			tmp = ft_lsttostr(tmplst2);
-			ft_cleanlst(tmplst);
+			ft_helpexpdollar(&tmp, lst, tkn);
 			free(lst->content);
 			lst->content = tmp;
 		}
