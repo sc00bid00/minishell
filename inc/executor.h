@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:13:49 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 14:15:43 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:53:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_noredirect(t_scmd *scmd);
 void	ft_execute(t_scmd *scmd);
 void	ft_fileissues(t_scmd *scmd);
 void	ft_cmdissues(t_scmd *scmd);
+void	ft_helpcmdissues(t_cmd *cmd, t_scmd *scmd);
 void	ft_redirect(t_scmd *scmd);
 
 #endif

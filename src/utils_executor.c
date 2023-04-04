@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 13:09:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:52:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,7 @@ void	ft_cmdissues(t_scmd *scmd)
 	}
 	else if (cmd->stat & 0)
 		cmd->err_flag = 0;
-	if (cmd->stat & IN_OK)
-		close(cmd->fd_in);
-	if (cmd->stat & OUT_OK)
-		close(cmd->fd_out);
-	close(scmd->fd[0]);
-	close(scmd->fd[1]);
+	ft_helpcmdissues(cmd, scmd);
 	exit(cmd->err_flag);
 }
 
