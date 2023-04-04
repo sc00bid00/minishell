@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prexec_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:11:13 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 14:12:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 18:26:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_helpprexec(t_cmd *cmd, t_scmd *scmd)
 {
 	if (!ft_absrelpath(cmd))
 		ft_paths(scmd);
-	if (!cmd->path)
+	if (!cmd->path && !(cmd->stat & EX_OK))
 		cmd->stat |= CMD_KO;
 }
 
@@ -38,19 +38,21 @@ int	ft_absrelpath(t_cmd *cmd)
 	if (cmd->arr && ft_strchr(cmd->arr[0], '/'))
 	{
 		dir = opendir(cmd->arr[0]);
-		ft_helpabsrelpath(dir, cmd);
-		if (!access(cmd->arr[0], X_OK) && ft_strncmp(cmd->arr[0], "./", 2)
-			&& ft_strncmp(cmd->arr[0], "../", 3))
+		if (!access(cmd->arr[0], X_OK))
 		{
-			cmd->stat |= EX_OK;
-			cmd->path = ft_strdup(cmd->arr[0]);
+			if (dir)
+				ft_helpabsrelpath(dir, cmd);
+			else
+			{
+				cmd->stat |= EX_OK;
+				cmd->path = ft_strdup(cmd->arr[0]);
+			}
 		}
 		else
 		{
-			cmd->stat |= (CMD_KO | SLASH);
+			cmd->stat |= SLASH | CMD_KO;
+			cmd->path = ft_strdup(cmd->arr[0]);
 		}
-		if (cmd->stat & (IS_DIR | EX_OK))
-			cmd->stat |= CMD_KO;
 		return (1);
 	}
 	return (0);
