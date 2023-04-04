@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:33:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/04/04 11:07:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:37:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*read_line(void)
 
 	line = readline("\033[36;1mminishell$ \033[0m");
 	if (line == NULL)
-		exit(1);
+		line = strdup("exit");
 	return (line);
 }
 
