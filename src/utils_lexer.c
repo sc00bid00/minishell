@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:15:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 19:05:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 19:47:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*ft_dollarsubst(char *str, t_token *tkn)
 	}
 	else if (str && ft_isdigit(str[0]))
 		tmp = ft_strdup(&str[1]);
+	else if (str && str[0] == '?')
+		tmp = ft_itoa(g_exitstatus);
 	else if (str)
 	{
 		env_var = ret_var(&tkn->env, str);
@@ -94,7 +96,7 @@ t_list	*ft_strtolst(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && i != 0)
+		if (!ft_isalnum(str[i]) && str[i] != '?' && str[i] != '_' && i != 0)
 		{
 			ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
 			j = i;
@@ -103,6 +105,7 @@ t_list	*ft_strtolst(char *str)
 	}
 	if (i != j && str[j] != '\0')
 		ft_lstadd_back(&lst, ft_lstnew(ft_substr(str, j, i - j)));
+	tmp_prtlst2(lst);
 	return (lst);
 }
 
