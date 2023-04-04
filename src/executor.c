@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 11:54:30 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 13:02:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:15:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void	ft_child(t_scmd *scmd)
 
 	fun = ft_builtin(scmd);
 	cmd = scmd->cmd[scmd->count];
-	ft_putnbr_fd(cmd->stat, 2);
-	ft_putendl_fd("$ debug", 2);
 	if (cmd->stat & FILE_KO)
 		ft_fileissues(scmd);
 	if (!cmd->builtin && cmd->stat & CMD_KO)

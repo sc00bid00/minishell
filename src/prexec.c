@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 13:14:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:15:37 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int	ft_absrelpath(t_cmd *cmd)
 		}
 		if (cmd->stat & (IS_DIR | EX_OK))
 			cmd->stat |= CMD_KO;
-		ft_putnbr_fd(cmd->stat, 2 );
-		ft_putendl_fd("debug checkin", 2);
 		return (1);
 	}
 	return (0);
