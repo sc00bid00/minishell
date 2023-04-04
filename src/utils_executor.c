@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:54:48 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/03 10:59:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:09:20 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	ft_cmdissues(t_scmd *scmd)
 	if (cmd->stat & IS_DIR)
 	{
 		ft_eerr("minishell: ", cmd->arr[0], ERROR_13);
+		cmd->err_flag = 126;
+	}
+	else if (cmd->stat == 144)
+	{
+		ft_eerr("minishell: ", cmd->arr[0], ERROR_7);
 		cmd->err_flag = 126;
 	}
 	else if ((cmd->stat & CMD_KO) && scmd->dir != 1)
@@ -97,12 +102,12 @@ void	ft_execute(t_scmd *scmd)
 	err = execve(cmd->path, cmd->arr, scmd->envp);
 	if (err == -1)
 	{
-		if (ft_strncmp(cmd->arr[0], "..", 3))
+		if (!ft_strncmp(cmd->arr[0], ".", 2))
 		{
 			ft_eerr("minishell: ", cmd->arr[0], ERROR_14);
 			cmd->err_flag = 2;
 		}
-		else if (ft_strncmp(cmd->arr[0], ".", 2))
+		else if (!ft_strncmp(cmd->arr[0], "..", 3))
 		{
 			ft_eerr("minishell: ", cmd->arr[0], ERROR_6);
 			cmd->err_flag = 127;
