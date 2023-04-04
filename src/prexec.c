@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 13:15:37 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/04/04 14:12:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,6 @@ int	ft_direct(t_list **tmp, int *count, t_scmd *scmd)
 	return (1);
 }
 
-int	ft_absrelpath(t_cmd *cmd)
-{
-	DIR	*dir;
-
-	dir = NULL;
-	cmd->path = NULL;
-	if (cmd->arr && ft_strchr(cmd->arr[0], '/'))
-	{
-		dir = opendir(cmd->arr[0]);
-		if (dir)
-		{
-			cmd->stat |= IS_DIR;
-			closedir(dir);
-		}
-		if (!access(cmd->arr[0], X_OK) && ft_strncmp(cmd->arr[0], "./", 2) && ft_strncmp(cmd->arr[0], "../", 3))
-		{
-			cmd->stat |= EX_OK;
-			cmd->path = ft_strdup(cmd->arr[0]);
-		}
-		else
-		{
-			cmd->stat |= (CMD_KO | SLASH);
-		}
-		if (cmd->stat & (IS_DIR | EX_OK))
-			cmd->stat |= CMD_KO;
-		return (1);
-	}
-	return (0);
-}
-
 int	ft_prexec(t_scmd *scmd)
 {
 	t_list	*tmp;
@@ -137,10 +107,7 @@ int	ft_prexec(t_scmd *scmd)
 			if (tmp)
 				tmp = tmp->next;
 		}
-		if (!ft_absrelpath(cmd))
-			ft_paths(scmd);
-		if (!cmd->path)
-			cmd->stat |= CMD_KO;
+		ft_helpprexec(cmd, scmd);
 		scmd->count++;
 	}
 	return (1);
