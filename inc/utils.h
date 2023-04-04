@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:15:45 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/30 10:41:28 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 08:31:39 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define ERROR_11 "export: usage: export [-nf] [name[=value] ...] or export -p"
 # define ERROR_12 "unset: usage: unset [-f] [-v] [name ...]"
 # define ERROR_13 ": is a directory"
-# define ERROR_14 ": filename argument required\n.: usage: . filename [arguments]"
+# define ERROR_14 ": filename argument required\n.: \
+	usage: . filename [arguments]"
 # define ERROR_15 "OLDPWD not set"
-
 
 t_env	*ms_lstlast(t_env *lst);
 t_env	*ms_lstadd_back(t_env *env, t_env *temp);
