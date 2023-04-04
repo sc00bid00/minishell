@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 10:58:03 by lsordo            #+#    #+#             */
-/*   Updated: 2023/04/04 10:22:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:28:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,23 @@ void	ft_paths(t_scmd *scmd)
 {
 	int		j;
 	char	**arr;
-	t_cmd	*cmd;
 
 	arr = ft_arrpaths(scmd);
 	j = 0;
 	while (arr && arr[j])
 	{
-		cmd = scmd->cmd[scmd->count];
-		if (!cmd->arr || !cmd->arr[0])
-			cmd->path = NULL;
+		if (!scmd->cmd[scmd->count]->arr || !scmd->cmd[scmd->count]->arr[0])
+			scmd->cmd[scmd->count]->path = NULL;
 		else
 		{
-			ft_helppaths(cmd, arr, j);
-			if (ft_validpath(cmd->path))
+			ft_helppaths(scmd->cmd[scmd->count], arr, j);
+			if (ft_validpath(scmd->cmd[scmd->count]->path))
 			{
-				cmd->stat |= 0b100000;
+				scmd->cmd[scmd->count]->stat |= 0b100000;
 				break ;
 			}
-			free(cmd->path);
-			cmd->path = NULL;
+			free(scmd->cmd[scmd->count]->path);
+			scmd->cmd[scmd->count]->path = NULL;
 		}
 		j++;
 	}
