@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 05:06:00 by lsordo            #+#    #+#              #
-#    Updated: 2023/04/04 14:13:39 by lsordo           ###   ########.fr        #
+#    Updated: 2023/04/08 08:14:53 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ INC_DIR =	-I ./inc \
 
 LIBFT= ./lib/libft/libft.a
 LIBGNL= ./lib/get_next_line/libgnl.a
-
+LSAN= ./lib/LeakSanitizer/liblsan.a
 SRC =		builtin.c \
 			builtin_cd.c \
 			builtin_echo.c \
@@ -88,20 +88,24 @@ MAC_READLINE	=	~/.brew/opt/readline
 MAC_INCLUDES	=	-I $(MAC_READLINE)/include
 MAC_LINKER		=	-L $(MAC_READLINE)/lib
 
+LS_LNK_MAC = -L ./lib/LeakSanitizer -llsan -lc++
+LS_LNK_LNX = -rdynamic -L<path/to/library> -llsan -ldl -lstdc++
+LS_INC = -Wno-gnu-include-next -I lib/LeakSanitizer/include
+
 all: $(NAME)
 
 ifeq ($(UNAME), Darwin)
-$(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
+$(NAME): $(MAC_BREW) $(MAC_READLINE) $(OBJ_DIR) $(LSAN) $(LIBFT) $(LIBGNL) $(OBJ)
 	@echo "$(COLOR_MAKE)Make minishell for Darwin...$(DEFCL)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MAC_LINKER) $(LINKER)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MAC_LINKER) $(LINKER) $(LS_LNK_MAC)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) -c $^ -o $@
+	@$(CC) $(CFLAGS) $(INC_DIR) $(MAC_INCLUDES) $(LS_INC) -c $^ -o $@
 else
-$(NAME): $(READLINE) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
+$(NAME): $(READLINE) $(LSAN) $(OBJ_DIR) $(LIBFT) $(LIBGNL) $(OBJ)
 	@echo "$(COLOR_MAKE)Make minishell for Linux...$(DEFCL)"
-	@$(CC) $(OBJ) $(LINKER) -o $(NAME)
+	@$(CC) $(OBJ) $(LINKER) $(LS_LNK_LNX) -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $(LS_INC) $^ -o $@
 endif
 
 $(OBJ_DIR):
@@ -135,6 +139,14 @@ $(MAC_READLINE):
 	@brew install readline
 	@echo ""
 
+$(LSAN):
+	@echo "${COLOR_INSTALL}installing LeakSanitizer...${DEFCL}"
+	@if [ ! -d "./lib/LeakSanitizer" ]; then \
+		@git clone --recursive https://www.github.com/mhahnFr/LeakSanitizer.git ./lib/LeakSanitizer/; \
+	fi;
+	@echo "$(COLOR_MAKE)Make LeakSanitizer...$(DEFCL)"
+	@$(MAKE) -C ./lib/LeakSanitizer
+
 clean:
 	@echo "$(BRED)Clean objects...$(DEFCL)"
 	@rm -rf $(OBJ_DIR)
@@ -142,12 +154,15 @@ clean:
 	@make clean -s -C ./lib/libft
 	@echo "$(BRED)Clean libgnl...$(DEFCL)"
 	@make clean -s -C ./lib/get_next_line
+	@echo "$(BRED)Clean LeakSanitizer...$(DEFCL)"
+	@make clean -s -C ./lib/LeakSanitizer
 
 fclean: clean
 	@echo "$(BRED)Clean exec...$(DEFCL)"
 	@rm -f $(NAME)
 	@make fclean -s -C ./lib/libft
 	@make fclean -s -C ./lib/get_next_line
+	@make fclean -s -C ./lib/LeakSanitizer
 
 re: fclean all
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:37:51 by kczichow          #+#    #+#             */
-/*   Updated: 2023/03/28 14:56:43 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/04/08 08:15:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtin_exit(t_cmd *cmd, t_env **env)
 		}
 	}
 	ms_mycleanup(cmd, env);
-	exit (g_exitstatus);
+	return (g_exitstatus);
 }
 
 /* modified atoi to take 19 digits input for g_exitstatus like bash*/
@@ -60,7 +60,7 @@ unsigned long long	ft_atoi_long_long(char *str)
 {
 	unsigned long long	num;
 	long				sign;
-	char				*copy;					
+	char				*copy;
 
 	copy = str;
 	num = 0;
